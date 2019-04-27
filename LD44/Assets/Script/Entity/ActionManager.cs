@@ -53,6 +53,7 @@ public class ActionManager : MonoBehaviour
 
 	private ActorMovement _moverRef = null;
 	private ActorStats _statsRef = null;
+	
 
 	public bool DoAction(ActionType newAction)
 	{
@@ -130,6 +131,8 @@ public class ActionManager : MonoBehaviour
 			    break;
 		    case AttackResult.InfectionInProgress:
 		    {
+				//TODO Add charge/eating animations to make it visual that an infection is happening
+
 			    _actionDelay = _statsRef.InfectionSpeed;
 			    CurrentAttack = AttackType.Infect;
 			    _awaitingResult = false;

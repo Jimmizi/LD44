@@ -22,7 +22,7 @@ public class ActorStats : MonoBehaviour
 	/// <summary>
 	/// How fast can this character infect another (In seconds)?
 	/// </summary>
-	public float InfectionSpeed = 5.0f;
+	public float InfectionSpeed = 2.5f;
 
 	/// <summary>
 	/// Is this character infected?

@@ -14,12 +14,15 @@ public class ActorMovement : MonoBehaviour
 	public float Speed = 2.0f;
 
 	private Rigidbody2D _rigidbodyRef = null;
-
+	private ActionManager _actionManager = null;
 
     void Start()
     {
 		_rigidbodyRef = GetComponent<Rigidbody2D>();
 		Debug.Assert(_rigidbodyRef != null, "Didn't manage to find a rigidbody.");
+
+		_actionManager = GetComponent<ActionManager>();
+		Debug.Assert(_actionManager != null, "Didn't manage to find a ActionManager.");
 
 		if(_rigidbodyRef)
 		{
@@ -31,6 +34,11 @@ public class ActorMovement : MonoBehaviour
 	
     void FixedUpdate()
     {
+	    if (_actionManager?.CurrentAttack == ActionManager.AttackType.Infect)
+	    {
+		    return;
+	    }
+
 		_rigidbodyRef.velocity = Direction * Speed;
 
 		if (Direction.x != 0.0f)

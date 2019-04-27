@@ -23,6 +23,9 @@ public class InfectActor : MonoBehaviour
 		//TODO change sprite under like a particle effects hide
 		//TODO Play wololololo sound?
 
+		//just a test 
+		this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32_Friendly");
+
 		if (_done)
 		{
 			//Once done just destroy this script
