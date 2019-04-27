@@ -10,6 +10,7 @@ using UnityEngine;
 public class ActorMovement : MonoBehaviour
 {
 	public Vector2 Direction;
+	public int DirectionFacing = 1; //-1 for Left, 1 for right
 	public float Speed = 2.0f;
 
 	private Rigidbody2D _rigidbodyRef = null;
@@ -31,5 +32,10 @@ public class ActorMovement : MonoBehaviour
     void FixedUpdate()
     {
 		_rigidbodyRef.velocity = Direction * Speed;
+
+		if (Direction.x != 0.0f)
+		{
+			DirectionFacing = Direction.x < 0.0f ? -1 : 1;
+		}
 	}
 }

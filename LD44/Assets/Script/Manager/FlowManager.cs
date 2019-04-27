@@ -27,6 +27,8 @@ public class FlowManager : MonoBehaviour
 		Shutdown	// Done with the stage, delete everything and go to the next scene
 	}
 
+	public bool DebugStraightToGameplay;
+
 	#region Engine facing config
 
 	/// <summary>
@@ -154,6 +156,12 @@ public class FlowManager : MonoBehaviour
 			{
 				SpawnEnemyIn();
 			}
+		}
+
+		if (DebugStraightToGameplay)
+		{
+			_currentState = LevelState.PlayerInit;
+			return;
 		}
 
 		//Spawn in the spawn position target
