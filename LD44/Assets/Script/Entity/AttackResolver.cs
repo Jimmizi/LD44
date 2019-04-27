@@ -90,6 +90,12 @@ public class AttackResolver : MonoBehaviour
 			return;
 		}
 
+		//Don't attack the same type
+		if (CallerStats.Infected == othersStats.Infected)
+		{
+			return;
+		}
+
 		_queryResult = ResolveAttack(CallerStats, othersStats);
 
 		switch (_queryResult)
@@ -121,6 +127,8 @@ public class AttackResolver : MonoBehaviour
 
 	private ActionManager.AttackResult ResolveAttack(ActorStats attackerStats, ActorStats victimStats)
 	{
+		var justInfected = false;
+
 		switch (CurrentAttackType)
 		{
 			case ActionManager.AttackType.Lethal:
@@ -136,6 +144,7 @@ public class AttackResolver : MonoBehaviour
 			case ActionManager.AttackType.Infect:
 			{
 				victimStats.Infected = true;
+				justInfected = true;
 				break;
 			}
 		}
@@ -143,7 +152,7 @@ public class AttackResolver : MonoBehaviour
 		{
 			return ActionManager.AttackResult.VictimDeath;
 		}
-		else if (victimStats.Infected)
+		else if (justInfected)
 		{
 			return ActionManager.AttackResult.VictimInfected;
 		}

@@ -26,6 +26,19 @@ public class InfectActor : MonoBehaviour
 		//just a test 
 		this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32_Friendly");
 
+		var tempStats = this.GetComponent<ActorStats>();
+		if (tempStats)
+		{
+			tempStats.Infected = true;
+			tempStats.Neutral = false;
+		}
+
+		var tempController = this.GetComponent<AIController>();
+		if (tempController)
+		{
+			tempController.RespondToInfected();
+		}
+
 		if (_done)
 		{
 			//Once done just destroy this script

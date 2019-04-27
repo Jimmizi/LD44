@@ -14,6 +14,11 @@ using Random = UnityEngine.Random;
 
 public class AIController : MonoBehaviour
 {
+
+	private const float REACHED_NODE_DISTANCE = 0.25f;
+	private const float REEVALUATE_DIST_FOR_TARGET_HAVING_MOVED = 0.3f;
+
+
 	public enum AITask
 	{
 		Wander,			//Randomly around the map
@@ -39,12 +44,13 @@ public class AIController : MonoBehaviour
 	//Target vars
 	private GameObject _taskTarget = null;
 	private Vector2 _originalTargetPlace;
+	private float _timeSinceLastAttackAction;
 
 	private Vector2 _currentDirection;
 
 	public bool ShouldRunFaster()
 	{
-		return CurrentTask == AITask.Panic;
+		return CurrentTask == AITask.Panic || CurrentTask == AITask.Flee;
 	}
 
 	public void SetDesiredAttackType(ActionManager.AttackType newType)
@@ -95,6 +101,7 @@ public class AIController : MonoBehaviour
 		{
 			case AITask.Wander:
 			case AITask.Panic:
+			case AITask.Flee:
 			{
 				ProcessTaskWander();
 				break;
@@ -106,13 +113,32 @@ public class AIController : MonoBehaviour
 			}
 			case AITask.DefendTarget:
 				break;
-			case AITask.Flee:
-				break;
 			
 			default:
 				throw new ArgumentOutOfRangeException();
 		}
 	}
+
+    public void RespondToInfected()
+    {
+	    CurrentTask = AITask.AttackTarget;
+	    ClearTarget();
+    }
+
+    public void RespondToPlayerSpawned()
+    {
+	    if (_statsRef.Neutral)
+	    {
+		    CurrentTask = Random.Range(0, 101) < 50 ? AITask.Panic : AITask.Flee;
+		    _currentPath.Clear();
+		    _endOfPathWaitTime = 0.0f;
+			_currentNode = 0;
+		}
+	    else
+	    {
+			CurrentTask = AITask.AttackTarget;
+	    }
+    }
 
     public void cbPathResult(List<Node> path)
     {
@@ -125,12 +151,93 @@ public class AIController : MonoBehaviour
 
     }
 
+    private GameObject FindSuitableTargetToAttack()
+    {
+	    var allActors = GameObject.FindObjectsOfType<ActorStats>();
+		var enemiesToTarget = new List<GameObject>();
+
+		// Weed out all the same type as me
+		foreach (var actor in allActors)
+		{
+			//If the actor we're looking at doesn't have the same stat of infection as me, they are a target
+			if (actor.Infected != _statsRef.Infected)
+			{
+				enemiesToTarget.Add(actor.gameObject);
+			}
+		}
+
+		//Exit out if no enemies, if only one just use that
+		if (enemiesToTarget.Count == 0)
+		{
+			return null;
+		}
+		else if (enemiesToTarget.Count == 1)
+		{
+			return enemiesToTarget[0];
+		}
+
+	    var randomChance = Random.Range(0, 101);
+
+		//Random chance between random enemy, picking the closest, and picking the furthest
+		if (randomChance >= 0 && randomChance < 25)
+		{
+			return enemiesToTarget[Random.Range(0, enemiesToTarget.Count)];
+		}
+
+		float lowestScore = 9999.9f;
+		int lowestScoreIndex = -1;
+
+		float highestScore = 0.0f;
+		int highestScoreIndex = -1;
+
+		//Get the furthest and closest
+		for (var i = 0; i < enemiesToTarget.Count; i++)
+		{
+			var distance = ((Vector2)enemiesToTarget[i].transform.position - (Vector2)this.transform.position).magnitude;
+
+			if (distance < lowestScore)
+			{
+				lowestScore = distance;
+				lowestScoreIndex = i;
+			}
+
+			if (distance > highestScore)
+			{
+				highestScore = distance;
+				highestScoreIndex = i;
+			}
+		}
+		
+		//random chances to pick the furthest or closest
+		if (highestScoreIndex != -1 && randomChance >= 25 && randomChance < 25)
+		{
+			return enemiesToTarget[highestScoreIndex];
+		}
+		else if(lowestScoreIndex != -1)
+		{
+			return enemiesToTarget[lowestScoreIndex];
+		}
+
+		//Else select a random one as a fallback
+		return enemiesToTarget[Random.Range(0, enemiesToTarget.Count)];
+	}
+
+    private void ClearTarget()
+    {
+	    _actionRef.TargetLocationForAction = Vector2.zero;
+	    _currentPath.Clear();
+	    _endOfPathWaitTime = 0.0f;
+	    _originalTargetPlace = Vector2.zero;
+	    _currentNode = 0;
+	    _timeSinceLastAttackAction = 0;
+		_taskTarget = null;
+    }
+
     private void ProcessTaskAttackTarget()
     {
-		//TODO Proper selection than just the player as a target
 		if (_taskTarget == null)
 		{
-			_taskTarget = GameObject.FindGameObjectWithTag("Player");
+			_taskTarget = FindSuitableTargetToAttack();
 		}
 
 		if (_taskTarget == null)
@@ -145,11 +252,26 @@ public class AIController : MonoBehaviour
 			return;
 		}
 
+		//Retarget if the target is now infected
+		if (!_waitingOnPathResult && _statsRef.Infected && _taskTarget.GetComponent<ActorStats>().Infected)
+		{
+			ClearTarget();
+			return;
+		}
+		
+		_timeSinceLastAttackAction += Time.deltaTime;
+		if (_timeSinceLastAttackAction >= 12.0f)
+		{
+			ClearTarget();
+			return;
+		}
+
 		//If we're close enough, attack the target
-		if (((Vector2) _taskTarget.transform.position - (Vector2)this.transform.position).magnitude < 0.4f)
+		if (((Vector2) _taskTarget.transform.position - (Vector2)this.transform.position).magnitude < _statsRef.AttackRange)
 		{
 			_actionRef.DoAction(ActionManager.ActionType.Attack);
 			_actionRef.TargetLocationForAction = _taskTarget.transform.position;
+			_timeSinceLastAttackAction = 0.0f;
 		}
 		else if (_currentPath == null || _currentPath.Count == 0)
 		{
@@ -157,6 +279,7 @@ public class AIController : MonoBehaviour
 			{
 				_pathfinder.RequestPathfind(this.transform.position, _taskTarget.transform.position, cbPathResult);
 				_originalTargetPlace = _taskTarget.transform.position;
+				_timeSinceLastAttackAction = 0.0f;
 				_waitingOnPathResult = true;
 			}
 		}
@@ -165,15 +288,15 @@ public class AIController : MonoBehaviour
 		{
 			_currentPath.Clear();
 			_currentNode = 0;
-			
+			_timeSinceLastAttackAction = 0.0f;
 		}
 		//Recalculate if the target has moved 
-		else if (((Vector2)_taskTarget.transform.position - _originalTargetPlace).magnitude >= 0.3f)
+		else if (((Vector2)_taskTarget.transform.position - _originalTargetPlace).magnitude >= REEVALUATE_DIST_FOR_TARGET_HAVING_MOVED)
 		{
 			_currentPath.Clear();
 			_currentNode = 0;
 
-			_moverRef.Direction /= 5;
+			_moverRef.Direction /= 4; //don't fully stop
 		}
 		else
 		{
@@ -185,7 +308,7 @@ public class AIController : MonoBehaviour
 
 			_moverRef.Direction = direction;
 
-			if ((transform.position - _currentPath[_currentNode].position).magnitude <= 0.25f)
+			if ((transform.position - _currentPath[_currentNode].position).magnitude <= REACHED_NODE_DISTANCE)
 			{
 				_currentNode++;
 
@@ -211,18 +334,21 @@ public class AIController : MonoBehaviour
 	    {
 		    if (!_waitingOnPathResult)
 		    {
-			    _pathfinder.RequestPathfind(this.transform.position, _pathfinder.GetRandomPointInBounds(), cbPathResult);
+			    _pathfinder.RequestPathfind(this.transform.position, _pathfinder.GetRandomPointInBounds(CurrentTask != AITask.Wander), cbPathResult);
 			    _waitingOnPathResult = true;
 		    }
 	    }
 		//We've done our current one
 	    else if(_currentNode >= _currentPath.Count)
 	    {
-		    _currentPath = null;
+		    _currentPath.Clear();
 		    _currentNode = 0;
 
-		    _endOfPathWaitTime = Random.Range(0.5f, 3.0f);
-		}
+		    if (CurrentTask == AITask.Wander)
+		    {
+			    _endOfPathWaitTime = Random.Range(0.5f, 3.0f);
+		    }
+	    }
 	    else
 	    {
 			//Otherwise travel in the direction of the next node
@@ -233,7 +359,7 @@ public class AIController : MonoBehaviour
 			
 			_moverRef.Direction = direction;
 
-			if ((transform.position - _currentPath[_currentNode].position).magnitude <= 0.25f)
+			if ((transform.position - _currentPath[_currentNode].position).magnitude <= REACHED_NODE_DISTANCE)
 			{
 				_currentNode++;
 

@@ -3141,5 +3141,15 @@ PrefabInstance:
       propertyPath: RoundTimer
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: NumberOfNeutralEnemies
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: NumberOfHostileEnemies
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc2d04ad753996e4e89f1351d01a66a5, type: 3}

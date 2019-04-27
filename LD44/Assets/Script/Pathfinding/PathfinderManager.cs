@@ -79,8 +79,12 @@ namespace Pathfinding
 	        return false;
         }
 
-
-		public Vector2 GetRandomPointInBounds()
+		/// <summary>
+		/// awayFromEnemies only for testing against infected
+		/// </summary>
+		/// <param name="awayFromEnemies"></param>
+		/// <returns></returns>
+		public Vector2 GetRandomPointInBounds(bool awayFromEnemies = false)
 		{
 			var boundsGameObject = GameObject.FindGameObjectWithTag("MapBounds");
 
@@ -93,7 +97,56 @@ namespace Pathfinding
 				{
 					tempResults.Add(GetRandomPointInBounds(bound.bounds));
 				}
-				
+
+				if (awayFromEnemies)
+				{
+					//Add a whole bunch more random points to work with
+					for (int i = 0; i < 12; i++)
+					{
+						foreach (var bound in applicableBounds)
+						{
+							tempResults.Add(GetRandomPointInBounds(bound.bounds));
+						}
+					}
+
+					var allCharacters = GameObject.FindObjectsOfType<ActorStats>();
+
+					var furthestDist = 0.0f;
+					var bestIndex = -1;
+					var bestPosition = Vector2.zero;
+
+					var averagePosition = Vector2.zero;
+					var timesAdded = 0;
+
+					//get average enemy position to weight results against
+					for (int i = 0; i < allCharacters.Length; i++)
+					{
+						if (allCharacters[i].Infected)
+						{
+							averagePosition += (Vector2)allCharacters[i].gameObject.transform.position;
+							timesAdded++;
+						}
+					}
+
+					if (timesAdded > 0)
+					{
+						averagePosition /= timesAdded;
+					}
+
+					foreach (var result in tempResults)
+					{
+						var dist = (averagePosition - result).magnitude;
+
+						if (dist > furthestDist)
+						{
+							furthestDist = dist;
+							bestPosition = result;
+						}
+					}
+
+					return bestPosition;
+				}
+
 				return tempResults[Random.Range(0, tempResults.Count)];
 			}
 

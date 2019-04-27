@@ -66,6 +66,9 @@ public class FlowManager : MonoBehaviour
 	// On a range of 1 - 10
 	public int Difficulty = 5;
 
+	public int NumberOfNeutralEnemies;
+	public int NumberOfHostileEnemies;
+
 	public int RoundTimer = 60;
 
 	#endregion
@@ -149,11 +152,19 @@ public class FlowManager : MonoBehaviour
     }
 
 
-	void SpawnEnemyIn()
+	void SpawnEnemyIn(bool isNeutral = false)
 	{
-		Vector2 vPosition = _spawnerRef.GetSpawnPoint();
-
+		var vPosition = _spawnerRef.GetSpawnPoint();
 		var tempEnemy = (GameObject)Instantiate(EnemyList[Random.Range(0, EnemyList.Count)], vPosition, new Quaternion());
+
+		var tempStats = tempEnemy.GetComponent<ActorStats>();
+
+		if (tempStats)
+		{
+			tempStats.Neutral = isNeutral;
+			tempStats.SetupDifficulty(Difficulty);
+		}
+		
 		_currentEnemies.Add(tempEnemy);
 	}
 
@@ -161,8 +172,11 @@ public class FlowManager : MonoBehaviour
 	{
 		if (EnemyList.Count > 0)
 		{
-			//TODO actual difficulty scaling
-			for (var i = 0; i < Difficulty; i++)
+			for (var i = 0; i < NumberOfNeutralEnemies; i++)
+			{
+				SpawnEnemyIn(true);
+			}
+			for (var i = 0; i < NumberOfHostileEnemies; i++)
 			{
 				SpawnEnemyIn();
 			}
@@ -253,6 +267,11 @@ public class FlowManager : MonoBehaviour
 		_npcManagerRef.SetStartSpawningFriendlies(_playerSpawnPosition);
 
 		_currentState = LevelState.Update;
+
+		foreach (var enemy in _currentEnemies)
+		{
+			enemy.GetComponent<AIController>()?.RespondToPlayerSpawned();
+		}
 	}
 
 	void StateUpdate()

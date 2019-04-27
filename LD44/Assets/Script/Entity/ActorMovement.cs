@@ -11,11 +11,12 @@ public class ActorMovement : MonoBehaviour
 {
 	public Vector2 Direction;
 	public int DirectionFacing = 1; //-1 for Left, 1 for right
-	public float Speed = 2.0f;
+	
 
 	private Rigidbody2D _rigidbodyRef = null;
 	private ActionManager _actionManager = null;
 	private AIController _aiController = null;
+	private ActorStats _statsRef = null;
 
     void Start()
     {
@@ -24,6 +25,9 @@ public class ActorMovement : MonoBehaviour
 
 		_actionManager = GetComponent<ActionManager>();
 		Debug.Assert(_actionManager != null, "Didn't manage to find a ActionManager.");
+
+		_statsRef = GetComponent<ActorStats>();
+		Debug.Assert(_statsRef != null, "Didn't manage to find a ActorStats.");
 
 		_aiController = GetComponent<AIController>();
 
@@ -42,18 +46,18 @@ public class ActorMovement : MonoBehaviour
 		    return;
 	    }
 
-	    var tempSpeed = Speed;
+	    var tempSpeed = _statsRef.MovementSpeed;
 
 	    if (_aiController)
 	    {
 		    if (_aiController.ShouldRunFaster())
 		    {
-			    tempSpeed *= 2;
+			    tempSpeed *= 1.5f;
 
 		    }
 	    }
 
-		_rigidbodyRef.velocity = Direction * Speed;
+		_rigidbodyRef.velocity = Direction * tempSpeed;
 
 		if (Direction.x != 0.0f)
 		{

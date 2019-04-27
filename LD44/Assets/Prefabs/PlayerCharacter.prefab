@@ -120,7 +120,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Direction: {x: 0, y: 0}
   DirectionFacing: 0
-  Speed: 0.85
 --- !u!61 &1390341794798836558
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -189,7 +188,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   Damage: 20
+  MovementSpeed: 1
   AttackSpeed: 0.25
+  AttackRange: 0.4
   InfectionSpeed: 5
-  Infected: 0
+  Infected: 1
+  Neutral: 0
   BeingInfectedBy: {fileID: 0}
