@@ -35,14 +35,15 @@ public class PlayerController : MonoBehaviour
 			//_actionRef.ToggleAttackMode();
 		}
 
-		if (Input.GetKeyDown(KeyCode.E))
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
+			//TODO Player attack should find the nearest enemy, not just a attack on a adjacent square
 			_actionRef.DoAction(ActionManager.ActionType.Attack);
 		}
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			_actionRef.DoAction(ActionManager.ActionType.Dash);
+			//_actionRef.DoAction(ActionManager.ActionType.Dash);
 		}
 	}
 }

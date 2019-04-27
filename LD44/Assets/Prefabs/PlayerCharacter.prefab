@@ -120,7 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Direction: {x: 0, y: 0}
   DirectionFacing: 0
-  Speed: 2
+  Speed: 0.85
 --- !u!61 &1390341794798836558
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -174,6 +174,7 @@ MonoBehaviour:
   AttackQueryPrefab: {fileID: 7747949484712415893, guid: e023620c08555324188d18e099c5f4c7,
     type: 3}
   CurrentAttack: 1
+  TargetLocationForAction: {x: 0, y: 0}
 --- !u!114 &8736139691342441652
 MonoBehaviour:
   m_ObjectHideFlags: 0

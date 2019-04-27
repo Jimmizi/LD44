@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/BetweenStagesScene.unity
     guid: 213abdc86ce6f3549bfd6997556bd8cb
   - enabled: 1
-    path: Assets/Scenes/Game Levels/FirstScene.unity
+    path: Assets/Scenes/Game Levels/BaseLevel.unity
     guid: f7bf7fc804e92374092948a700784b93
   m_configObjects: {}

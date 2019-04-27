@@ -23,7 +23,7 @@ public class AIController : MonoBehaviour
 		Panic			//Erratic wander
 	}
 
-	private AITask _currentTask = AITask.Wander;
+	public AITask CurrentTask = AITask.Wander;
 
 	private ActorMovement _moverRef = null;
 	private ActionManager _actionRef = null;
@@ -44,7 +44,24 @@ public class AIController : MonoBehaviour
 
 	public bool ShouldRunFaster()
 	{
-		return _currentTask == AITask.Panic;
+		return CurrentTask == AITask.Panic;
+	}
+
+	public void SetDesiredAttackType(ActionManager.AttackType newType)
+	{
+		//TODO perhaps redo this?
+		//Not caring about a proper way to do this right now, just randomise whether the character takes this new type
+
+		//30% of your bodies will ignore your change attack priority order
+		if (Random.Range(0, 101) < 30)
+		{
+			return;
+		}
+
+		if (GetComponent<ActionManager>())
+		{
+			GetComponent<ActionManager>().CurrentAttack = newType;
+		}
 	}
 
     void Start()
@@ -74,7 +91,7 @@ public class AIController : MonoBehaviour
 			return;
 	    }
 
-		switch (_currentTask)
+		switch (CurrentTask)
 		{
 			case AITask.Wander:
 			case AITask.Panic:

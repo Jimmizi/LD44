@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f5ff6ccbb698a543b6dbb41109ecb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentTask: 0
 --- !u!1001 &6208273945129549640
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19,20 +20,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -8990057955013956940, guid: 6daae1d9d9b0c634a828368c2ad46646,
-        type: 3}
-      propertyPath: CurrentAttack
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: m_Name
-      value: AiCharacter
+      value: FriendlyCharacter
       objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: TeamPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8736139691342441652, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: Infected
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6910d0e63399e594987ce04a6b4bd58c,
+        type: 3}
+    - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836558, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836559, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
@@ -89,31 +111,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 76094bb0cd742fb40b765647791ac071,
-        type: 3}
-    - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836562, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: Speed
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1390341794798836558, guid: 6daae1d9d9b0c634a828368c2ad46646,
+    - target: {fileID: -8990057955013956940, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
+      propertyPath: CurrentAttack
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1390341794798836553, guid: 6daae1d9d9b0c634a828368c2ad46646, type: 3}

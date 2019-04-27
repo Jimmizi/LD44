@@ -8,6 +8,8 @@ TagManager:
   - FriendlySpawn
   - Manager_Spawnpoints
   - MapBounds
+  - TeamPlayer
+  - TeamEnemy
   layers:
   - Default
   - TransparentFX

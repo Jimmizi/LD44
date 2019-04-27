@@ -57,12 +57,16 @@ public class FlowManager : MonoBehaviour
 	/// </summary>
 	public Text GameObjectiveText;
 
+	public Text RoundTimerText;
+
 	#endregion
 
 	#region Tuning
 
 	// On a range of 1 - 10
 	public int Difficulty = 5;
+
+	public int RoundTimer = 60;
 
 	#endregion
 
@@ -87,7 +91,7 @@ public class FlowManager : MonoBehaviour
 
 	private Vector2 _playerSpawnPosition;
 	private float _objectiveTextToGameplayDuration;
-
+	private float _timeSinceRoundStart;
 	private LevelState _currentState;
 	
 
@@ -97,6 +101,8 @@ public class FlowManager : MonoBehaviour
 	    _spawnerRef = GameObject.FindGameObjectWithTag("Manager_Spawnpoints")?.GetComponent<SpawnpointFinder>();
 		_mainCameraRef = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<Camera>();
 		_npcManagerRef = GetComponent<FriendlyNPCManager>();
+
+		RoundTimerText.gameObject.SetActive(false);
 
 		Debug.Assert(_spawnerRef != null, "Did not have a spawner in the level.");
 		Debug.Assert(_mainCameraRef != null, "Did not have a camera in the level.");
@@ -211,7 +217,7 @@ public class FlowManager : MonoBehaviour
 			{
 				//Take the current position of the target for where the player spawns
 				_playerSpawnPosition = _currentSpawnTarget.transform.position;
-
+				
 				//Unassign the camera
 				AssignCameraToFollow(null);
 
@@ -240,9 +246,11 @@ public class FlowManager : MonoBehaviour
 		//TODO Extra player init here (HUD, extra bodies)
 
 		GameObjectiveText.text = "Survive.";
+		RoundTimerText.gameObject.SetActive(true);
 		_objectiveTextToGameplayDuration = OBJECTIVE_TEXT_ROUND_START_DURATION_TIME;
 
 		_npcManagerRef.SetButtonActive();
+		_npcManagerRef.SetStartSpawningFriendlies(_playerSpawnPosition);
 
 		_currentState = LevelState.Update;
 	}
@@ -264,8 +272,15 @@ public class FlowManager : MonoBehaviour
 			SetObjectiveTextAlpha(0.0f);
 		}
 
+		_timeSinceRoundStart += Time.deltaTime;
 
+		if (_timeSinceRoundStart >= RoundTimer)
+		{
+			_timeSinceRoundStart = RoundTimer;
+			_currentState = LevelState.StageOver;
+		}
 
+		RoundTimerText.text = (RoundTimer - (int) _timeSinceRoundStart).ToString();
 
 #if UNITY_EDITOR
 		if (Input.GetKeyDown(KeyCode.F1))

@@ -38,7 +38,7 @@ namespace Pathfinding
 	        );
         }
 
-        public bool IsPointWithinPlayableArea(Vector2 testPoint)
+        public bool IsPointWithinPlayableArea(Vector2 testPoint, bool testNotOnCharacter = false)
         {
 	        var boundsGameObject = GameObject.FindGameObjectWithTag("MapBounds");
 
@@ -54,6 +54,16 @@ namespace Pathfinding
 			        {
 				        containedWithinABounds = true;
 				        break;
+			        }
+		        }
+
+		        if (testNotOnCharacter)
+		        {
+			        var allCharacters = GameObject.FindObjectsOfType<ActorStats>();
+
+			        if (allCharacters.Any(actor => ((Vector2) actor.gameObject.transform.position - testPoint).magnitude <= 0.2f))
+			        {
+				        return false;
 			        }
 		        }
 
