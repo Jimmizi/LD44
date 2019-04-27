@@ -29,11 +29,13 @@ public class PermanentUpgradeManager : MonoBehaviour
     public static void UpgradePermanent(Upgrade upgrade)
     {        
         upgrade.stage++;      
-        //GameManager.cells -= UpgradeCost(upgrades[upgrade]);
+        GameManager.cells -= UpgradeCost(upgrade.stage);
     }
+
+    private const int upgradeCostMutiplier = 2;
 
     public static int UpgradeCost(int stage)
     {
-        return stage * 5;
+        return stage * upgradeCostMutiplier;
     }
 }
