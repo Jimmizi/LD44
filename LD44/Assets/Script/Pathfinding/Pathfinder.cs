@@ -22,8 +22,7 @@ namespace Pathfinding
         private GridGenerator _gridGenerator;
         private List<Node> _foundPath;
         private PathfinderManager.PathfindingComplete _callback;
-        
-        
+		
 
         public Pathfinder(Vector3 startPosition, Vector3 targetPosition, PathfinderManager.PathfindingComplete callback = null)
         {

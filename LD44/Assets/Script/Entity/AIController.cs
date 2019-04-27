@@ -23,7 +23,7 @@ public class AIController : MonoBehaviour
 		Panic			//Erratic wander
 	}
 
-	private AITask _currentTask = AITask.AttackTarget;
+	private AITask _currentTask = AITask.Wander;
 
 	private ActorMovement _moverRef = null;
 	private ActionManager _actionRef = null;

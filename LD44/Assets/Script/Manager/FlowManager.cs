@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -201,24 +202,28 @@ public class FlowManager : MonoBehaviour
 		if (Input.GetMouseButtonDown(0) && CurrentPlayerGameObject)
 		{
 			//TODO Valid position check
-			
-			//Take the current position of the target for where the player spawns
-			_playerSpawnPosition = _currentSpawnTarget.transform.position;
 
-			//Unassign the camera
-			AssignCameraToFollow(null);
-
-			if (_currentSpawnTarget)
+			var tempPathfinder = GameObject.FindObjectOfType<PathfinderManager>();
+			if (tempPathfinder == null || tempPathfinder.IsPointWithinPlayableArea(_currentSpawnTarget.transform.position))
 			{
-				Destroy(_currentSpawnTarget);
-			}
-			
-			if (_currentDummyPlayer)
-			{
-				Destroy(_currentDummyPlayer);
-			}
+				//Take the current position of the target for where the player spawns
+				_playerSpawnPosition = _currentSpawnTarget.transform.position;
 
-			_currentState = LevelState.PlayerInit;
+				//Unassign the camera
+				AssignCameraToFollow(null);
+
+				if (_currentSpawnTarget)
+				{
+					Destroy(_currentSpawnTarget);
+				}
+
+				if (_currentDummyPlayer)
+				{
+					Destroy(_currentDummyPlayer);
+				}
+
+				_currentState = LevelState.PlayerInit;
+			}
 		}
 	}
 

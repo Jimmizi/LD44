@@ -38,6 +38,37 @@ namespace Pathfinding
 	        );
         }
 
+        public bool IsPointWithinPlayableArea(Vector2 testPoint)
+        {
+	        var boundsGameObject = GameObject.FindGameObjectWithTag("MapBounds");
+
+	        if (boundsGameObject)
+	        {
+		        var applicableBounds = boundsGameObject.GetComponents<BoxCollider2D>();
+		        List<Vector2> tempResults = new List<Vector2>();
+		        bool containedWithinABounds = false;
+
+		        foreach (var bound in applicableBounds)
+		        {
+			        if (bound.bounds.Contains(testPoint))
+			        {
+				        containedWithinABounds = true;
+				        break;
+			        }
+		        }
+
+		        if (containedWithinABounds)
+		        {
+			        var tempNode = GridGenerator.GetInstance().NodeFromWorldPosition(testPoint);
+
+			        return (tempNode != null && !tempNode.obstructed);
+		        }
+
+	        }
+
+	        return false;
+        }
+
 
 		public Vector2 GetRandomPointInBounds()
 		{
