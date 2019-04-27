@@ -31,7 +31,9 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
             upgrade.upgradeObject.GetCompomentWithName<Text>("StageText").text = "stage\n" + upgrade.stage;
 
             // sets interactibility of upgrade button
-            upgrade.upgradeObject.GetComponentInChildren<Button>().interactable = PermanentUpgradeManager.UpgradeCost(upgrade.stage) <= cells;
+            Button upgradeButton = upgrade.upgradeObject.GetComponentInChildren<Button>();
+            upgradeButton.interactable = PermanentUpgradeManager.UpgradeCost(upgrade.stage) <= cells;
+            upgradeButton.GetComponentInChildren<Text>().text = "Upgrade\n<" + PermanentUpgradeManager.UpgradeCost(upgrade.stage) + '>';
         }
 
         cellsCounter.text = cells.ToString(); // sets cell counter
@@ -45,7 +47,6 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
             return;
 
         upgrade.stage++;
-        upgrade.upgradeObject.GetCompomentWithName<Text>("StageText").text = upgrade.stage.ToString();
 
         GameManager.InfectedCellsCount -= PermanentUpgradeManager.UpgradeCost(upgrade.stage);
 

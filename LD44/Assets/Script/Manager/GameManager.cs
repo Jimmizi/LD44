@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static int InfectedCellsCount
     {
         get { return _infectedCellsCount; }
-        set { DestroyCells(value); _infectedCellsCount = value; }
+        set { DestroyCells(_infectedCellsCount - value); _infectedCellsCount = value; }
     }
 
     public static LevelManager levelManager;
@@ -35,18 +35,24 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Desctroys specific amount of cells (GameObjects in infectedCells array)
+    /// Desctroys specific amount of infected cells
     /// </summary>
     /// <param name="amount">Number of cells to destroy</param>
     private static void DestroyCells(int amount)
     {
-        List<GameObject> infectedCells = FindObjectsOfType<ActorStats>().Where(x => x.Infected).Select(x => x.gameObject).ToList();
+        if (amount <= 0)
+            return;
+
+        // get list of all infected cells except of one controlled by a player
+        List<GameObject> infectedCells = FindObjectsOfType<ActorStats>().
+                                         Where(x => x.Infected && x.gameObject.GetComponent<PlayerController>() == null).
+                                         Select(x => x.gameObject).ToList();
 
         for (int i = 0; i < amount; i++)
         {
             int index = Random.Range(0, infectedCells.Count);
 
-            Destroy(infectedCells[index]);
+            KillCell(infectedCells[index]);
         }
     }
 

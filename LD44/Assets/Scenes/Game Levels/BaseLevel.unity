@@ -1395,7 +1395,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1798466294}
     - target: {fileID: 6170334965237978709, guid: 797da496c2d5b5c418f5e4ae773408f1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -2787,7 +2787,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1798466294}
     - target: {fileID: 6170334965237978709, guid: 797da496c2d5b5c418f5e4ae773408f1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -3479,7 +3479,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1798466294}
     - target: {fileID: 6170334965237978709, guid: 797da496c2d5b5c418f5e4ae773408f1,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -4320,8 +4320,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FriendlyNPCPrefab: {fileID: 4999915037488276507, guid: 1d9b1ad56c3c59a4881b01676c74a0cb,
     type: 3}
-  PreferredTypeText: {fileID: 611513214}
   FriendliesList: []
+  FriendlyAttackTypeText: {fileID: 0}
 --- !u!4 &1848686569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,

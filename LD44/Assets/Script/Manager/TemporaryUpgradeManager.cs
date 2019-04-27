@@ -37,8 +37,10 @@ public class TemporaryUpgradeManager : MonoBehaviour
             // sets "stage x" text
             upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("StageText").text = "stage\n" + upgrade.temporaryStage;
 
-            // sets interactibility of upgrade button
-            upgrade.temporaryUpgradeObject.GetComponentInChildren<Button>().interactable = UpgradeCost(upgrade.temporaryStage) <= cells;
+            // sets interactibility and text of upgrade button
+            Button upgradeButton = upgrade.temporaryUpgradeObject.GetComponentInChildren<Button>();
+            upgradeButton.interactable = UpgradeCost(upgrade.temporaryStage) <= cells;
+            upgradeButton.GetComponentInChildren<Text>().text = "Upgrade\n<" + UpgradeCost(upgrade.temporaryStage) + '>';
         }
 
         cellsCounter.text = cells.ToString(); // sets cell counter
@@ -52,7 +54,6 @@ public class TemporaryUpgradeManager : MonoBehaviour
             return;
 
         upgrade.temporaryStage++;
-        upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("StageText").text = upgrade.temporaryStage.ToString();
 
         GameManager.InfectedCellsCount -= UpgradeCost(upgrade.temporaryStage);
 
