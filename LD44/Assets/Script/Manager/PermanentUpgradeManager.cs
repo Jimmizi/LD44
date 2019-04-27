@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
@@ -10,9 +11,10 @@ public class PermanentUpgradeManager : MonoBehaviour
 
     public static Upgrade[] upgrades;
 
-    void Start()
+    void Awake()
     {
-        DontDestroyOnLoad(this);
+        if (damageUpgrade != null)
+            return;
 
         damageUpgrade = new Upgrade();
         HPUpgrade = new Upgrade();
@@ -26,10 +28,9 @@ public class PermanentUpgradeManager : MonoBehaviour
         };
     }
 
-    public static void UpgradePermanent(Upgrade upgrade)
-    {        
-        upgrade.stage++;      
-        GameManager.cells -= UpgradeCost(upgrade.stage);
+    void Start()
+    {
+        DontDestroyOnLoad(this);
     }
 
     private const int upgradeCostMutiplier = 2;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,42 +13,43 @@ public class TemporaryUpgradeManager : MonoBehaviour
 
     public Text cellsCounter;
 
-    void Awake()
+    void Start()
     {
         PermanentUpgradeManager.damageUpgrade.temporaryUpgradeObject = damageUpgradeObject;
         PermanentUpgradeManager.HPUpgrade.temporaryUpgradeObject = HPUpgradeObject;
         PermanentUpgradeManager.cloningUpgrade.temporaryUpgradeObject = cloningUpgradeObject;
-    }
 
-    void Start()
-    {
         // reset temporary stage to default value (equal to normal stage)
         foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
             upgrade.temporaryStage = upgrade.stage;
 
-        SetUpGUI(GameManager.cells);
+        SetUpGUI(GameManager.InfectedCellsCount);
     }
 
-    void SetUpGUI(int cells)
+    private void SetUpGUI(int cells)
     {
         foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
         {
             // sets "stage x" text
-            upgrade.temporaryUpgradeObject.transform.Find("StageText").GetComponent<Text>().text = "stage\n" + upgrade.stage;
+            upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("StageText").text = "stage\n" + upgrade.temporaryStage;
 
             // sets interactibility of upgrade button
-            upgrade.temporaryUpgradeObject.GetComponent<Button>().interactable = UpgradeCost(upgrade.stage) <= cells;
+            upgrade.temporaryUpgradeObject.GetComponentInChildren<Button>().interactable = UpgradeCost(upgrade.temporaryStage) <= cells;
         }
 
         cellsCounter.text = cells.ToString(); // sets cell counter
     }
 
-    public void UpgradeTemporary(Upgrade upgrade)
+    public void UpgradeTemporary(GameObject upgradeObject)
     {
-        upgrade.temporaryStage++;
-        GameManager.cells -= UpgradeCost(upgrade.temporaryStage);
+        Upgrade upgrade = PermanentUpgradeManager.upgrades.First(x => x.temporaryUpgradeObject == upgradeObject);
 
-        SetUpGUI(GameManager.cells);
+        upgrade.temporaryStage++;
+        upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("StageText").text = upgrade.temporaryStage.ToString();
+
+        GameManager.InfectedCellsCount -= UpgradeCost(upgrade.temporaryStage);
+
+        SetUpGUI(GameManager.InfectedCellsCount);
     }
 
     private const int upgradeCostMutiplier = 1;
