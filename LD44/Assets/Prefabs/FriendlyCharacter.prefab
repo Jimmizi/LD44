@@ -28,7 +28,7 @@ PrefabInstance:
     - target: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: m_TagString
-      value: TeamPlayer
+      value: TeamFriendly
       objectReference: {fileID: 0}
     - target: {fileID: 8736139691342441652, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}

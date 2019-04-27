@@ -8,8 +8,11 @@ TagManager:
   - FriendlySpawn
   - Manager_Spawnpoints
   - MapBounds
-  - TeamPlayer
+  - MainUICanvas
+  - GameOverCanvas
+  - PauseMenuCanvas
   - TeamEnemy
+  - TeamFriendly
   layers:
   - Default
   - TransparentFX
