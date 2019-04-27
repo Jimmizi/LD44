@@ -22,7 +22,7 @@ PrefabInstance:
     - target: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: m_Name
-      value: Character Variant
+      value: AiCharacter
       objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836559, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
@@ -88,6 +88,21 @@ PrefabInstance:
     - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836562, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: Speed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836558, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:

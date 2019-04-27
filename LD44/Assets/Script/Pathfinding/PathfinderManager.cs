@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Pathfinding;
 using UnityEngine;
@@ -27,7 +28,37 @@ namespace Pathfinding
             _queue = new List<Pathfinder>();
 
         }
-    
+
+        private Vector3 GetRandomPointInBounds(Bounds bounds)
+        {
+	        return new Vector3(
+		        Random.Range(bounds.min.x, bounds.max.x),
+		        Random.Range(bounds.min.y, bounds.max.y),
+		        Random.Range(bounds.min.z, bounds.max.z)
+	        );
+        }
+
+
+		public Vector2 GetRandomPointInBounds()
+		{
+			var boundsGameObject = GameObject.FindGameObjectWithTag("MapBounds");
+
+			if (boundsGameObject)
+			{
+				var applicableBounds = boundsGameObject.GetComponents<BoxCollider2D>();
+				List<Vector2> tempResults = new List<Vector2>();
+
+				foreach (var bound in applicableBounds)
+				{
+					tempResults.Add(GetRandomPointInBounds(bound.bounds));
+				}
+				
+				return tempResults[Random.Range(0, tempResults.Count)];
+			}
+
+			return new Vector2(0.0f, 0.0f);
+		}
+
         // TODO: Temporary
         private void TestCallback(List<Node> path)
         {
@@ -47,7 +78,7 @@ namespace Pathfinding
             // TODO: Temporary
             if (Input.GetKeyDown("space"))
             {
-                RequestPathfind(new Vector3(0, 0, 0), new Vector3(6, 6, 0), TestCallback);
+                RequestPathfind(new Vector3(-1.4f, 0, 0), new Vector3(1.0f, -0.5f, 0), TestCallback);
             }
 
 
