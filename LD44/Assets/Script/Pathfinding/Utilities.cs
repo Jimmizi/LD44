@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Pathfinding
 {
+    
+    /// <summary>
+    /// Utilities and helpers for pathfinding.
+    /// </summary>
 
     public static class Utilities
     {

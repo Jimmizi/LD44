@@ -7,18 +7,22 @@ using UnityEngine;
 namespace Pathfinding
 {
 
+    /// <summary>
+    /// Manages all pathfinding requests. Dispatches work concurrently.
+    /// </summary>
+
     public class PathfinderManager : MonoBehaviour
     {
 
         public int maxThreads = 3;
 
-        private List<Pathfinder> jobs;
-        private List<Pathfinder> queue;
+        private List<Pathfinder> _jobs;
+        private List<Pathfinder> _queue;
 
         void Start()
         {
-            jobs = new List<Pathfinder>();
-            queue = new List<Pathfinder>();
+            _jobs = new List<Pathfinder>();
+            _queue = new List<Pathfinder>();
 
         }
 
@@ -34,11 +38,11 @@ namespace Pathfinding
 
             int i = 0;
 
-            while (i < jobs.Count)
+            while (i < _jobs.Count)
             {
-                if (jobs[i].done)
+                if (_jobs[i].done)
                 {
-                    jobs.RemoveAt(i);
+                    _jobs.RemoveAt(i);
                 }
                 else
                 {
@@ -46,11 +50,11 @@ namespace Pathfinding
                 }
             }
 
-            if (queue.Count > 0 && jobs.Count < maxThreads)
+            if (_queue.Count > 0 && _jobs.Count < maxThreads)
             {
-                Pathfinder finder = queue[0];
-                queue.RemoveAt(0);
-                jobs.Add(finder);
+                Pathfinder finder = _queue[0];
+                _queue.RemoveAt(0);
+                _jobs.Add(finder);
 
                 Thread thread = new Thread(finder.FindPath);
                 thread.Start();
@@ -68,21 +72,21 @@ namespace Pathfinding
         public void RequestPathfind(Vector3 start, Vector3 target)
         {
             Pathfinder finder = new Pathfinder(start, target);
-            queue.Add(finder);
+            _queue.Add(finder);
         }
 
 
         // Singleton
-        private static PathfinderManager instance;
+        private static PathfinderManager _instance;
 
         void Awake()
         {
-            instance = this;
+            _instance = this;
         }
 
         public static PathfinderManager GetInstance()
         {
-            return instance;
+            return _instance;
         }
     }
 }
