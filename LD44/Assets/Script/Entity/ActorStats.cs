@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStats : MonoBehaviour
+public class ActorStats : MonoBehaviour
 {
 	/// <summary>
 	/// How much health does this character have left?
