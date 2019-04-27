@@ -8,6 +8,9 @@ TagManager:
   - FriendlySpawn
   - Manager_Spawnpoints
   - MapBounds
+  - MainUICanvas
+  - GameOverCanvas
+  - PauseMenuCanvas
   layers:
   - Default
   - TransparentFX

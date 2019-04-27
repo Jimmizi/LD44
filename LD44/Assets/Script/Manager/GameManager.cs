@@ -24,6 +24,14 @@ public class GameManager : MonoBehaviour
         random = new Random();
     }
 
+    void Update()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            levelManager.PauseUnpause();
+        }
+    }
+
     /// <summary>
     /// Desctroys specific amount of cells (GameObjects in infectedCells array)
     /// </summary>

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    private GameObject gameOverCanvas;
     private GameObject mainCanvas;
+    private GameObject gameOverCanvas;
+    private GameObject pauseMenuCanvas;
+
+    public bool paused;
 
     void Start()
     {
@@ -13,9 +16,11 @@ public class LevelManager : MonoBehaviour
 
         mainCanvas = GameObject.FindWithTag("MainUICanvas");
         gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
+        pauseMenuCanvas = GameObject.FindWithTag("PauseMenuCanvas");
 
         mainCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
+        pauseMenuCanvas.SetActive(false);
     }
 
     public void GameOver()
@@ -24,5 +29,33 @@ public class LevelManager : MonoBehaviour
         gameOverCanvas.SetActive(true);
 
         Time.timeScale = 0;
+    }
+
+    public void Pause()
+    {
+        mainCanvas.SetActive(false);
+        pauseMenuCanvas.SetActive(true);
+
+        Time.timeScale = 0;
+
+        paused = true;
+    }
+
+    public void Unpause()
+    {
+        mainCanvas.SetActive(true);
+        pauseMenuCanvas.SetActive(false);
+
+        Time.timeScale = 1;
+
+        paused = false;
+    }
+
+    public void PauseUnpause()
+    {
+        if (paused)
+            Unpause();
+        else
+            Pause();
     }
 }
