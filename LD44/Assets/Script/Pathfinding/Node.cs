@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace Pathfinding
 {
+    
+    /// <summary>
+    /// Represents a node in a regular grid of nodes used in pathfinding.
+    /// </summary>
+
     public class Node
     {
 

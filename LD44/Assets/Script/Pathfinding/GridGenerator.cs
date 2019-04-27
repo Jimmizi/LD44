@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 namespace Pathfinding
 {
+    
+    /// <summary>
+    /// Generates grid to apply pathfinding on.
+    /// </summary>
+
     public class GridGenerator : MonoBehaviour
     {
 
@@ -17,41 +25,41 @@ namespace Pathfinding
         
         public List<Node> finalPath;
 
-        private Node[,] nodes;
-        private float nodeDiameter;
-        private int sizeX;
-        private int sizeY;
+        private Node[,] _nodes;
+        private float _nodeDiameter;
+        private int _sizeX;
+        private int _sizeY;
 
 
         private void Start()
         {
-            nodeDiameter = nodeRadius * 2;
-            sizeX = Mathf.RoundToInt(gridSize.x / nodeDiameter);
-            sizeY = Mathf.RoundToInt(gridSize.y / nodeDiameter);
+            _nodeDiameter = nodeRadius * 2;
+            _sizeX = Mathf.RoundToInt(gridSize.x / _nodeDiameter);
+            _sizeY = Mathf.RoundToInt(gridSize.y / _nodeDiameter);
             Generate();
         }
 
         private void Generate()
         {
-            nodes = new Node[sizeX, sizeY];
+            _nodes = new Node[_sizeX, _sizeY];
 
             Vector3 bottomLeft = transform.position - 
                                  Vector3.right * gridSize.x * 0.5f - 
                                  Vector3.up * gridSize.y * 0.5f;
             
-            for (int x = 0; x < sizeX; x++)
+            for (int x = 0; x < _sizeX; x++)
             {
-                for (int y = 0; y < sizeY; y++)
+                for (int y = 0; y < _sizeY; y++)
                 {
                     Vector3 worldPoint3 = bottomLeft + 
-                        Vector3.right * (x * nodeDiameter + nodeRadius) + 
-                        Vector3.up * (y * nodeDiameter + nodeRadius);
+                        Vector3.right * (x * _nodeDiameter + nodeRadius) + 
+                        Vector3.up * (y * _nodeDiameter + nodeRadius);
                     
                     Vector2 worldPoint2 = new Vector2(worldPoint3.x, worldPoint3.y);
 
                     bool obstructed = (Physics2D.OverlapCircle(worldPoint2, nodeRadius, obstaclesMask) != null);
                     
-                    nodes[x, y] = new Node(obstructed, worldPoint3, x, y);
+                    _nodes[x, y] = new Node(obstructed, worldPoint3, x, y);
                 }
             }
         }
@@ -64,10 +72,10 @@ namespace Pathfinding
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    if ((node.x + i) >= 0 && (node.x + i) < sizeX &&
-                        (node.y + j) >= 0 && (node.y + j) < sizeY)
+                    if ((node.x + i) >= 0 && (node.x + i) < _sizeX &&
+                        (node.y + j) >= 0 && (node.y + j) < _sizeY)
                     {
-                        neighbours.Add(nodes[node.x + i, node.y + j]);
+                        neighbours.Add(_nodes[node.x + i, node.y + j]);
                     }
                 }
             }
@@ -81,15 +89,15 @@ namespace Pathfinding
             float fx = Mathf.Clamp01((worldPosition.x + gridSize.x * 0.5f) / gridSize.x);
             float fy = Mathf.Clamp01((worldPosition.y + gridSize.y * 0.5f) / gridSize.y);
 
-            int ix = Mathf.RoundToInt((sizeX - 1) * fx);
-            int iy = Mathf.RoundToInt((sizeY - 1) * fy);
+            int ix = Mathf.RoundToInt((_sizeX - 1) * fx);
+            int iy = Mathf.RoundToInt((_sizeY - 1) * fy);
 
             ix = (ix < 0) ? 0 : ix;
-            ix = (ix >= sizeX) ? (sizeX - 1) : ix;
+            ix = (ix >= _sizeX) ? (_sizeX - 1) : ix;
             iy = (iy < 0) ? 0 : iy;
-            iy = (iy >= sizeY) ? (sizeY - 1) : iy;
+            iy = (iy >= _sizeY) ? (_sizeY - 1) : iy;
             
-            return nodes[ix, iy];
+            return _nodes[ix, iy];
         }
 
 
@@ -98,9 +106,9 @@ namespace Pathfinding
 
             Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, gridSize.y, 1));
 
-            if (nodes != null)
+            if (_nodes != null)
             {
-                foreach (Node n in nodes)
+                foreach (Node n in _nodes)
                 {
                     if (n.obstructed)
                     {
@@ -127,21 +135,22 @@ namespace Pathfinding
                         Gizmos.color = Color.red;
                     }
 
-                    Utilities.drawRectangle(n.position, Vector2.one * (nodeDiameter - nodeSpacing));
+                    Utilities.drawRectangle(n.position, Vector2.one * (_nodeDiameter - nodeSpacing));
                 }
             }
         }
         
         // Singleton
-        public static GridGenerator instance;
+        private static GridGenerator _instance;
+        
         public static GridGenerator GetInstance()
         {
-            return instance;
+            return _instance;
         }
 
         void Awake()
         {
-            instance = this;
+            _instance = this;
         }
     }
 

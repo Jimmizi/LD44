@@ -5,6 +5,11 @@ using UnityEngine.Analytics;
 
 namespace Pathfinding
 {
+    
+    /// <summary>
+    /// Performs optimal path search algorithm (A*) on a grid
+    /// provided by the GridGenerator singleton.
+    /// </summary>
 
     public class Pathfinder
     {
@@ -14,29 +19,29 @@ namespace Pathfinding
         
         public volatile bool done = false;
         
-        private GridGenerator gridGenerator;
-        private List<Node> foundPath;
+        private GridGenerator _gridGenerator;
+        private List<Node> _foundPath;
         
         
 
         public Pathfinder(Vector3 startPosition, Vector3 targetPosition)
         {
-            gridGenerator = GridGenerator.GetInstance();
-            gridGenerator.startPosition = startPosition;
-            gridGenerator.endPosition = targetPosition;
+            _gridGenerator = GridGenerator.GetInstance();
+            _gridGenerator.startPosition = startPosition;
+            _gridGenerator.endPosition = targetPosition;
             
-            start = gridGenerator.NodeFromWorldPosition(startPosition);
-            target = gridGenerator.NodeFromWorldPosition(targetPosition);
+            start = _gridGenerator.NodeFromWorldPosition(startPosition);
+            target = _gridGenerator.NodeFromWorldPosition(targetPosition);
         }
 
         public void FindPath()
         {
-            foundPath = AStar(start, target);
+            _foundPath = AStar(start, target);
             done = true;
 
-            if (foundPath != null)
+            if (_foundPath != null)
             {
-                gridGenerator.finalPath = foundPath;
+                _gridGenerator.finalPath = _foundPath;
             }
         }
 
@@ -74,7 +79,7 @@ namespace Pathfinding
                     return Backtrace(start, current);
                 }
 
-                foreach (Node neighbour in gridGenerator.GetNeighbours(current))
+                foreach (Node neighbour in _gridGenerator.GetNeighbours(current))
                 {
                     if (neighbour.obstructed || closedSet.Contains(neighbour))
                     {
