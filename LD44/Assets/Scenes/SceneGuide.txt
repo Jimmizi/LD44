@@ -1,0 +1,3 @@
+MenuScene: The first scene in the game, the menu.
+
+BetweenStagesScene: The scene we go to after having completed a stage. Basically the stats/upgrade scene.
