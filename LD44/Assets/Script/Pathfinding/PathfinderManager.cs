@@ -15,6 +15,8 @@ namespace Pathfinding
     {
 
         public int maxThreads = 3;
+        
+        public delegate void PathfindingComplete(List<Node> path);
 
         private List<Pathfinder> _jobs;
         private List<Pathfinder> _queue;
@@ -25,14 +27,27 @@ namespace Pathfinding
             _queue = new List<Pathfinder>();
 
         }
-
+    
+        // TODO: Temporary
+        private void TestCallback(List<Node> path)
+        {
+            if (path != null)
+            {
+                Debug.Log("Path found.");
+            }
+            else
+            {
+                Debug.Log("Path not found.");
+            }
+        }
+        
         void Update()
         {
 
             // TODO: Temporary
             if (Input.GetKeyDown("space"))
             {
-                RequestPathfind(new Vector3(0, 0, 0), new Vector3(6, 6, 0));
+                RequestPathfind(new Vector3(0, 0, 0), new Vector3(6, 6, 0), TestCallback);
             }
 
 
@@ -42,6 +57,7 @@ namespace Pathfinding
             {
                 if (_jobs[i].done)
                 {
+                    _jobs[i].NotifyComplete();
                     _jobs.RemoveAt(i);
                 }
                 else
@@ -69,9 +85,9 @@ namespace Pathfinding
 
         }
 
-        public void RequestPathfind(Vector3 start, Vector3 target)
+        public void RequestPathfind(Vector3 start, Vector3 target, PathfindingComplete callback)
         {
-            Pathfinder finder = new Pathfinder(start, target);
+            Pathfinder finder = new Pathfinder(start, target, callback);
             _queue.Add(finder);
         }
 

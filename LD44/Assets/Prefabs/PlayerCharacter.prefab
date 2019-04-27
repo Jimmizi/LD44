@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackQueryPrefab: {fileID: 7747949484712415893, guid: e023620c08555324188d18e099c5f4c7,
     type: 3}
-  CurrentAttack: 0
+  CurrentAttack: 1
 --- !u!114 &8736139691342441652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,3 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd6486d5ee06644ca500d14790bd79b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  Damage: 20
+  AttackSpeed: 0.25
+  InfectionSpeed: 5
+  Infected: 0
