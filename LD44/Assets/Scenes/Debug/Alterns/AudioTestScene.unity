@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tempo: 20
-  _subdivisions: 4
+  _subdivisions: 1
 --- !u!4 &225937013
 Transform:
   m_ObjectHideFlags: 0
