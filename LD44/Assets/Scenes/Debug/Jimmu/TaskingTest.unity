@@ -2453,9 +2453,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FriendlyNPCPrefab: {fileID: 4999915037488276507, guid: 1d9b1ad56c3c59a4881b01676c74a0cb,
     type: 3}
-  PreferredTypeText: {fileID: 0}
   FriendliesList: []
-  FriendlyAttackTypeText: {fileID: 0}
+  FriendlyAttackTypeText: {fileID: 1860110804}
 --- !u!4 &1848686569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
@@ -3098,7 +3097,7 @@ PrefabInstance:
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
       propertyPath: NumberOfHostileEnemies
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc2d04ad753996e4e89f1351d01a66a5, type: 3}
