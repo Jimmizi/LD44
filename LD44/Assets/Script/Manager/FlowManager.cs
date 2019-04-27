@@ -81,6 +81,7 @@ public class FlowManager : MonoBehaviour
 
 	private Camera _mainCameraRef = null;
 	private SpawnpointFinder _spawnerRef = null;
+	private FriendlyNPCManager _npcManagerRef = null;
 
 	#endregion
 
@@ -95,9 +96,11 @@ public class FlowManager : MonoBehaviour
     {
 	    _spawnerRef = GameObject.FindGameObjectWithTag("Manager_Spawnpoints")?.GetComponent<SpawnpointFinder>();
 		_mainCameraRef = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<Camera>();
+		_npcManagerRef = GetComponent<FriendlyNPCManager>();
 
 		Debug.Assert(_spawnerRef != null, "Did not have a spawner in the level.");
 		Debug.Assert(_mainCameraRef != null, "Did not have a camera in the level.");
+		Debug.Assert(_npcManagerRef != null, "Did not have a FriendlyNPCManager");
 
 		Debug.Assert(DummyControllerForPlacementCamera != null, "Invalid dummy controller.");
     }
@@ -238,6 +241,8 @@ public class FlowManager : MonoBehaviour
 
 		GameObjectiveText.text = "Survive.";
 		_objectiveTextToGameplayDuration = OBJECTIVE_TEXT_ROUND_START_DURATION_TIME;
+
+		_npcManagerRef.SetButtonActive();
 
 		_currentState = LevelState.Update;
 	}

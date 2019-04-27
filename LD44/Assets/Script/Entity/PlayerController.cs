@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 		// Toggle between attack modes
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			_actionRef.ToggleAttackMode();
+			//_actionRef.ToggleAttackMode();
 		}
 
 		if (Input.GetKeyDown(KeyCode.E))
