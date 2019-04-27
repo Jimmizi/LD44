@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,15 +14,9 @@ public class GameManager : MonoBehaviour
 
     public static LevelManager levelManager;
 
-    private static List<GameObject> infectedCells;
-
-    private static Random random;
-
     void Start()
     {
         DontDestroyOnLoad(this);
-
-        random = new Random();
     }
 
     void Update()
@@ -45,30 +40,20 @@ public class GameManager : MonoBehaviour
     /// <param name="amount">Number of cells to destroy</param>
     private static void DestroyCells(int amount)
     {
+        List<GameObject> infectedCells = FindObjectsOfType<ActorStats>().Where(x => x.Infected).Select(x => x.gameObject).ToList();
+
         for (int i = 0; i < amount; i++)
         {
             int index = Random.Range(0, infectedCells.Count);
 
-            KillCellOnIndex(index);
+            Destroy(infectedCells[index]);
         }
     }
 
     public static void KillCell(GameObject cell)
     {
-        int index = infectedCells.IndexOf(cell);
-
-        KillCellOnIndex(index);
+        Destroy(cell);
     }
-
-    private static void KillCellOnIndex(int index)
-    {
-        Destroy(infectedCells[index]);
-
-        infectedCells.RemoveAt(index);
-
-        if (infectedCells.Count == 0)
-            levelManager.GameOver();
-    }   
 
     public static Upgrade UpgradeChooser(string name)
     {
