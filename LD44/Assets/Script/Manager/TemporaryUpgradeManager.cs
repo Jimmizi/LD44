@@ -13,8 +13,12 @@ public class TemporaryUpgradeManager : MonoBehaviour
 
     public Text cellsCounter;
 
+    public static TemporaryUpgradeManager singleton;
+
     void Start()
     {
+        singleton = this;
+
         PermanentUpgradeManager.damageUpgrade.temporaryUpgradeObject = damageUpgradeObject;
         PermanentUpgradeManager.HPUpgrade.temporaryUpgradeObject = HPUpgradeObject;
         PermanentUpgradeManager.cloningUpgrade.temporaryUpgradeObject = cloningUpgradeObject;
@@ -43,6 +47,9 @@ public class TemporaryUpgradeManager : MonoBehaviour
     public void UpgradeTemporary(GameObject upgradeObject)
     {
         Upgrade upgrade = PermanentUpgradeManager.upgrades.First(x => x.temporaryUpgradeObject == upgradeObject);
+
+        if (GameManager.InfectedCellsCount < UpgradeCost(upgrade.temporaryStage))
+            return;
 
         upgrade.temporaryStage++;
         upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("StageText").text = upgrade.temporaryStage.ToString();

@@ -41,6 +41,9 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
     {
         Upgrade upgrade = PermanentUpgradeManager.upgrades.First(x => x.upgradeObject == upgradeObject);
 
+        if (GameManager.InfectedCellsCount < PermanentUpgradeManager.UpgradeCost(upgrade.temporaryStage))
+            return;
+
         upgrade.stage++;
         upgrade.upgradeObject.GetCompomentWithName<Text>("StageText").text = upgrade.stage.ToString();
 
