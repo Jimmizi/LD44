@@ -3,6 +3,7 @@
 public class Upgrade
 {
     public GameObject upgradeObject;
+    public GameObject temporaryUpgradeObject;
 
     public int stage = 1;
     public int temporaryStage = 0;

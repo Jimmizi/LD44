@@ -18,6 +18,11 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
         PermanentUpgradeManager.cloningUpgrade.upgradeObject = cloningUpgradeObject;
     }
 
+    private void Start()
+    {
+        SetUpGUI(GameManager.cells);
+    }
+
     void SetUpGUI(int cells)
     {
         foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
@@ -39,6 +44,6 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
 
         PermanentUpgradeManager.UpgradePermanent(upgrade);
 
-        //SetUpGUI(GameManager.cells);
+        SetUpGUI(GameManager.cells);
     }
 }

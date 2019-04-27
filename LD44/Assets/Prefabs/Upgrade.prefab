@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3831508485012352404}
   - component: {fileID: 1577147437700624297}
   m_Layer: 5
-  m_Name: Background
+  m_Name: StageBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 3932727942795207560}
   - component: {fileID: 5709907655684929220}
   m_Layer: 5
-  m_Name: Image
+  m_Name: UpgradeTypeBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
