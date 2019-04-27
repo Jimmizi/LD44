@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,7 +11,9 @@ public class GameManager : MonoBehaviour
         set { DestroyCells(value); _infectedCellsCount = value; }
     }
 
-    private static GameObject[] infectedCells;
+    public static LevelManager levelManager;
+
+    private static List<GameObject> infectedCells;
 
     private static Random random;
 
@@ -32,11 +32,28 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            int index = Random.Range(0, infectedCells.Length);
+            int index = Random.Range(0, infectedCells.Count);
 
-            Destroy(infectedCells[index]);
+            KillCellOnIndex(index);
         }
     }
+
+    public static void KillCell(GameObject cell)
+    {
+        int index = infectedCells.IndexOf(cell);
+
+        KillCellOnIndex(index);
+    }
+
+    private static void KillCellOnIndex(int index)
+    {
+        Destroy(infectedCells[index]);
+
+        infectedCells.RemoveAt(index);
+
+        if (infectedCells.Count == 0)
+            levelManager.GameOver();
+    }   
 
     public static Upgrade UpgradeChooser(string name)
     {
@@ -58,7 +75,7 @@ public class GameManager : MonoBehaviour
 }
 
 
-static class Utitilies
+internal static class Utitilies
 {
     public static T GetCompomentWithName<T>(this GameObject root, string componentName) where T : Component
     {
