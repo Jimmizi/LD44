@@ -162,7 +162,44 @@ public class ActionManager : MonoBehaviour
 		    CurrentAttack = AttackType.InfectAttempt;
 	    }
     }
-	
+
+    private Vector2 GetNearestPosition()
+    {
+	    var allActors = GameObject.FindObjectsOfType<ActorStats>();
+	    var enemiesToTarget = new List<GameObject>();
+
+	    // Weed out all the same type as me
+	    foreach (var actor in allActors)
+	    {
+		    //If the actor we're looking at doesn't have the same stat of infection as me, they are a target
+		    if (actor.Infected != _statsRef.Infected)
+		    {
+			    enemiesToTarget.Add(actor.gameObject);
+		    }
+	    }
+
+	    if (enemiesToTarget.Count == 0)
+	    {
+		    return Vector2.zero;
+	    }
+	    else if (enemiesToTarget.Count == 1)
+	    {
+		    return enemiesToTarget[0].transform.position;
+	    }
+
+	    foreach (var enemy in enemiesToTarget)
+	    {
+		    var distance = ((Vector2)enemy.transform.position - (Vector2)this.transform.position).magnitude;
+
+		    if (distance < _statsRef.AttackRange)
+		    {
+			    return enemy.transform.position;
+
+		    }
+		}
+
+	    return Vector2.zero;
+	}
 
 	void DoAttack()
     {
@@ -177,11 +214,17 @@ public class ActionManager : MonoBehaviour
 		}
 		else
 		{
-			attackSpawnPos = (Vector2)transform.position + new Vector2(transform.localScale.x * _moverRef.DirectionFacing, 0.0f);
+			attackSpawnPos = GetNearestPosition(); //(Vector2)transform.position + new Vector2(transform.localScale.x * _moverRef.DirectionFacing, 0.0f);
+		}
+
+		if (attackSpawnPos == Vector2.zero)
+		{
+			_currentAction = ActionType.Idle;
+			_awaitingResult = false;
+			return;
 		}
 
 		var tempQuery = (GameObject) Instantiate(AttackQueryPrefab, attackSpawnPos, new Quaternion());
-
 		var tempResolver = tempQuery.GetComponent<AttackResolver>();
 
 		if (tempResolver)

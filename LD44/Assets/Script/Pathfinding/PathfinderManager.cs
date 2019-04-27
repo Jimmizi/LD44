@@ -168,14 +168,7 @@ namespace Pathfinding
         
         void Update()
         {
-
-            // TODO: Temporary
-            if (Input.GetKeyDown("space"))
-            {
-                RequestPathfind(new Vector3(-1.4f, 0, 0), new Vector3(1.0f, -0.5f, 0), TestCallback);
-            }
-
-
+			
             int i = 0;
 
             while (i < _jobs.Count)

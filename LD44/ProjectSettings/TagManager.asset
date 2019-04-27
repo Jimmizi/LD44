@@ -13,6 +13,7 @@ TagManager:
   - PauseMenuCanvas
   - TeamEnemy
   - TeamFriendly
+  - PlayerAttackType
   layers:
   - Default
   - TransparentFX

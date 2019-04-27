@@ -14,6 +14,9 @@ public class ActorStats : MonoBehaviour
 	/// </summary>
 	public int Damage = 20;
 
+	/// <summary>
+	/// How fast does the character move?
+	/// </summary>
 	public float MovementSpeed = 0.5f;
 
 	/// <summary>
@@ -24,12 +27,12 @@ public class ActorStats : MonoBehaviour
 	/// <summary>
 	/// How far away can this character attack from?
 	/// </summary>
-	public float AttackRange = 0.4f; //0.4f is a good default melee range
+	public float AttackRange = 0.425f; //a good default melee range
 
 	/// <summary>
 	/// How fast can this character infect another (In seconds)?
 	/// </summary>
-	public float InfectionSpeed = 2.5f;
+	public float InfectionSpeed = 4.5f;
 
 	/// <summary>
 	/// Is this character infected?

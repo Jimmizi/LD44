@@ -12,9 +12,10 @@ public class FriendlyNPCManager : MonoBehaviour
 {
 
 	public GameObject FriendlyNPCPrefab;
-	public Text PreferredTypeText;
 	public List<GameObject> FriendliesList = new List<GameObject>();
-	
+
+	public Text FriendlyAttackTypeText;
+
 	private ActionManager.AttackType _aiPreferredAttack;
 	private int _friendliesLeftToSpawn;
 	private int _failedAttempts = 0;
@@ -25,12 +26,10 @@ public class FriendlyNPCManager : MonoBehaviour
 		if (_aiPreferredAttack == ActionManager.AttackType.InfectAttempt)
 		{
 			_aiPreferredAttack = ActionManager.AttackType.Lethal;
-			PreferredTypeText.text = "Friendlies go for kills.";
 		}
 		else
 		{
 			_aiPreferredAttack = ActionManager.AttackType.InfectAttempt;
-			PreferredTypeText.text = "Friendlies go for infecting.";
 		}
 
 		foreach (var friend in FriendliesList)
@@ -43,7 +42,7 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	public void SetButtonActive()
 	{
-		PreferredTypeText.gameObject.transform.parent.gameObject.SetActive(true);
+		FriendlyAttackTypeText.gameObject.transform.parent.gameObject.SetActive(true);
 	}
 
 	public void SetStartSpawningFriendlies(Vector2 spawnPoint)
@@ -54,13 +53,23 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	void Start()
     {
-		PreferredTypeText.text = "Friendlies go for kills.";
-		PreferredTypeText.gameObject.transform.parent.gameObject.SetActive(false);
+		FriendlyAttackTypeText.gameObject.transform.parent.gameObject.SetActive(false);
     }
 
 
 	void Update()
 	{
+		// Toggle between attack modes
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			SwitchPreferredAttackType();
+
+			if (FriendlyAttackTypeText)
+			{
+				FriendlyAttackTypeText.text = "(E) " + (_aiPreferredAttack == ActionManager.AttackType.Lethal ? "Friendlies Prefer Killing" : "Friendlies Prefer Infecting");
+			}
+		}
+
 		if (_friendliesLeftToSpawn <= 0)
 		{
 			return;

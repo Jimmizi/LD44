@@ -96,7 +96,7 @@ public class AIController : MonoBehaviour
 
 			return;
 	    }
-
+		
 		switch (CurrentTask)
 		{
 			case AITask.Wander:
@@ -260,10 +260,13 @@ public class AIController : MonoBehaviour
 		}
 		
 		_timeSinceLastAttackAction += Time.deltaTime;
-		if (_timeSinceLastAttackAction >= 12.0f)
+		if (_timeSinceLastAttackAction >= 7.5f)
 		{
-			ClearTarget();
-			return;
+			if (((Vector2)_taskTarget.transform.position - (Vector2)this.transform.position).magnitude > _statsRef.AttackRange * 2.5f)
+			{
+				ClearTarget();
+				return;
+			}
 		}
 
 		//If we're close enough, attack the target

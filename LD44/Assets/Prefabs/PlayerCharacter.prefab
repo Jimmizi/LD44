@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackQueryPrefab: {fileID: 7747949484712415893, guid: e023620c08555324188d18e099c5f4c7,
     type: 3}
-  CurrentAttack: 1
+  CurrentAttack: 0
   TargetLocationForAction: {x: 0, y: 0}
 --- !u!114 &8736139691342441652
 MonoBehaviour:
@@ -190,7 +190,7 @@ MonoBehaviour:
   Damage: 20
   MovementSpeed: 1
   AttackSpeed: 0.25
-  AttackRange: 0.4
+  AttackRange: 0.5
   InfectionSpeed: 5
   Infected: 1
   Neutral: 0
