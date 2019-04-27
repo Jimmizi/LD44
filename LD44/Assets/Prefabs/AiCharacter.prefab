@@ -19,10 +19,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8990057955013956940, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: CurrentAttack
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: m_Name
       value: AiCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836559, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}

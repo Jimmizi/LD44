@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8736139691342441652}
   m_Layer: 0
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,3 +191,4 @@ MonoBehaviour:
   AttackSpeed: 0.25
   InfectionSpeed: 5
   Infected: 0
+  BeingInfectedBy: {fileID: 0}

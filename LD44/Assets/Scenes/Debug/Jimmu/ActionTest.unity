@@ -2405,7 +2405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea22fcf93c3e4b7b80cab8a07392f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxThreads: 3
+  maxThreads: 1
 --- !u!4 &1897596004
 Transform:
   m_ObjectHideFlags: 0
@@ -2778,7 +2778,7 @@ PrefabInstance:
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
       propertyPath: Difficulty
-      value: 15
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc2d04ad753996e4e89f1351d01a66a5, type: 3}

@@ -12,6 +12,7 @@ public class AttackResolver : MonoBehaviour
 	public ActorStats CallerStats;
 
 	public GameObject SpecificTarget = null;
+	public GameObject CallingGameObject = null;
 
 	ActionManager.AttackResult _queryResult = ActionManager.AttackResult.InvalidTarget;
 
@@ -61,7 +62,7 @@ public class AttackResolver : MonoBehaviour
 		foreach (var other in contactsList)
 		{
 			//Reached the end of found objects
-			if (other == null)
+			if (other == null || other == CallingGameObject.GetComponent<Collider2D>())
 			{
 				break;
 			}
@@ -108,6 +109,8 @@ public class AttackResolver : MonoBehaviour
 			case ActionManager.AttackResult.VictimOkay:
 				break;
 			case ActionManager.AttackResult.InfectionInProgress:
+				//Tell the other character they're being infected by us
+				othersStats.BeingInfectedBy = CallingGameObject;
 				break;
 			default:
 				throw new ArgumentOutOfRangeException();

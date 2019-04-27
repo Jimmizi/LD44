@@ -15,6 +15,7 @@ public class ActorMovement : MonoBehaviour
 
 	private Rigidbody2D _rigidbodyRef = null;
 	private ActionManager _actionManager = null;
+	private AIController _aiController = null;
 
     void Start()
     {
@@ -24,7 +25,9 @@ public class ActorMovement : MonoBehaviour
 		_actionManager = GetComponent<ActionManager>();
 		Debug.Assert(_actionManager != null, "Didn't manage to find a ActionManager.");
 
-		if(_rigidbodyRef)
+		_aiController = GetComponent<AIController>();
+
+		if (_rigidbodyRef)
 		{
 			_rigidbodyRef.freezeRotation = true;
 			_rigidbodyRef.drag = 10.0f;
@@ -37,6 +40,17 @@ public class ActorMovement : MonoBehaviour
 	    if (_actionManager?.CurrentAttack == ActionManager.AttackType.Infect)
 	    {
 		    return;
+	    }
+
+	    var tempSpeed = Speed;
+
+	    if (_aiController)
+	    {
+		    if (_aiController.ShouldRunFaster())
+		    {
+			    tempSpeed *= 2;
+
+		    }
 	    }
 
 		_rigidbodyRef.velocity = Direction * Speed;

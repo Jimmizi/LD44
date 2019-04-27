@@ -40,7 +40,7 @@ public class ActionManager : MonoBehaviour
 	/// </summary>
 	public AttackType CurrentAttack = AttackType.InfectAttempt;
 
-
+	public Vector2 TargetLocationForAction;
 
 	private ActionType _currentAction;
 	private bool _awaitingResult;
@@ -54,6 +54,13 @@ public class ActionManager : MonoBehaviour
 	private ActorMovement _moverRef = null;
 	private ActorStats _statsRef = null;
 	
+	public bool DoingAnAction
+	{
+		get
+		{
+			return _currentAction != ActionType.Idle;
+		}
+	}
 
 	public bool DoAction(ActionType newAction)
 	{
@@ -132,7 +139,7 @@ public class ActionManager : MonoBehaviour
 		    case AttackResult.InfectionInProgress:
 		    {
 				//TODO Add charge/eating animations to make it visual that an infection is happening
-
+				
 			    _actionDelay = _statsRef.InfectionSpeed;
 			    CurrentAttack = AttackType.Infect;
 			    _awaitingResult = false;
@@ -142,13 +149,15 @@ public class ActionManager : MonoBehaviour
 		    default:
 			    throw new ArgumentOutOfRangeException(nameof(eResult), eResult, null);
 	    }
-
+	    
 		Debug.Log("Action result received");
 	    _currentAction = ActionType.Idle;
 	    _attemptingToInfectTarget = null;
 		_awaitingResult = false;
+		TargetLocationForAction = Vector2.zero;
 
-	    if (CurrentAttack == AttackType.Infect)
+
+		if (CurrentAttack == AttackType.Infect)
 	    {
 		    CurrentAttack = AttackType.InfectAttempt;
 	    }
@@ -160,7 +169,17 @@ public class ActionManager : MonoBehaviour
 		//TODO stats for range and size of attack
 
 		//TODO improve where the bounds of the attack are
-		var attackSpawnPos = (Vector2)transform.position + new Vector2(transform.localScale.x * _moverRef.DirectionFacing, 0.0f);
+		Vector2 attackSpawnPos;
+
+		if (TargetLocationForAction != Vector2.zero)
+		{
+			attackSpawnPos = TargetLocationForAction;
+		}
+		else
+		{
+			attackSpawnPos = (Vector2)transform.position + new Vector2(transform.localScale.x * _moverRef.DirectionFacing, 0.0f);
+		}
+
 		var tempQuery = (GameObject) Instantiate(AttackQueryPrefab, attackSpawnPos, new Quaternion());
 
 		var tempResolver = tempQuery.GetComponent<AttackResolver>();
@@ -170,6 +189,7 @@ public class ActionManager : MonoBehaviour
 			tempResolver.CallerResultCallback = GetActionResult;
 			tempResolver.CallerInfectionTarget = other => _attemptingToInfectTarget = other;
 			tempResolver.SpecificTarget = _attemptingToInfectTarget;
+			tempResolver.CallingGameObject = this.gameObject;
 			tempResolver.CallerStats = _statsRef;
 
 			tempResolver.CurrentAttackType = CurrentAttack;

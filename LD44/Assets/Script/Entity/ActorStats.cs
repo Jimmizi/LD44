@@ -29,15 +29,9 @@ public class ActorStats : MonoBehaviour
 	/// </summary>
 	public bool Infected;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	/// <summary>
+	/// The character is currently being infected by another character
+	/// </summary>
+	public GameObject BeingInfectedBy;
+	
 }
