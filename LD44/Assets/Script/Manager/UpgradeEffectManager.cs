@@ -6,7 +6,7 @@ public class UpgradeEffectManager : MonoBehaviour
 {
     private const int HPUpgradeMultiplier = 15;
     private const int damageUpgradeMultiplier = 4;
-    private const int cloningUpgradeMultiplier = 5;
+    private const float cloningUpgradeMultiplier = 5.0f;
 
     public static void ApplyPermanentUpgrades(ActorStats actorStats)
     {

@@ -30,7 +30,7 @@ public class TemporaryUpgradeManager : MonoBehaviour
         SetUpGUI(GameManager.InfectedCellsCount);
     }
 
-    private void SetUpGUI(int cells)
+    public void SetUpGUI(int cells)
     {
         foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
         {
@@ -52,11 +52,11 @@ public class TemporaryUpgradeManager : MonoBehaviour
         Upgrade upgrade = PermanentUpgradeManager.upgrades.First(x => x.temporaryUpgradeObject == upgradeObject);
 
         if (GameManager.InfectedCellsCount < UpgradeCost(upgrade.temporaryStage))
-            return;
-
-        upgrade.temporaryStage++;
+            return;      
 
         GameManager.InfectedCellsCount -= UpgradeCost(upgrade.temporaryStage);
+
+        upgrade.temporaryStage++;
 
         SetUpGUI(GameManager.InfectedCellsCount);
 

@@ -50,9 +50,9 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
         if (GameManager.InfectedCellsCount < PermanentUpgradeManager.UpgradeCost(upgrade.temporaryStage))
             return;
 
-        upgrade.stage++;
-
         GameManager.InfectedCellsCount -= PermanentUpgradeManager.UpgradeCost(upgrade.stage);
+
+        upgrade.stage++;
 
         SetUpGUI(GameManager.InfectedCellsCount);
     }
