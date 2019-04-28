@@ -293,7 +293,8 @@ public class AIController : MonoBehaviour
 		_timeSinceLastAttackAction += Time.deltaTime;
 		if (_timeSinceLastAttackAction >= 7.5f)
 		{
-			if (((Vector2)_taskTarget.transform.position - (Vector2)this.transform.position).magnitude > _statsRef.AttackRange * 2.5f)
+			Debug.Log("Attack Timeout");
+			if (((Vector2)_taskTarget.transform.position - (Vector2)this.transform.position).magnitude > _statsRef.AttackRange * 2.0f)
 			{
 				ClearTarget();
 				return;
@@ -313,7 +314,6 @@ public class AIController : MonoBehaviour
 			{
 				_pathfinder.RequestPathfind(this.transform.position, _taskTarget.transform.position, cbPathResult);
 				_originalTargetPlace = _taskTarget.transform.position;
-				_timeSinceLastAttackAction = 0.0f;
 				_waitingOnPathResult = true;
 			}
 		}
@@ -322,7 +322,6 @@ public class AIController : MonoBehaviour
 		{
 			_currentPath.Clear();
 			_currentNode = 0;
-			_timeSinceLastAttackAction = 0.0f;
 		}
 		//Recalculate if the target has moved 
 		else if (((Vector2)_taskTarget.transform.position - _originalTargetPlace).magnitude >= REEVALUATE_DIST_FOR_TARGET_HAVING_MOVED)

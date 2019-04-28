@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ public class FriendlyNPCManager : MonoBehaviour
 	public List<GameObject> FriendliesList = new List<GameObject>();
 
 	public Text FriendlyAttackTypeText;
+	public Text FriendliesLeftText;
 
 	private ActionManager.AttackType _aiPreferredAttack;
 	private int _friendliesLeftToSpawn;
@@ -68,6 +70,12 @@ public class FriendlyNPCManager : MonoBehaviour
 			{
 				FriendlyAttackTypeText.text = "(E) " + (_aiPreferredAttack == ActionManager.AttackType.Lethal ? "Friendlies Prefer Killing" : "Friendlies Prefer Infecting");
 			}
+		}
+
+		if (FriendliesLeftText)
+		{
+			var allActors = GameObject.FindObjectsOfType<ActorStats>().Where(x => x.Infected).ToArray();
+			FriendliesLeftText.text = allActors.Length.ToString();
 		}
 
 		if (_friendliesLeftToSpawn <= 0)
