@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Fx;
 
 /// <summary>
 /// Adding this component to an actor kills it
@@ -10,10 +11,61 @@ using UnityEngine;
 public class KillActor : MonoBehaviour
 {
 	private bool _done = true;
+    private bool _triggered = false;
+	
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    private void Kill()
+    {
+	    Destroy(gameObject);
+    }
+
+    private void TriggerVisuals()
+    {
+	    if (_triggered)
+	    {
+		    return;
+	    }
+	    
+	    foreach (Component component in gameObject.GetComponents<Component>())
+	    {
+		    ActorMovement av = component as ActorMovement;
+		    ActionManager am = component as ActionManager;
+		    PlayerController pc = component as PlayerController;
+		    ActorStats ac = component as ActorStats;
+		    AIController ai = component as AIController;
+				
+		    if (av != null) av.enabled = false;
+		    if (am != null) am.enabled = false;
+		    if (pc != null) pc.enabled = false;
+		    if (ac != null)
+		    {
+			    ac.enabled = false;
+			    ac.Active = false;
+		    }
+		    if (ai != null) ai.enabled = false;
+				
+	    }
+			
+	    Collider2D cl = gameObject.GetComponent<Collider2D>();
+	    if (cl != null) Destroy(cl);
+	    
+	    DeceaseFx fx = gameObject.GetComponent<DeceaseFx>();
+	    if (fx != null)
+	    {
+		    fx.Trigger(Kill);
+	    }
+	    else
+	    {
+		    Kill();
+	    }
+
+	    _triggered = true;
+
     }
 
     // Update is called once per frame
@@ -52,7 +104,8 @@ public class KillActor : MonoBehaviour
 	        if (GetComponent<ActorStats>().Infected)
 	            GameManager.InfectedCellDies();
 
-			Destroy(gameObject);
+			//Destroy(gameObject);
+			TriggerVisuals();
 	    }
     }
 }
