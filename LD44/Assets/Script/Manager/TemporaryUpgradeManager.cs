@@ -35,7 +35,11 @@ public class TemporaryUpgradeManager : MonoBehaviour
         foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
         {
             // sets "stage x" text
-            upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("StageText").text = "stage\n" + upgrade.temporaryStage;
+            var tempText = upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("StageText");
+            if (tempText)
+			{
+				tempText.text = "stage\n" + upgrade.temporaryStage;
+			}
 
             // sets interactibility and text of upgrade button
             Button upgradeButton = upgrade.temporaryUpgradeObject.GetComponentInChildren<Button>();
