@@ -58,6 +58,8 @@ public class TemporaryUpgradeManager : MonoBehaviour
         GameManager.InfectedCellsCount -= UpgradeCost(upgrade.temporaryStage);
 
         SetUpGUI(GameManager.InfectedCellsCount);
+
+        UpgradeEffectManager.ApplyTemporaryUpgrades(upgrade);
     }
 
     private const int upgradeCostMutiplier = 1;
