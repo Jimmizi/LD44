@@ -45,6 +45,7 @@ public class AIController : MonoBehaviour
 	private GameObject _taskTarget = null;
 	private Vector2 _originalTargetPlace;
 	private float _timeSinceLastAttackAction;
+	private int _targetFindAttempts;
 
 	private Vector2 _currentDirection;
 
@@ -230,6 +231,7 @@ public class AIController : MonoBehaviour
 	    _originalTargetPlace = Vector2.zero;
 	    _currentNode = 0;
 	    _timeSinceLastAttackAction = 0;
+	    _targetFindAttempts = 0;
 		_taskTarget = null;
     }
 
@@ -238,13 +240,24 @@ public class AIController : MonoBehaviour
 		if (_taskTarget == null)
 		{
 			_taskTarget = FindSuitableTargetToAttack();
-		}
-
-		if (_taskTarget == null)
-		{
 			_moverRef.Direction = Vector2.zero;
-			return;
+
+			if (_taskTarget == null)
+			{
+				_targetFindAttempts++;
+
+				if (_targetFindAttempts >= 4)
+				{
+					CurrentTask = AITask.Wander;
+					_targetFindAttempts = 0;
+				}
+				
+				return;
+			}
+
+			_targetFindAttempts = 0;
 		}
+		
 
 		if (_actionRef.DoingAnAction)
 		{

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -307,7 +308,18 @@ public class FlowManager : MonoBehaviour
 			Debug.Log("Debug skipping stage.");
 			_currentState = LevelState.StageOver;
 		}
-		
+
+		if (Input.GetKeyDown(KeyCode.F2))
+		{
+			var allActors = GameObject.FindObjectsOfType<ActorStats>().Where(x => x.gameObject.GetComponent<PlayerController>()).ToArray();
+
+			if (allActors.Length > 0)
+			{
+				allActors[0].gameObject.AddComponent<KillActor>();
+			}
+
+		}
+
 #endif
 	}
 

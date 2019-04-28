@@ -128,12 +128,23 @@ public class AttackResolver : MonoBehaviour
 	private ActionManager.AttackResult ResolveAttack(ActorStats attackerStats, ActorStats victimStats)
 	{
 		var justInfected = false;
+		var instaKill = false;
 
 		switch (CurrentAttackType)
 		{
 			case ActionManager.AttackType.Lethal:
 			{
 				victimStats.Health -= attackerStats.Damage;
+				
+				var victimActions = victimStats.GetComponent<ActionManager>();
+
+				if (victimActions)
+				{
+					//If the victim is infecting another, they are vulnerable because of it 
+					//Could be just and increase of damage if needed
+					instaKill = victimActions.CurrentAttack == ActionManager.AttackType.Infect;
+				}
+				
 				break;
 			}
 			case ActionManager.AttackType.InfectAttempt:
@@ -148,7 +159,7 @@ public class AttackResolver : MonoBehaviour
 				break;
 			}
 		}
-		if (victimStats.Health <= 0.0f)
+		if (victimStats.Health <= 0.0f || instaKill)
 		{
 			return ActionManager.AttackResult.VictimDeath;
 		}
