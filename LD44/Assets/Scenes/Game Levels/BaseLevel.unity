@@ -4904,7 +4904,7 @@ PrefabInstance:
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
       propertyPath: Difficulty
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
@@ -4926,5 +4926,17 @@ PrefabInstance:
       propertyPath: NumberOfHostileEnemies
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: HostileEnemyGameObject
+      value: 
+      objectReference: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,
+        type: 3}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: NeutralEnemyGameObject
+      value: 
+      objectReference: {fileID: 4999915037488276507, guid: 83d4bb32180f16644b858c1207472a7f,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc2d04ad753996e4e89f1351d01a66a5, type: 3}

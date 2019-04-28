@@ -40,7 +40,8 @@ public class FlowManager : MonoBehaviour
 	/// <summary>
 	/// List of enemies that can be spawned in for this stage.
 	/// </summary>
-	public List<GameObject> EnemyList = new List<GameObject>();
+	public GameObject HostileEnemyGameObject;
+	public GameObject NeutralEnemyGameObject;
 
 	/// <summary>
 	/// The prefab for visualisation of where the spawn drop in point will be
@@ -179,13 +180,22 @@ public class FlowManager : MonoBehaviour
 	void SpawnEnemyIn(bool isNeutral = false)
 	{
 		var vPosition = _spawnerRef.GetSpawnPoint();
-		var tempEnemy = (GameObject)Instantiate(EnemyList[Random.Range(0, EnemyList.Count)], vPosition, new Quaternion());
+		GameObject tempEnemy = null;
+
+		if (isNeutral)
+		{
+			tempEnemy = (GameObject)Instantiate(NeutralEnemyGameObject, vPosition, new Quaternion());
+		}
+		else
+		{
+			tempEnemy = (GameObject)Instantiate(HostileEnemyGameObject, vPosition, new Quaternion());
+		}
+		
 
 		var tempStats = tempEnemy.GetComponent<ActorStats>();
 
 		if (tempStats)
 		{
-			tempStats.Neutral = isNeutral;
 			tempStats.SetupDifficulty(GameManager.Difficulty);
 		}
 		
@@ -194,24 +204,21 @@ public class FlowManager : MonoBehaviour
 
 	void StateInit()
 	{
-		if (EnemyList.Count > 0)
+		var NumHostiles = (int) (GameManager.Difficulty * HostileEnemiesModifier);
+		var NumFriendlies = (int) (GameManager.Difficulty * NeutralEnemiesModifier);
+
+		if (NumHostiles == 0 && NumFriendlies == 0)
 		{
-			var NumHostiles = (int) (GameManager.Difficulty * HostileEnemiesModifier);
-			var NumFriendlies = (int) (GameManager.Difficulty * NeutralEnemiesModifier);
+			NumHostiles = 1;
+		}
 
-			if (NumHostiles == 0 && NumFriendlies == 0)
-			{
-				NumHostiles = 1;
-			}
-
-			for (var i = 0; i < NumFriendlies; i++)
-			{
-				SpawnEnemyIn(true);
-			}
-			for (var i = 0; i < NumHostiles; i++)
-			{
-				SpawnEnemyIn();
-			}
+		for (var i = 0; i < NumFriendlies; i++)
+		{
+			SpawnEnemyIn(true);
+		}
+		for (var i = 0; i < NumHostiles; i++)
+		{
+			SpawnEnemyIn();
 		}
 
 		if (DebugStraightToGameplay)

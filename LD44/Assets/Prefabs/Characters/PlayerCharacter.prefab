@@ -188,9 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd6486d5ee06644ca500d14790bd79b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
-  Damage: 20
-  MovementSpeed: 1
+  Health: 20
+  Damage: 4
+  MovementSpeed: 0.6
   AttackSpeed: 0.25
   AttackRange: 0.5
   InfectionChance: 15
