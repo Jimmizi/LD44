@@ -55,7 +55,11 @@ public class InfectActor : MonoBehaviour
 		TriggerVisuals();
 		
 		//just a test 
-		this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32_Friendly");
+		//this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32_Friendly");
+		if (this.GetComponent<Animator>())
+		{
+			this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animators/slime_green_64x64_0");
+		}
 
 		var tempStats = this.GetComponent<ActorStats>();
 		if (tempStats)

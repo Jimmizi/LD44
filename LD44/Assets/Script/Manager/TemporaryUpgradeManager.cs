@@ -42,9 +42,13 @@ public class TemporaryUpgradeManager : MonoBehaviour
 			}
 
             // sets interactibility and text of upgrade button
-            Button upgradeButton = upgrade.temporaryUpgradeObject.GetComponentInChildren<Button>();
-            upgradeButton.interactable = UpgradeCost(upgrade.temporaryStage) <= cells;
-            upgradeButton.GetComponentInChildren<Text>().text = "Upgrade\n<" + UpgradeCost(upgrade.temporaryStage) + '>';
+            Button upgradeButton = upgrade?.temporaryUpgradeObject?.GetComponentInChildren<Button>();
+
+            if (upgradeButton)
+            {
+	            upgradeButton.interactable = UpgradeCost(upgrade.temporaryStage) <= cells;
+	            upgradeButton.GetComponentInChildren<Text>().text = "Upgrade\n<" + UpgradeCost(upgrade.temporaryStage) + '>';
+            }
         }
 
 		//Flow manager does this (y)
