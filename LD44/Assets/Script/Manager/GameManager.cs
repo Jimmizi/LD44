@@ -45,12 +45,12 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Desctroys specific amount of infected cells
+    /// Destroys specific amount of infected cells
     /// </summary>
     /// <param name="newCellsCount">New number of infected cells</param>
     private static void DestroyCells(int newCellsCount)
     {
-        TemporaryUpgradeManager.singleton.SetUpGUI(newCellsCount);
+        TemporaryUpgradeManager.singleton?.SetUpGUI(newCellsCount);
 
         if (newCellsCount > _infectedCellsCount)
         {

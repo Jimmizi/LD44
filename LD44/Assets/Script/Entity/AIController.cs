@@ -60,7 +60,7 @@ public class AIController : MonoBehaviour
 		//TODO perhaps redo this?
 		//Not caring about a proper way to do this right now, just randomise whether the character takes this new type
 
-		//30% of your bodies will ignore your change attack priority order
+		//30% of your bodies will ignore your change attack priority order //TODO too confusing for player?
 		if (Random.Range(0, 101) < 30)
 		{
 			return;
