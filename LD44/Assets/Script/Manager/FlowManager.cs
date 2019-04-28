@@ -207,6 +207,7 @@ public class FlowManager : MonoBehaviour
 		}
 
 		GameObjectiveText.text = "Pick a spawn point.";
+		GameObjectiveText.gameObject.transform.parent.gameObject.SetActive(true);
 
 		_currentState = LevelState.Placement;
 	}
@@ -261,7 +262,13 @@ public class FlowManager : MonoBehaviour
 		//TODO Extra player init here (HUD, extra bodies)
 
 		GameObjectiveText.text = "Survive.";
-		RoundTimerText.gameObject.SetActive(true);
+		//RoundTimerText.gameObject.SetActive(true);
+
+		for (int i = 0; i < RoundTimerText.gameObject.transform.parent.childCount; i++)
+		{
+			RoundTimerText.gameObject.transform.parent.GetChild(i).gameObject.SetActive(true);
+		}
+
 		_objectiveTextToGameplayDuration = OBJECTIVE_TEXT_ROUND_START_DURATION_TIME;
 
 		_npcManagerRef.SetButtonActive();
