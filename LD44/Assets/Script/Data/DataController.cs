@@ -39,7 +39,7 @@ namespace Data
             
         }
 
-        List<GameObject> FindAllPrefabInstances(UnityEngine.Object myPrefab)
+        /*List<GameObject> FindAllPrefabInstances(UnityEngine.Object myPrefab)
         {
             List<GameObject> result = new List<GameObject>();
             GameObject[] allObjects = (GameObject[])FindObjectsOfType(typeof(GameObject));
@@ -53,7 +53,7 @@ namespace Data
                 }
             }
             return result;
-        }
+        }*/
 
         private void initActor(ActorStats stats, Actor actor)
         {
