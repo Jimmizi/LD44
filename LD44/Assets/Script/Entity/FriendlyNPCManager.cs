@@ -49,8 +49,8 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	public void SetStartSpawningFriendlies(Vector2 spawnPoint)
 	{
-		//TODO Need to populate friendly count from somewhere
-		_friendliesLeftToSpawn = 5;
+		
+		_friendliesLeftToSpawn = GameManager.InfectedCellsCount;
 		_pointToSpawnAround = spawnPoint;
 	}
 

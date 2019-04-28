@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static int _infectedCellsCount;
+	//TODO Need to populate friendly count from somewhere
+	private static int _infectedCellsCount = 5;
 
     public static int InfectedCellsCount
     {

@@ -271,7 +271,7 @@ public class FlowManager : MonoBehaviour
 	void StatePlayerInit()
 	{
 		_currentPlayer = (GameObject) Instantiate(CurrentPlayerGameObject, _playerSpawnPosition, new Quaternion());
-		_currentDummyPlayer.GetComponent<ActorStats>()?.ApplyPlayerStats();
+		_currentPlayer.GetComponent<ActorStats>()?.ApplyPlayerStats();
 
 		// Assign the camera to follow the actual player now
 		AssignCameraToFollow(_currentPlayer, true);
