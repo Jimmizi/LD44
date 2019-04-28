@@ -8,8 +8,8 @@ using UnityEngine;
 
 public class JustSpawnedSize : MonoBehaviour
 {
-	private Vector2 _originalScale = Vector2.zero;
-	private Vector2 _currentScale  = Vector2.zero;
+	private Vector3 _originalScale = Vector3.zero;
+	private Vector3 _currentScale  = Vector3.zero;
 
 	private float _scaleTimer;
 
@@ -25,6 +25,7 @@ public class JustSpawnedSize : MonoBehaviour
 		
 		_currentScale.x = Mathf.Lerp(_currentScale.x, _originalScale.x, Time.deltaTime * 2.0f);
 		_currentScale.y = Mathf.Lerp(_currentScale.y, _originalScale.y, Time.deltaTime * 2.0f);
+		_currentScale.z = Mathf.Lerp(_currentScale.z, _originalScale.z, Time.deltaTime * 2.0f);
 
 		transform.localScale = _currentScale;
 

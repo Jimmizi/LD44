@@ -11,7 +11,7 @@ public class ActorMovement : MonoBehaviour
 {
 	public Vector2 Direction;
 	public int DirectionFacing = 1; //-1 for Left, 1 for right
-	
+	private bool _waitForScaleIn = true;
 
 	private Rigidbody2D _rigidbodyRef = null;
 	private ActionManager _actionManager = null;
@@ -76,6 +76,17 @@ public class ActorMovement : MonoBehaviour
 			_animatorRef?.SetBool("Moving", false);
 		}
 
-		transform.localScale = new Vector3(-DirectionFacing, 1, 1);
+		if (_waitForScaleIn)
+		{
+			if (GetComponent<JustSpawnedSize>() == null)
+			{
+				_waitForScaleIn = false;
+			}
+		}
+
+		if (DirectionFacing != 0 && !_waitForScaleIn)
+		{
+			transform.localScale = new Vector3(-DirectionFacing, 1, 1);
+		}
 	}
 }
