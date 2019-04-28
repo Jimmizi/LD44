@@ -16,15 +16,23 @@ public class StartOptions : MonoBehaviour {
     public Image fadeImage;                                             //Reference to image used to fade out before changing scenes
 
 	[HideInInspector] public bool inMainMenu = true;					//If true, pause button disabled in main menu (Cancel in input manager, default escape key)
-	[HideInInspector] public AnimationClip fadeAlphaAnimationClip;		//Animation clip fading out UI elements alpha
+	[HideInInspector] public AnimationClip fadeAlphaAnimationClip;      //Animation clip fading out UI elements alpha
 
+	private bool _doingFadeIn = true;
+	private bool _doingFadeOut = false;
+	private bool _startedExitFade = false;
+	private bool _goingToPlay;
+	private TransitionFade _fader;
 
 	private PlayMusic playMusic;										//Reference to PlayMusic script
 	private float fastFadeIn = .01f;									//Very short fade time (10 milliseconds) to start playing music immediately without a click/glitch
 	private ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
     private CanvasGroup menuCanvasGroup;
 
-
+    void Start()
+    {
+	    _fader = GameObject.FindObjectOfType<TransitionFade>();
+	}
     void Awake()
 	{
 		//Get a reference to ShowPanels attached to UI object
@@ -39,9 +47,40 @@ public class StartOptions : MonoBehaviour {
         fadeImage.color = menuSettingsData.sceneChangeFadeColor;
 	}
 
+    void Update()
+    {
+	    if (_fader)
+	    {
+		    if (_doingFadeIn && !_doingFadeOut)
+		    {
+			    _doingFadeIn = !_fader.DoFadeIn(2.0f);
+		    }
+		    if (_doingFadeOut && !_doingFadeIn)
+		    {
+			    _doingFadeOut = !_fader.DoFadeOut(2.0f);
+		    }
+	    }
 
+	    if (_startedExitFade)
+	    {
+		    StartButtonClicked();
+
+	    }
+
+	}
 	public void StartButtonClicked()
 	{
+		if (_doingFadeIn || _doingFadeOut || _goingToPlay)
+		{
+			return;
+		}
+		if (!_startedExitFade)
+		{
+			_startedExitFade = true;
+			_doingFadeOut = true;
+			return;
+		}
+
 		//If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic
 		//To change fade time, change length of animation "FadeToColor"
 		if (menuSettingsData.musicLoopToChangeTo != null) 
@@ -65,6 +104,8 @@ public class StartOptions : MonoBehaviour {
 			//Call the StartGameInScene function to start game without loading a new scene.
 			StartGameInScene();
 		}
+
+		_goingToPlay = true;
 
 	}
 
