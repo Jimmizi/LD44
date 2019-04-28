@@ -18,7 +18,7 @@ public class StartOptions : MonoBehaviour {
 	[HideInInspector] public bool inMainMenu = true;					//If true, pause button disabled in main menu (Cancel in input manager, default escape key)
 	[HideInInspector] public AnimationClip fadeAlphaAnimationClip;      //Animation clip fading out UI elements alpha
 
-	private bool _doingFadeIn = true;
+	private bool _doingFadeIn = false;
 	private bool _doingFadeOut = false;
 	private bool _startedExitFade = false;
 	private bool _goingToPlay;

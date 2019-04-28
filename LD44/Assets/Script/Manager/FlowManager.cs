@@ -35,6 +35,7 @@ public class FlowManager : MonoBehaviour
 	}
 
 	public bool DebugStraightToGameplay;
+	public bool ThisIsTheTitleMenu;
 
 	#region Engine facing config
 	
@@ -177,7 +178,7 @@ public class FlowManager : MonoBehaviour
 		_npcManagerRef = GetComponent<FriendlyNPCManager>();
 		_fader = GameObject.FindObjectOfType<TransitionFade>();
 
-		RoundTimerText.gameObject.SetActive(false);
+		RoundTimerText?.gameObject.SetActive(false);
 
 		Debug.Assert(_spawnerRef != null, "Did not have a spawner in the level.");
 		Debug.Assert(_mainCameraRef != null, "Did not have a camera in the level.");
@@ -310,6 +311,11 @@ public class FlowManager : MonoBehaviour
 	{
 		HandleEnemySpawning();
 
+		if (ThisIsTheTitleMenu)
+		{
+			_currentState = LevelState.Update;
+			return;
+		}
 		if (DebugStraightToGameplay)
 		{
 			_currentState = LevelState.PlayerInit;
@@ -419,6 +425,11 @@ public class FlowManager : MonoBehaviour
 
 	void StateUpdate()
 	{
+		if (ThisIsTheTitleMenu)
+		{
+			return;
+		}
+
 		//Keep the objective text only for so long and then fade it out
 		if (_objectiveTextToGameplayDuration > 0.0f)
 		{
