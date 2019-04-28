@@ -30,8 +30,11 @@ public class KillActor : MonoBehaviour
 	    {
 		    return;
 	    }
-	    
-	    foreach (Component component in gameObject.GetComponents<Component>())
+
+        if (GetComponent<ActorStats>().Infected)
+            GameManager.InfectedCellDies();
+
+        foreach (Component component in gameObject.GetComponents<Component>())
 	    {
 		    ActorMovement av = component as ActorMovement;
 		    ActionManager am = component as ActionManager;
@@ -101,10 +104,6 @@ public class KillActor : MonoBehaviour
 				}
 			}
 
-	        if (GetComponent<ActorStats>().Infected)
-	            GameManager.InfectedCellDies();
-
-			//Destroy(gameObject);
 			TriggerVisuals();
 	    }
     }
