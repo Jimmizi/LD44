@@ -49,6 +49,8 @@ public class ActorStats : MonoBehaviour
 	/// </summary>
 	public GameObject BeingInfectedBy;
 
+    public int cloningRate = 10;
+
 	private const int EXTRA_HEALTH_INTRODUCED_AT_DIFFICULTY_LEVEL = 3;
 	private const int EXTRA_HEALTH_PER_DIFFICULTY_STEP = 10;
 
@@ -92,12 +94,11 @@ public class ActorStats : MonoBehaviour
 
 	public void ApplyPlayerStats()
 	{
-		//Might want to call a reset stats function, any NPC can become the player
-	}
+	    UpgradeEffectManager.ApplyPermanentUpgrades(this);
+    }
 
 	public void ApplyFriendlyStats()
 	{
-		//Might want to call a reset stats function, any NPC can become a friendly
-	}
-
+	    UpgradeEffectManager.ApplyPermanentUpgrades(this);
+    }
 }
