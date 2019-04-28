@@ -3143,7 +3143,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851920359}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.153, y: -3.143, z: 0.9}
+  m_LocalPosition: {x: -0.062, y: -3.538, z: 0.9}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2093533713}
@@ -8316,6 +8316,11 @@ PrefabInstance:
         type: 3}
       propertyPath: EnemyList.Array.data[2].TimesToTrySpawnIncreasePerDifficultyLevel
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: NextScene
+      value: ThirdLevel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc2d04ad753996e4e89f1351d01a66a5, type: 3}

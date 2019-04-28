@@ -2762,7 +2762,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1848686569}
+  - {fileID: 1265255892}
   - {fileID: 857665330}
   - {fileID: 1897596004}
   m_Father: {fileID: 0}
@@ -4783,6 +4783,92 @@ Transform:
   m_Father: {fileID: 889429836}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1265255890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1265255892}
+  - component: {fileID: 1265255891}
+  - component: {fileID: 1848686567}
+  m_Layer: 0
+  m_Name: Level Director
+  m_TagString: FlowManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1265255891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265255890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 518ddbe7ae51fcd4e8fd75847fc1a35c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugStraightToGameplay: 0
+  SpawnInTargetPrefab: {fileID: 7485585363705099457, guid: 9965327771d66174c84a56334411ca58,
+    type: 3}
+  CurrentPlayerGameObject: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
+    type: 3}
+  DummyControllerForPlacementCamera: {fileID: 755506794860714621, guid: 657e6c858fb22c344b9235c89947dcc2,
+    type: 3}
+  GameObjectiveText: {fileID: 1536936523}
+  RoundTimerText: {fileID: 1870021179}
+  EnemyList:
+  - Prefab: {fileID: 4999915037488276507, guid: 83d4bb32180f16644b858c1207472a7f,
+      type: 3}
+    Type: 0
+    BaseSpawnChance: 100
+    SpawnIncreasePerDifficultyLevel: 0
+    DifficultyLevelToSpawn: 1
+    BaseTimesToTryAndSpawn: 2
+    TimesToTrySpawnIncreasePerDifficultyLevel: 0.4
+    OnlySpawnOnce: 0
+  - Prefab: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,
+      type: 3}
+    Type: 1
+    BaseSpawnChance: 50
+    SpawnIncreasePerDifficultyLevel: 10
+    DifficultyLevelToSpawn: 2
+    BaseTimesToTryAndSpawn: 2
+    TimesToTrySpawnIncreasePerDifficultyLevel: 1
+    OnlySpawnOnce: 0
+  - Prefab: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
+      type: 3}
+    Type: 2
+    BaseSpawnChance: 25
+    SpawnIncreasePerDifficultyLevel: 15
+    DifficultyLevelToSpawn: 3
+    BaseTimesToTryAndSpawn: 2
+    TimesToTrySpawnIncreasePerDifficultyLevel: 0
+    OnlySpawnOnce: 1
+  RoundTimer: 60
+  DifficultyMod: 0.5
+  DifficultyIncreaseAfterRound: 1
+  NextScene: SecondLevel
+  NextSceneAtDifficultyLevel: 1
+--- !u!4 &1265255892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265255890}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 742564899}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1280882829
 GameObject:
   m_ObjectHideFlags: 0
@@ -6676,19 +6762,13 @@ Transform:
   m_Father: {fileID: 3605883}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1848686566 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9074814640462022848, guid: cc2d04ad753996e4e89f1351d01a66a5,
-    type: 3}
-  m_PrefabInstance: {fileID: 9074814639470710034}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1848686567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1848686566}
+  m_GameObject: {fileID: 1265255890}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbccb77311b283c4b8744efe528b8261, type: 3}
@@ -6698,12 +6778,6 @@ MonoBehaviour:
     type: 3}
   FriendliesList: []
   FriendliesLeftText: {fileID: 1779093105}
---- !u!4 &1848686569 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-    type: 3}
-  m_PrefabInstance: {fileID: 9074814639470710034}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1858659673 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1434146103320491794, guid: 73ccb6792ccd66548a3d16ed31b8b98e,
@@ -8056,266 +8130,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73ccb6792ccd66548a3d16ed31b8b98e, type: 3}
---- !u!1001 &9074814639470710034
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 742564899}
-    m_Modifications:
-    - target: {fileID: 9074814640462022848, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_Name
-      value: Level Director
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022848, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_TagString
-      value: FlowManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022854, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: SpawnInTargetPrefab
-      value: 
-      objectReference: {fileID: 7485585363705099457, guid: 9965327771d66174c84a56334411ca58,
-        type: 3}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: CurrentPlayerGameObject
-      value: 
-      objectReference: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
-        type: 3}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: DummyControllerForPlacementCamera
-      value: 
-      objectReference: {fileID: 755506794860714621, guid: 657e6c858fb22c344b9235c89947dcc2,
-        type: 3}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: GameObjectiveText
-      value: 
-      objectReference: {fileID: 1536936523}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: DebugStraightToGameplay
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: Difficulty
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: RoundTimerText
-      value: 
-      objectReference: {fileID: 1870021179}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: RoundTimer
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: NumberOfNeutralEnemies
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: NumberOfHostileEnemies
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: HostileEnemyGameObject
-      value: 
-      objectReference: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,
-        type: 3}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: NeutralEnemyGameObject
-      value: 
-      objectReference: {fileID: 4999915037488276507, guid: 83d4bb32180f16644b858c1207472a7f,
-        type: 3}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: NeutralEnemiesModifier
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: HostileEnemiesModifier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: HostileSweeperGameObject
-      value: 
-      objectReference: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
-        type: 3}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[0].Prefab
-      value: 
-      objectReference: {fileID: 4999915037488276507, guid: 83d4bb32180f16644b858c1207472a7f,
-        type: 3}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[2].Prefab
-      value: 
-      objectReference: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
-        type: 3}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[1].Prefab
-      value: 
-      objectReference: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,
-        type: 3}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[1].Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[2].Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[0].BaseSpawnChance
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[0].DifficultyLevelToSpawn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[0].BaseTimesToTryAndSpawn
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[0].TimesToTrySpawnIncreasePerDifficultyLevel
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[1].BaseSpawnChance
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[1].SpawnIncreasePerDifficultyLevel
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[1].DifficultyLevelToSpawn
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[1].BaseTimesToTryAndSpawn
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[1].TimesToTrySpawnIncreasePerDifficultyLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[2].BaseSpawnChance
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[2].SpawnIncreasePerDifficultyLevel
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[2].DifficultyLevelToSpawn
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[2].BaseTimesToTryAndSpawn
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[2].OnlySpawnOnce
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
-        type: 3}
-      propertyPath: EnemyList.Array.data[2].TimesToTrySpawnIncreasePerDifficultyLevel
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cc2d04ad753996e4e89f1351d01a66a5, type: 3}

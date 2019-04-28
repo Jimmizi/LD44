@@ -126,6 +126,9 @@ public class FlowManager : MonoBehaviour
 	// On a range of 1 - 10 - This Gets added onto GameManager.Difficulty
 	public int DifficultyIncreaseAfterRound = 1;
 
+	public string NextScene = "";
+	public int NextSceneAtDifficultyLevel = 5;
+
 	#endregion
 
 
@@ -493,7 +496,17 @@ public class FlowManager : MonoBehaviour
 
 	void StateShutdown()
 	{
-		//TODO hand off to the stats system
+		if (GameManager.Difficulty >= NextSceneAtDifficultyLevel)
+		{
+			//Next level, reset difficulty
+			UpgradeNextScene.NextSceneToUse = NextScene;
+			GameManager.Difficulty = 1;
+		}
+		else
+		{
+			UpgradeNextScene.NextSceneToUse = SceneManager.GetActiveScene().name;
+		}
+		
 		SceneManager.LoadScene(LEVEL_COMPLETE_SCENE);
 	}
 
