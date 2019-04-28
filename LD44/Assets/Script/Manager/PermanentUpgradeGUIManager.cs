@@ -11,6 +11,8 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
 
     public Text cellsCounter;
 
+    private int endOfRoundCellReward = 10;
+
     void Awake()
     {
         PermanentUpgradeManager.damageUpgrade.upgradeObject = damageUpgradeObject;
@@ -20,6 +22,8 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.InfectedCellsCount += endOfRoundCellReward;
+
         SetUpGUI(GameManager.InfectedCellsCount);
     }
 
