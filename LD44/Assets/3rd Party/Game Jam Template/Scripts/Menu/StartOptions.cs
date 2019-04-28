@@ -18,10 +18,13 @@ public class StartOptions : MonoBehaviour {
 	[HideInInspector] public bool inMainMenu = true;					//If true, pause button disabled in main menu (Cancel in input manager, default escape key)
 	[HideInInspector] public AnimationClip fadeAlphaAnimationClip;      //Animation clip fading out UI elements alpha
 
+	private float _waitToFadeMenusInTimer = 2.25f;
 	private bool _doingFadeIn = false;
+	private bool _fadedInMenus = false;
 	private bool _doingFadeOut = false;
-	private bool _startedExitFade = false;
-	private bool _goingToPlay;
+	private bool _startedUiExitFade = false;
+	private bool _startedGameExitFade = false;
+	private bool _uiFadedOut = false;
 	private TransitionFade _fader;
 
 	private PlayMusic playMusic;										//Reference to PlayMusic script
@@ -29,7 +32,9 @@ public class StartOptions : MonoBehaviour {
 	private ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
     private CanvasGroup menuCanvasGroup;
 
-    void Start()
+    public CanvasGroup StartMenuGroup; 
+
+	void Start()
     {
 	    _fader = GameObject.FindObjectOfType<TransitionFade>();
 	}
@@ -45,6 +50,12 @@ public class StartOptions : MonoBehaviour {
         menuCanvasGroup = GetComponent<CanvasGroup>();
 
         fadeImage.color = menuSettingsData.sceneChangeFadeColor;
+        //_doingFadeIn = true;
+
+		if (StartMenuGroup)
+        {
+	        StartMenuGroup.alpha = 0.0f;
+		}
 	}
 
     void Update()
@@ -61,25 +72,45 @@ public class StartOptions : MonoBehaviour {
 		    }
 	    }
 
-	    if (_startedExitFade)
+	    if (_startedUiExitFade)
 	    {
 		    StartButtonClicked();
 
 	    }
 
+	    if (_waitToFadeMenusInTimer > 0.0f)
+	    {
+		    _waitToFadeMenusInTimer -= Time.deltaTime;
+		}
+		
+		if (_waitToFadeMenusInTimer <= 0.0f && !_fadedInMenus)
+	    {
+		    _fadedInMenus = true;
+		    StartCoroutine(FadeCanvasGroupAlpha(0f, 1f, StartMenuGroup, true));
+		}
+
 	}
 	public void StartButtonClicked()
 	{
-		if (_doingFadeIn || _doingFadeOut || _goingToPlay)
+		if (_startedGameExitFade)
 		{
 			return;
 		}
-		if (!_startedExitFade)
+
+		if (!_startedUiExitFade)
 		{
-			_startedExitFade = true;
-			_doingFadeOut = true;
+			StartCoroutine(FadeCanvasGroupAlpha(0f, 1f, fadeOutImageCanvasGroup));
+			_startedUiExitFade = true;
+			
+			//return;
+		}
+
+		if (!_uiFadedOut)
+		{
 			return;
 		}
+
+		//_doingFadeOut = true;
 
 		//If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic
 		//To change fade time, change length of animation "FadeToColor"
@@ -93,9 +124,7 @@ public class StartOptions : MonoBehaviour {
 		{
 			//Use invoke to delay calling of LoadDelayed by half the length of fadeColorAnimationClip
 			Invoke ("LoadDelayed", menuSettingsData.menuFadeTime);
-
-            StartCoroutine(FadeCanvasGroupAlpha(0f, 1f, fadeOutImageCanvasGroup));
-
+			
         } 
 
 		//If changeScenes is false, call StartGameInScene
@@ -105,7 +134,7 @@ public class StartOptions : MonoBehaviour {
 			StartGameInScene();
 		}
 
-		_goingToPlay = true;
+		_startedGameExitFade = true;
 
 	}
 
@@ -146,6 +175,7 @@ public class StartOptions : MonoBehaviour {
 	{
 		//Hide the main menu UI element after fading out menu for start game in scene
 		showPanels.HideMenu();
+		_uiFadedOut = true;
 	}
 
 	public void StartGameInScene()
@@ -163,9 +193,8 @@ public class StartOptions : MonoBehaviour {
         StartCoroutine(FadeCanvasGroupAlpha(1f,0f, menuCanvasGroup));
 	}
 
-    public IEnumerator FadeCanvasGroupAlpha(float startAlpha, float endAlpha, CanvasGroup canvasGroupToFadeAlpha)
+    public IEnumerator FadeCanvasGroupAlpha(float startAlpha, float endAlpha, CanvasGroup canvasGroupToFadeAlpha, bool forMenuFadeIn = false)
     {
-
         float elapsedTime = 0f;
         float totalDuration = menuSettingsData.menuFadeTime;
 
@@ -174,13 +203,26 @@ public class StartOptions : MonoBehaviour {
             elapsedTime += Time.deltaTime;
             float currentAlpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / totalDuration);
             canvasGroupToFadeAlpha.alpha = currentAlpha;
+			
             yield return null;
         }
 
-        HideDelayed();
-        Debug.Log("Coroutine done. Game started in same scene! Put your game starting stuff here.");
+        if (!forMenuFadeIn)
+        {
+	        HideDelayed();
 
-        SceneManager.LoadScene(sceneToStart);
+	        float extraDelay = 1.0f;
+
+	        while (extraDelay > 0.0f)
+	        {
+		        extraDelay -= Time.deltaTime;
+		        yield return null;
+	        }
+
+			Debug.Log("Loading scene " + sceneToStart);
+	        SceneManager.LoadScene(sceneToStart);
+
+        }
 	}
 
 

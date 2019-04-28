@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GameObject = UnityEngine.GameObject;
 
 public class LevelManager : MonoBehaviour
 {
@@ -13,7 +14,22 @@ public class LevelManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-	    SetupHUD();
+	    if (mainCanvas == null)
+	    {
+		    mainCanvas = GameObject.Find("MainCanvas");
+	    }
+
+	    if (gameOverCanvas == null)
+	    {
+		    gameOverCanvas = GameObject.Find("GameOverCanvas");
+	    }
+
+	    if (pauseMenuCanvas == null)
+	    {
+		    pauseMenuCanvas = GameObject.Find("PauseMenuCanvas");
+	    }
+
+		SetupHUD();
     }
 
     void SetupHUD()

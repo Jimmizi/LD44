@@ -144,8 +144,7 @@ public class AttackResolver : MonoBehaviour
 		var infectionChance = UnityEngine.Random.Range(0.0f, 100.0f);
 		var cloningChance = UnityEngine.Random.Range(0.0f, 100.0f);
 		var infectedVictim = (infectionChance <= attackerStats.InfectionChance);
-
-		return ActionManager.AttackResult.VictimInfected;
+		
 		victimStats.Health -= attackerStats.Damage;
 
 		if (victimStats.Health <= 0.0f)

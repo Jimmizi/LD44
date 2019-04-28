@@ -24,6 +24,8 @@ public class PauseLevelManagerFinder : MonoBehaviour
 
     public void ExitButtonPressed()
     {
-	    SceneManager.LoadScene("MenuScene");
+	    Time.timeScale = 1;
+
+		SceneManager.LoadScene("MenuScene");
 	}
 }
