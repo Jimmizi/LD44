@@ -182,10 +182,6 @@ public class ActionManager : MonoBehaviour
 	    {
 		    return Vector2.zero;
 	    }
-	    else if (enemiesToTarget.Count == 1)
-	    {
-		    return enemiesToTarget[0].transform.position;
-	    }
 
 	    foreach (var enemy in enemiesToTarget)
 	    {
@@ -212,9 +208,25 @@ public class ActionManager : MonoBehaviour
 		{
 			attackSpawnPos = TargetLocationForAction;
 		}
+		else if (_attemptingToInfectTarget)
+		{
+			attackSpawnPos = _attemptingToInfectTarget.transform.position;
+		}
 		else
 		{
-			attackSpawnPos = GetNearestPosition(); //(Vector2)transform.position + new Vector2(transform.localScale.x * _moverRef.DirectionFacing, 0.0f);
+			attackSpawnPos = GetNearestPosition(); 
+		}
+
+		if (CurrentAttack == AttackType.Infect)
+		{
+			//If we were about to infect a target and they no longer exist, bail out.
+			//	Others won't be able to attack or target something being infected, but do this just in case
+			if (_attemptingToInfectTarget == null)
+			{
+				_currentAction = ActionType.Idle;
+				_awaitingResult = false;
+				return;
+			}
 		}
 
 		if (attackSpawnPos == Vector2.zero)

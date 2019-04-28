@@ -2446,7 +2446,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848686566}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbccb77311b283c4b8744efe528b8261, type: 3}
   m_Name: 
@@ -3077,7 +3077,7 @@ PrefabInstance:
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
       propertyPath: Difficulty
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
@@ -3092,12 +3092,12 @@ PrefabInstance:
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
       propertyPath: NumberOfNeutralEnemies
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
       propertyPath: NumberOfHostileEnemies
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc2d04ad753996e4e89f1351d01a66a5, type: 3}

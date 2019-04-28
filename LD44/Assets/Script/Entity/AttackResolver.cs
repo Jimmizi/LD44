@@ -62,11 +62,17 @@ public class AttackResolver : MonoBehaviour
 		foreach (var other in contactsList)
 		{
 			//Reached the end of found objects
-			if (other == null || other == CallingGameObject.GetComponent<Collider2D>())
+			if (other == null || CallingGameObject == null || other == CallingGameObject.GetComponent<Collider2D>())
 			{
 				break;
 			}
 
+			//If the invoker of the attack is not being infected, they cannot attack
+			if (CallerStats.BeingInfectedBy != null)
+			{
+				break;
+			}
+			
 			//TODO Picking a target depending on distance (limited by attack range)
 			//TODO Multiple targets possibly if an attack allows for that
 
@@ -95,6 +101,18 @@ public class AttackResolver : MonoBehaviour
 		{
 			return;
 		}
+
+		//Can't (or don't want to) kill a cell in the process of being infected.
+		if (othersStats.BeingInfectedBy != null && !othersStats.Infected)
+		{
+			//But only if we're not the one infecting them
+			if (othersStats.BeingInfectedBy != CallingGameObject)
+			{
+				return;
+			}
+		}
+
+
 
 		_queryResult = ResolveAttack(CallerStats, othersStats);
 

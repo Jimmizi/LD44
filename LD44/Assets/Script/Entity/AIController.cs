@@ -161,10 +161,18 @@ public class AIController : MonoBehaviour
 		foreach (var actor in allActors)
 		{
 			//If the actor we're looking at doesn't have the same stat of infection as me, they are a target
-			if (actor.Infected != _statsRef.Infected)
+			if (actor.Infected == _statsRef.Infected)
 			{
-				enemiesToTarget.Add(actor.gameObject);
+				continue;
 			}
+
+			//Don't pick an actor in the process of being infected
+			if (actor.BeingInfectedBy != null && !actor.Infected)
+			{
+				continue;
+			}
+
+			enemiesToTarget.Add(actor.gameObject);
 		}
 
 		//Exit out if no enemies, if only one just use that
@@ -263,6 +271,16 @@ public class AIController : MonoBehaviour
 		{
 			_moverRef.Direction = Vector2.zero;
 			return;
+		}
+
+		//Retarget if our target has begun being infected, and not by me
+		if (!_waitingOnPathResult && _statsRef.BeingInfectedBy != null && !_statsRef.Infected)
+		{
+			if (_statsRef.BeingInfectedBy != this.gameObject)
+			{
+				ClearTarget();
+				return;
+			}
 		}
 
 		//Retarget if the target is now infected
