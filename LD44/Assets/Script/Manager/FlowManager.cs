@@ -127,6 +127,9 @@ public class FlowManager : MonoBehaviour
 	// On a range of 1 - 10 - This Gets added onto GameManager.Difficulty
 	public int DifficultyIncreaseAfterRound = 1;
 
+	public string NextScene = "";
+	public int NextSceneAtDifficultyLevel = 5;
+
 	#endregion
 
 
@@ -155,6 +158,11 @@ public class FlowManager : MonoBehaviour
 	private float _evaluateRoundOverTimer;
 
 	private float _gameOverTimer;
+	private bool _doingFadeIn = true;
+	private bool _doingFadeOut = false;
+	private bool _startedFailFade = false;
+
+	private TransitionFade _fader;
 
 	public bool IsRoundOver()
 	{
@@ -167,6 +175,7 @@ public class FlowManager : MonoBehaviour
 	    _spawnerRef = GameObject.FindGameObjectWithTag("Manager_Spawnpoints")?.GetComponent<SpawnpointFinder>();
 		_mainCameraRef = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<Camera>();
 		_npcManagerRef = GetComponent<FriendlyNPCManager>();
+		_fader = GameObject.FindObjectOfType<TransitionFade>();
 
 		RoundTimerText.gameObject.SetActive(false);
 
@@ -182,6 +191,20 @@ public class FlowManager : MonoBehaviour
 	
 	void Update()
     {
+	    if (_fader)
+	    {
+		    if (_doingFadeIn && !_doingFadeOut)
+		    {
+			    _doingFadeIn = !_fader.DoFadeIn(2.0f);
+		    }
+		    if (_doingFadeOut && !_doingFadeIn)
+		    {
+			    _doingFadeOut = !_fader.DoFadeOut(2.0f);
+		    }
+		}
+
+
+
         switch(_currentState)
 		{
 			case LevelState.Init:
@@ -470,6 +493,7 @@ public class FlowManager : MonoBehaviour
 	{
 		//TODO: Fade out
 		_currentState = LevelState.Shutdown;
+		_doingFadeOut = true;
 
 		//TODO need to reset this on new stage start
 		GameManager.Difficulty += DifficultyIncreaseAfterRound;
@@ -480,7 +504,12 @@ public class FlowManager : MonoBehaviour
 		if (_gameOverTimer == 0.0f)
 		{
 			GameObject.FindObjectOfType<LevelManager>()?.GameOver();
-			
+		}
+
+		if (!_startedFailFade && _gameOverTimer > 0.5f)
+		{
+			_startedFailFade = true;
+			_doingFadeOut = true;
 		}
 
 		_gameOverTimer += Time.deltaTime;
@@ -500,7 +529,22 @@ public class FlowManager : MonoBehaviour
 
 	void StateShutdown()
 	{
-		//TODO hand off to the stats system
+		if (_doingFadeOut)
+		{
+			return;
+		}
+
+		if (GameManager.Difficulty >= NextSceneAtDifficultyLevel)
+		{
+			//Next level, reset difficulty
+			UpgradeNextScene.NextSceneToUse = NextScene;
+			GameManager.Difficulty = 1;
+		}
+		else
+		{
+			UpgradeNextScene.NextSceneToUse = SceneManager.GetActiveScene().name;
+		}
+		
 		SceneManager.LoadScene(LEVEL_COMPLETE_SCENE);
 	}
 

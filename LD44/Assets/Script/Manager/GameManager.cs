@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     /// <param name="newCellsCount">New number of infected cells</param>
     private static void DestroyCells(int newCellsCount)
     {
-        TemporaryUpgradeManager.singleton.SetUpGUI(newCellsCount);
+        TemporaryUpgradeManager.singleton?.SetUpGUI(newCellsCount);
 
         if (newCellsCount > _infectedCellsCount)
         {
@@ -104,28 +104,36 @@ internal static class Utitilies
 {
     public static T GetCompomentWithName<T>(this GameObject root, string componentName) where T : Component
     {
-        foreach (Transform child in root.transform)
-        {
-            if (child.gameObject.name == componentName)
-            {
-                return child.GetComponent<T>();
-            }
-            else
-            {
-                if (child.childCount == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    T returnObject = GetCompomentWithName<T>(child.gameObject, componentName);
+	    if (root && root.transform)
+	    {
+		    foreach (Transform child in root.transform)
+		    {
+			    if (child.gameObject == null)
+			    {
+				    continue;
+			    }
 
-                    if (returnObject != null)
-                        return returnObject;
-                }
-            }
-        }
+			    if (child.gameObject.name == componentName)
+			    {
+				    return child.GetComponent<T>();
+			    }
+			    else
+			    {
+				    if (child.childCount == 0)
+				    {
+					    return null;
+				    }
+				    else
+				    {
+					    T returnObject = GetCompomentWithName<T>(child.gameObject, componentName);
 
-        return null;
+					    if (returnObject != null)
+						    return returnObject;
+				    }
+			    }
+		    }
+	    }
+
+	    return null;
     }
 }

@@ -59,7 +59,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6910d0e63399e594987ce04a6b4bd58c,
+      objectReference: {fileID: -4419066316000688748, guid: ffdce905748e18a4c9f3e8c5839c771e,
         type: 3}
     - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
@@ -136,6 +136,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836559, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836559, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390341794798836559, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836562, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: Speed
@@ -146,6 +161,11 @@ PrefabInstance:
       propertyPath: CurrentAttack
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6729527464554533771, guid: 6daae1d9d9b0c634a828368c2ad46646,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: dfe505c8fe1f1aa4fbead464532ac0e3, type: 2}
     m_RemovedComponents:
     - {fileID: 1390341794798836553, guid: 6daae1d9d9b0c634a828368c2ad46646, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6daae1d9d9b0c634a828368c2ad46646, type: 3}
