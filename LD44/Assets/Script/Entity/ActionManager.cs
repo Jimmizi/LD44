@@ -161,12 +161,13 @@ public class ActionManager : MonoBehaviour
 	    {
 		    return Vector2.zero;
 	    }
-
+		List<float> distances = new  List<float>();
 	    foreach (var enemy in enemiesToTarget)
 	    {
 		    var distance = ((Vector2)enemy.transform.position - (Vector2)this.transform.position).magnitude;
+		    distances.Add(distance);
 
-		    if (distance < _statsRef.AttackRange)
+			if (distance < _statsRef.AttackRange)
 		    {
 			    return enemy.transform.position;
 

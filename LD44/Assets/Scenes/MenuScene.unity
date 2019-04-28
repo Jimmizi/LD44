@@ -755,7 +755,7 @@ GameObject:
   - component: {fileID: 258389644}
   - component: {fileID: 258389643}
   m_Layer: 5
-  m_Name: Alterns
+  m_Name: ndsn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -813,7 +813,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Alterns
+  m_Text: ndsn
 --- !u!222 &258389644
 CanvasRenderer:
   m_ObjectHideFlags: 0

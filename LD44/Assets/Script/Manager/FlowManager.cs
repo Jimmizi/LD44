@@ -18,8 +18,8 @@ public class FlowManager : MonoBehaviour
 	private const string LEVEL_COMPLETE_SCENE = "BetweenStagesScene";
 	private const string LEVEL_FAILED_SCENE = "MenuScene";
 
-	private const float OBJECTIVE_TEXT_ROUND_START_DURATION_TIME = 10.0f;
-	private const float OBJECTIVE_TEXT_ROUND_START_FADE_OUT_TIME = 2.0f;
+	private const float OBJECTIVE_TEXT_ROUND_START_DURATION_TIME = 6.0f;
+	private const float OBJECTIVE_TEXT_ROUND_START_FADE_OUT_TIME = 3.0f;
 
 
 	public enum LevelState
@@ -130,6 +130,9 @@ public class FlowManager : MonoBehaviour
 
 	public string NextScene = "";
 	public int NextSceneAtDifficultyLevel = 5;
+	
+	[SerializeField]
+	public List<string> ObjectiveTexts = new List<string>();
 
 	#endregion
 
@@ -339,7 +342,7 @@ public class FlowManager : MonoBehaviour
 			AssignCameraToFollow(_currentDummyPlayer);
 		}
 
-		GameObjectiveText.text = "Pick a spawn point.";
+		GameObjectiveText.text = "Pick the infection point";
 		GameObjectiveText.gameObject.transform.parent.gameObject.SetActive(true);
 
 		_currentState = LevelState.Placement;
@@ -401,10 +404,18 @@ public class FlowManager : MonoBehaviour
 		// Assign the camera to follow the actual player now
 		AssignCameraToFollow(_currentPlayer, true);
 
-		//TODO Extra player init here (HUD, extra bodies)
-
-		GameObjectiveText.text = "Survive.";
-
+		if (ObjectiveTexts.Count > 0)
+		{
+			if ((GameManager.Difficulty - 1) < ObjectiveTexts.Count)
+			{
+				GameObjectiveText.text = ObjectiveTexts[(GameManager.Difficulty - 1)];
+			}
+			else
+			{
+				GameObjectiveText.text = ObjectiveTexts[Random.Range(0, ObjectiveTexts.Count)];
+			}
+		}
+		
 		for (int i = 0; i < RoundTimerText.gameObject.transform.parent.childCount; i++)
 		{
 			RoundTimerText.gameObject.transform.parent.GetChild(i).gameObject.SetActive(true);
