@@ -47,15 +47,7 @@ public class ActorMovement : MonoBehaviour
 	    }
 
 	    var tempSpeed = _statsRef.MovementSpeed;
-
-	    if (_aiController)
-	    {
-		    if (_aiController.ShouldRunFaster())
-		    {
-			    tempSpeed *= 1.5f;
-
-		    }
-	    }
+		
 
 		_rigidbodyRef.velocity = Direction * tempSpeed;
 
