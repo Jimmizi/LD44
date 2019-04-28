@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 8736139691342441652}
   - component: {fileID: 8441199697852447088}
   - component: {fileID: -4270684100790205124}
+  - component: {fileID: -3934425740375618353}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -201,6 +202,12 @@ MonoBehaviour:
   Neutral: 0
   BeingInfectedBy: {fileID: 0}
   UsesAoeAttack: 0
+  ExtraHealthIntroducedAtDifficultyLevel: 3
+  ExtraHealthPerDifficultyStep: 10
+  ExtraDamageIntroducedAtDifficultyLevel: 2
+  ExtraDamagePerDifficultyStep: 5
+  ExtraAttackSpeedIntroducedAtDifficultyLevel: 4
+  ExtraAttackSpeedPerDifficultyStep: 0.025
 --- !u!114 &8441199697852447088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,4 +233,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _particleSystemPrefab: {fileID: 8105136588191558817, guid: 3b1d90a5e91584a42af4e37785338bf6,
+    type: 3}
+--- !u!114 &-3934425740375618353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390341794798836563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c680555c1fb8248dba8de132b6197ef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleSystemPrefab: {fileID: 8105136588191558817, guid: 143dcce1bea2640c0b4f611a7db24d84,
     type: 3}

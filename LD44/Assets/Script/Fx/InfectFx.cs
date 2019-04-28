@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Fx
 {
 
-    public class DeceaseFx : MonoBehaviour
+    public class InfectFx : MonoBehaviour
     {
 
         [SerializeField] private ParticleSystem _particleSystemPrefab;
@@ -43,11 +43,12 @@ namespace Fx
             
             if (_triggered && _particleSystem != null)
             {
-                
+                                
                 if (!_particleSystem.IsAlive() && _callback != null)
                 {
                     _callback();
                     _callback = null;
+                    _particleSystem.Stop();
                 }
                 
                 
@@ -56,6 +57,7 @@ namespace Fx
                     _particleSystem.Stop();
                 }*/
 
+                
             }
 
         }
