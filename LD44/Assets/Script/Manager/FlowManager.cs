@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Data;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -255,6 +256,12 @@ public class FlowManager : MonoBehaviour
 			var tempStats = tempEnemy.GetComponent<ActorStats>();
 			if (tempStats)
 			{
+				
+				DataController dataController = DataController.GetInstance();
+				if (dataController)
+				{
+					dataController.initActorFromType(tempStats, data.Type);
+				}
 				tempStats.SetupDifficulty(GameManager.Difficulty, DifficultyMod);
 			}
 

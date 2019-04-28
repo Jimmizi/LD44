@@ -57,11 +57,36 @@ namespace Pathfinding
                     
                     Vector2 worldPoint2 = new Vector2(worldPoint3.x, worldPoint3.y);
 
+                    
                     bool obstructed = (Physics2D.OverlapCircle(worldPoint2, nodeRadius, obstaclesMask) != null);
                     
                     _nodes[x, y] = new Node(obstructed, worldPoint3, x, y);
                 }
             }
+            
+        }
+
+        public void DetectObstacles()
+        {
+            
+            Vector3 bottomLeft = transform.position - 
+                                 Vector3.right * gridSize.x * 0.5f - 
+                                 Vector3.up * gridSize.y * 0.5f;
+            
+            for (int x = 0; x < _sizeX; x++)
+            {
+                for (int y = 0; y < _sizeY; y++)
+                {
+                    Vector3 worldPoint3 = bottomLeft +
+                                          Vector3.right * (x * _nodeDiameter + nodeRadius) +
+                                          Vector3.up * (y * _nodeDiameter + nodeRadius);
+
+                    Vector2 worldPoint2 = new Vector2(worldPoint3.x, worldPoint3.y);
+                    
+                    _nodes[x, y].obstructed = (Physics2D.OverlapCircle(worldPoint2, nodeRadius, obstaclesMask) != null);
+                }
+            }
+
         }
 
         public List<Node> GetNeighbours(Node node)

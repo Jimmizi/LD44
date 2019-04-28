@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Data;
 using UnityEngine;
 
 public class ActorStats : MonoBehaviour
@@ -134,11 +135,23 @@ public class ActorStats : MonoBehaviour
 
 	public void ApplyPlayerStats()
 	{
+		DataController dataController = DataController.GetInstance();
+		if (dataController != null)
+		{
+			dataController.initActorFromType(this, 4);	
+		}
+		
 	    UpgradeEffectManager.ApplyPermanentUpgrades(this);
     }
 
 	public void ApplyFriendlyStats()
 	{
+		DataController dataController = DataController.GetInstance();
+		if (dataController != null)
+		{
+			dataController.initActorFromType(this, 3);	
+		}
+		
 	    UpgradeEffectManager.ApplyPermanentUpgrades(this);
     }
 }

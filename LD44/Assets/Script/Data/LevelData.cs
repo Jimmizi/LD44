@@ -60,39 +60,39 @@ namespace Data
     }
 
     [System.Serializable]
-    public struct Spawn
+    public class Spawn
     {
-        public EnemyType type;
+        public EnemyType type = EnemyType.Neutral;
 
         /// <summary>
         /// The base chance to spawn this in
         /// </summary>
-        public int baseSpawnChance;
+        public int baseSpawnChance = 100;
 
         /// <summary>
         /// Extra difficulty levels above the DifficultyLevelToSpawn level add onto the chance to spawn
         /// </summary>
-        public int spawnIncreasePerDifficultyLevel;
+        public int spawnIncreasePerDifficultyLevel = 0;
 
         /// <summary>
         /// The difficulty level of the stage needed before we start trying to spawn things in
         /// </summary>
-        public int difficultyLevelToSpawn;
+        public int difficultyLevelToSpawn = 1;
 
         /// <summary>
         /// How many times to try and spawn
         /// </summary>
-        public int baseTimesToTryAndSpawn;
+        public int baseTimesToTryAndSpawn = 2;
 
         /// <summary>
         /// How many times to try and spawn
         /// </summary>
-        public float timesToTrySpawnIncreasePerDifficultyLevel;
+        public float timesToTrySpawnIncreasePerDifficultyLevel = 0.4f;
 
         /// <summary>
         /// If a chance spawns one, don't try to spawn any more
         /// </summary>
-        public bool onlySpawnOnce;
+        public bool onlySpawnOnce = false;
     }
 
     
@@ -102,7 +102,12 @@ namespace Data
         public Obstacle[] obstacles;
         public SpawnPoint[] spawnPoints;
         
-        public Actor actor;
+        public Actor actorNeutral;
+        public Actor actorHostile;
+        public Actor actorSweeper;
+        public Actor actorFriendly;
+        public Actor actorPlayer;
+        
         public Spawn[] spawns;
         
         public int difficulty = 1;

@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Pathfinding;
 using UnityEditor;
 
 
@@ -12,16 +13,30 @@ namespace Data
     public class DataController : MonoBehaviour
     {
 
-        private string levelDataFilename = "data.json";
 
         public GameObject obstaclePrefab;
         public GameObject spawnPointPrefab;
         public GameObject spawnPrefab;
 
+        private string _levelDataFilename = "data.json";
+        private bool _obstaclesAdded = false;
+        private LevelData _currentLevel;
+        private Actor[] _actorTypes;
+        
         void Start()
         {
             DontDestroyOnLoad(gameObject);
             LoadLevelData();
+        }
+
+        void Update()
+        {
+            if (_obstaclesAdded)
+            {
+                RegenerateGrid();
+                _obstaclesAdded = false;
+            }
+            
         }
 
         List<GameObject> FindAllPrefabInstances(UnityEngine.Object myPrefab)
@@ -40,6 +55,36 @@ namespace Data
             return result;
         }
 
+        private void initActor(ActorStats stats, Actor actor)
+        {
+            stats.Health = actor.health;
+            stats.Damage = actor.damage;
+            stats.MovementSpeed = actor.movementSpeed;
+            stats.AttackSpeed = actor.attackSpeed;
+            stats.AttackRange = actor.attackRange;
+        }
+    
+        public void initActorFromType(ActorStats stats, FlowManager.EnemyType enemyType)
+        {
+            int ix = (int) enemyType;
+            if (_actorTypes != null && ix < _actorTypes.Length) initActor(stats, _actorTypes[ix]);
+            
+        }
+        
+        public void initActorFromType(ActorStats stats, int ix)
+        {
+            if (_actorTypes != null && ix < _actorTypes.Length) initActor(stats, _actorTypes[ix]);            
+        }
+        
+        private void RegenerateGrid()
+        {
+            GridGenerator generator = GridGenerator.GetInstance();
+            if (generator != null)
+            {
+                generator.DetectObstacles();
+            }
+        }
+        
         private void GenerateLevel(LevelData levelData)
         {
 
@@ -50,9 +95,12 @@ namespace Data
             {
                 foreach (Obstacle obstacle in levelData.obstacles)
                 {
-                    GameObject newObstacle = Instantiate(obstaclePrefab, new Vector3(obstacle.x, obstacle.y, 0), Quaternion.identity) as GameObject;  // instatiate the object
+                    GameObject newObstacle = Instantiate(obstaclePrefab, new Vector3(obstacle.x, obstacle.y, 0), Quaternion.identity) as GameObject;
                     newObstacle.transform.localScale = new Vector3(obstacle.width, obstacle.height, 1);
                 }
+
+
+                _obstaclesAdded = true;
             }
 
             if (levelData.spawnPoints != null && spawnPointPrefab != null)
@@ -64,7 +112,7 @@ namespace Data
                 }
             }
 
-            if (levelData.actor != null)
+            /*if (levelData.actor != null)
             {
                 ActorStats[] actors = GameObject.FindObjectsOfType<ActorStats>() as ActorStats[];
                 
@@ -81,7 +129,7 @@ namespace Data
                     }
                 }
 
-            }
+            }*/
 
             if (levelData.spawns != null && flowManager != null && spawnPrefab != null)
             {
@@ -107,12 +155,22 @@ namespace Data
         
         private void LoadLevelData()
         {
-           string filePath = Path.Combine(Application.streamingAssetsPath, levelDataFilename);
+           string filePath = Path.Combine(Application.streamingAssetsPath, _levelDataFilename);
 
             if (File.Exists(filePath))
             {
                 string dataAsJson = File.ReadAllText(filePath);
-                LevelData loadedData = JsonUtility.FromJson<LevelData>(dataAsJson);            
+                LevelData loadedData = JsonUtility.FromJson<LevelData>(dataAsJson);
+                _currentLevel = loadedData;
+                _actorTypes = new Actor[]
+                {
+                    loadedData.actorNeutral,
+                    loadedData.actorHostile,
+                    loadedData.actorSweeper,
+                    loadedData.actorFriendly,
+                    loadedData.actorPlayer
+                };
+                
                 GenerateLevel(loadedData);
             }
             else
@@ -134,6 +192,19 @@ namespace Data
                 
                 Debug.LogError("Cannot load game data!");
             }
+        }
+        
+        // Singleton
+        private static DataController _instance;
+        
+        public static DataController GetInstance()
+        {
+            return _instance;
+        }
+
+        void Awake()
+        {
+            _instance = this;
         }
     }
 }

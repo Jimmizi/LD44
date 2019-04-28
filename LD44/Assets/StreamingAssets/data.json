@@ -1,8 +1,8 @@
 {
 	"obstacles": [
 		{
-			"x": 0.0,
-			"y": 0.0,
+			"x": -2.0,
+			"y": -2.0,
 			"width": 2.0,
 			"height": 4.0,
 			"enabled": true
@@ -14,9 +14,37 @@
 			"y": 0.0
 		}
 	],
-	"actor": {
-		"health": 100,
+	"actorNeutral": {
+		"health": 50,
 		"damage": 20,
+		"movementSpeed": 0.5,
+		"attackSpeed": 0.25,
+		"attackRange": 0.425
+	},
+	"actorHostile": {
+		"health": 100,
+		"damage": 40,
+		"movementSpeed": 0.5,
+		"attackSpeed": 0.25,
+		"attackRange": 0.425
+	},
+	"actorSweeper": {
+		"health": 50,
+		"damage": 10,
+		"movementSpeed": 0.5,
+		"attackSpeed": 0.25,
+		"attackRange": 0.425
+	},
+	"actorFriendly": {
+		"health": 100,
+		"damage": 40,
+		"movementSpeed": 0.5,
+		"attackSpeed": 0.25,
+		"attackRange": 0.425
+	},
+	"actorPlayer": {
+		"health": 100,
+		"damage": 90,
 		"movementSpeed": 0.5,
 		"attackSpeed": 0.25,
 		"attackRange": 0.425
