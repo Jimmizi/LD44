@@ -26,7 +26,7 @@ public class KillActor : MonoBehaviour
 
 			if (GetComponent<PlayerController>())
 			{
-				var allActors = GameObject.FindObjectsOfType<ActorStats>().Where(x => x.Infected && x != gameObject).ToArray();
+				var allActors = GameObject.FindObjectsOfType<ActorStats>().Where(x => x.Infected && !x.GetComponent<PlayerController>()).ToArray();
 
 				if (allActors.Length > 0)
 				{
@@ -39,6 +39,7 @@ public class KillActor : MonoBehaviour
 
 					newPlayerActor.gameObject.AddComponent<PlayerController>();
 					newPlayerActor.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32");
+					newPlayerActor.GetComponent<ActorStats>()?.ApplyPlayerStats();
 
 					Camera.main.gameObject.GetComponent<SimpleCameraLerp>().LerpTarget = newPlayerActor.gameObject.transform;
 				}

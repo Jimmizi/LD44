@@ -57,7 +57,8 @@ public class FriendlyNPCManager : MonoBehaviour
 	void Start()
     {
 		FriendlyAttackTypeText.gameObject.transform.parent.gameObject.SetActive(false);
-    }
+		FriendliesLeftText.text = GameManager.InfectedCellsCount.ToString();
+	}
 
 
 	void Update()
@@ -75,8 +76,7 @@ public class FriendlyNPCManager : MonoBehaviour
 
 		if (FriendliesLeftText)
 		{
-			var allActors = GameObject.FindObjectsOfType<ActorStats>().Where(x => x.Infected).ToArray();
-			FriendliesLeftText.text = allActors.Length.ToString();
+			FriendliesLeftText.text = GameManager.InfectedCellsCount.ToString();
 		}
 
 		if (_friendliesLeftToSpawn <= 0)

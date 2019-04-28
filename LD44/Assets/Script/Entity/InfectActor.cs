@@ -40,9 +40,12 @@ public class InfectActor : MonoBehaviour
 			tempController.RespondToInfected();
 		}
 
+		
+
 		if (_done)
 		{
 			//Once done just destroy this script
+			GameManager.InfectedCellsCount++;
 			Destroy(this);
 		}
     }
