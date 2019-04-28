@@ -28,9 +28,9 @@ namespace Audio
 				case EasingType.Cubic: return Power.EaseIn(linearStep, 3);
 				case EasingType.Quartic: return Power.EaseIn(linearStep, 4);
 				case EasingType.Quintic: return Power.EaseIn(linearStep, 5);
+				default: return (float) linearStep;
 			}
 
-			throw new NotImplementedException();
 		}
 
 		public static float EaseOut(double linearStep, EasingType type)
@@ -44,9 +44,9 @@ namespace Audio
 				case EasingType.Cubic: return Power.EaseOut(linearStep, 3);
 				case EasingType.Quartic: return Power.EaseOut(linearStep, 4);
 				case EasingType.Quintic: return Power.EaseOut(linearStep, 5);
+				default: return (float) linearStep;
 			}
 
-			throw new NotImplementedException();
 		}
 
 		public static float EaseInOut(double linearStep, EasingType easeInType, EasingType easeOutType)
@@ -65,9 +65,9 @@ namespace Audio
 				case EasingType.Cubic: return Power.EaseInOut(linearStep, 3);
 				case EasingType.Quartic: return Power.EaseInOut(linearStep, 4);
 				case EasingType.Quintic: return Power.EaseInOut(linearStep, 5);
+				default: return (float) linearStep;
 			}
 
-			throw new NotImplementedException();
 		}
 
 		static class Sine

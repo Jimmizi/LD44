@@ -22,11 +22,11 @@ public class JustSpawnedSize : MonoBehaviour
     void FixedUpdate()
     {
 	    _scaleTimer += Time.deltaTime;
+		
+		_currentScale.x = Mathf.Lerp(_currentScale.x, _originalScale.x, Time.deltaTime * 2.0f);
+		_currentScale.y = Mathf.Lerp(_currentScale.y, _originalScale.y, Time.deltaTime * 2.0f);
 
-	    _currentScale.x = Mathf.Lerp(_currentScale.x, _originalScale.x, Time.deltaTime * 2.0f);
-	    _currentScale.y = Mathf.Lerp(_currentScale.y, _originalScale.y, Time.deltaTime * 2.0f);
-
-	    transform.localScale = _currentScale;
+		transform.localScale = _currentScale;
 
 		if (_scaleTimer >= 2.0f)
 	    {

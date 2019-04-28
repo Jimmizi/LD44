@@ -19,7 +19,7 @@ public class KillActor : MonoBehaviour
         
     }
 
-    private void Kill()
+    private void FxDone()
     {
 	    Destroy(gameObject);
     }
@@ -31,7 +31,10 @@ public class KillActor : MonoBehaviour
 		    return;
 	    }
 
-        if (GetComponent<ActorStats>().Infected)
+	    GetComponent<Animator>()?.SetTrigger("Death");
+
+
+		if (GetComponent<ActorStats>().Infected)
             GameManager.InfectedCellDies();
 
         foreach (Component component in gameObject.GetComponents<Component>())
@@ -58,13 +61,14 @@ public class KillActor : MonoBehaviour
 	    if (cl != null) Destroy(cl);
 	    
 	    DeceaseFx fx = gameObject.GetComponent<DeceaseFx>();
-	    if (fx != null)
+		
+		if (fx != null)
 	    {
-		    fx.Trigger(Kill);
+		    fx.Trigger(FxDone);
 	    }
 	    else
 	    {
-		    Kill();
+		    FxDone();
 	    }
 
 	    _triggered = true;
@@ -76,8 +80,8 @@ public class KillActor : MonoBehaviour
     {
 	    if (_done)
 	    {
-			//TODO Before this point, we will want to spawn other entities, particles, sounds
-
+			// TODO: Before this point, we will want to spawn other entities, particles, sounds
+			TriggerVisuals();
 
 			if (GetComponent<PlayerController>())
 			{
@@ -104,7 +108,7 @@ public class KillActor : MonoBehaviour
 				}
 			}
 
-			TriggerVisuals();
+			
 	    }
     }
 }

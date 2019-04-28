@@ -17,6 +17,7 @@ public class ActorMovement : MonoBehaviour
 	private ActionManager _actionManager = null;
 	private AIController _aiController = null;
 	private ActorStats _statsRef = null;
+	private Animator _animatorRef = null;
 
     void Start()
     {
@@ -30,6 +31,9 @@ public class ActorMovement : MonoBehaviour
 		Debug.Assert(_statsRef != null, "Didn't manage to find a ActorStats.");
 
 		_aiController = GetComponent<AIController>();
+		_animatorRef = GetComponent<Animator>();
+
+		Debug.Assert(_animatorRef != null, "Didn't manage to find a Animator.");
 
 		if (_rigidbodyRef)
 		{
@@ -53,11 +57,11 @@ public class ActorMovement : MonoBehaviour
 		    if (_aiController.ShouldRunFaster())
 		    {
 			    tempSpeed *= 1.15f;
-
 		    }
 	    }
 
-		//Global speed mod
+		//Global speed mod 
+		//Could actually just double the tuning of character speeds if needed
 	    tempSpeed *= 2.0f;
 
 		_rigidbodyRef.velocity = Direction * tempSpeed;
@@ -65,6 +69,13 @@ public class ActorMovement : MonoBehaviour
 		if (Direction.x != 0.0f)
 		{
 			DirectionFacing = Direction.x < 0.0f ? -1 : 1;
+			_animatorRef?.SetBool("Moving", true);
 		}
+		else
+		{
+			_animatorRef?.SetBool("Moving", false);
+		}
+
+		transform.localScale = new Vector3(-DirectionFacing, 1, 1);
 	}
 }
