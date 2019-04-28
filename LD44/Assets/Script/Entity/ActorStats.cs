@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ActorStats : MonoBehaviour
 {
+	#region Tuning - Per actor
+
 	/// <summary>
 	/// How much health does this character have left?
 	/// </summary>
@@ -29,10 +31,21 @@ public class ActorStats : MonoBehaviour
 	/// </summary>
 	public float AttackRange = 0.425f; //a good default melee range
 
+	
+	//NOTE: No longer how infection works
+	//public float InfectionSpeed = 4.5f;
+
 	/// <summary>
-	/// How fast can this character infect another (In seconds)?
+	/// The chance per hit of infecting a target
+	/// Range: 0.0f - 100.0f
 	/// </summary>
-	public float InfectionSpeed = 4.5f;
+	public float InfectionChance = 15.0f;
+
+	/// <summary>
+	/// The chance on killing a target that they clone
+	/// Range: 0.0f - 100.0f
+	/// </summary>
+	public float CloningChance = 5.0f;
 
 	/// <summary>
 	/// Is this character infected?
@@ -49,7 +62,6 @@ public class ActorStats : MonoBehaviour
 	/// </summary>
 	public GameObject BeingInfectedBy;
 
-    public int cloningRate = 10;
 
 	private const int EXTRA_HEALTH_INTRODUCED_AT_DIFFICULTY_LEVEL = 3;
 	private const int EXTRA_HEALTH_PER_DIFFICULTY_STEP = 10;
@@ -62,6 +74,8 @@ public class ActorStats : MonoBehaviour
 
 	private const int EXTRA_MOVEMENT_SPEED_INTRODUCED_AT_DIFFICULTY_LEVEL = 2;
 	private const float EXTRA_MOVEMENT_SPEED_PER_DIFFICULTY_STEP = 0.1f;
+
+	#endregion
 
 	/// <summary>
 	/// Difficulty setup for enemies to the player

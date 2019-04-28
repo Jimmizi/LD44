@@ -12,7 +12,7 @@ public class UpgradeEffectManager : MonoBehaviour
     {
         actorStats.Health += PermanentUpgradeManager.HPUpgrade.stage * HPUpgradeMultiplier;
         actorStats.Damage += PermanentUpgradeManager.damageUpgrade.stage * damageUpgradeMultiplier;
-        actorStats.cloningRate += PermanentUpgradeManager.cloningUpgrade.stage * cloningUpgradeMultiplier;
+        actorStats.CloningChance += PermanentUpgradeManager.cloningUpgrade.stage * cloningUpgradeMultiplier;
     }
 
     public static void ApplyTemporaryUpgrades(Upgrade upgrade)
@@ -30,7 +30,7 @@ public class UpgradeEffectManager : MonoBehaviour
                 infectedCell.Damage += PermanentUpgradeManager.damageUpgrade.CurrentStage * damageUpgradeMultiplier;
 
             if (upgrade == PermanentUpgradeManager.cloningUpgrade)
-                infectedCell.cloningRate += PermanentUpgradeManager.cloningUpgrade.CurrentStage * cloningUpgradeMultiplier;
+                infectedCell.CloningChance += PermanentUpgradeManager.cloningUpgrade.CurrentStage * cloningUpgradeMultiplier;
         }
     }
 }

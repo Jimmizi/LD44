@@ -141,7 +141,7 @@ public class ActionManager : MonoBehaviour
 		    {
 				//TODO Add charge/eating animations to make it visual that an infection is happening
 				
-			    _actionDelay = _statsRef.InfectionSpeed;
+			    //_actionDelay = _statsRef.InfectionSpeed;
 			    CurrentAttack = AttackType.Infect;
 			    _awaitingResult = false;
 

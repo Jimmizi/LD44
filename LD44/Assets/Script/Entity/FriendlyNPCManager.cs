@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
 
 /// <summary>
 /// Script that manages the NPCs friendly to the player
@@ -49,8 +52,20 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	public void SetStartSpawningFriendlies(Vector2 spawnPoint)
 	{
-		
-		_friendliesLeftToSpawn = GameManager.InfectedCellsCount;
+		if (GameManager.InfectedCellsCount == 0)
+		{
+			_friendliesLeftToSpawn = 3;
+		}
+		else
+		{
+			_friendliesLeftToSpawn = GameManager.InfectedCellsCount;
+		}
+		_pointToSpawnAround = spawnPoint;
+	}
+
+	public void SpawnSingleFriendly(Vector2 spawnPoint)
+	{
+		_friendliesLeftToSpawn++;
 		_pointToSpawnAround = spawnPoint;
 	}
 
@@ -81,6 +96,7 @@ public class FriendlyNPCManager : MonoBehaviour
 
 		if (_friendliesLeftToSpawn <= 0)
 		{
+			_friendliesLeftToSpawn = 0;
 			return;
 		}
 
@@ -111,11 +127,14 @@ public class FriendlyNPCManager : MonoBehaviour
 					tempController.SetDesiredAttackType(_aiPreferredAttack);
 					tempController.CurrentTask = AIController.AITask.AttackTarget;
 				}
-
-
+				
 				FriendliesList.Add(tempFriendly);
 				spawnedSuccessfully = true;
+
 				_friendliesLeftToSpawn--;
+				GameManager.InfectedCellsCount++;
+
+				break;
 			}
 		}
 

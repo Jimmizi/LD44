@@ -66,7 +66,7 @@ public class FlowManager : MonoBehaviour
 
 	#endregion
 
-	#region Tuning
+	#region Tuning - per round
 
 	// On a range of 1 - 10 - This Gets added onto GameManager.Difficulty
 	public int Difficulty = 1;

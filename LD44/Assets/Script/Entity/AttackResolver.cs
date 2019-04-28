@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class AttackResolver : MonoBehaviour
 {
@@ -146,55 +147,35 @@ public class AttackResolver : MonoBehaviour
 
 	private ActionManager.AttackResult ResolveAttack(ActorStats attackerStats, ActorStats victimStats)
 	{
-		//var justInfected = false;
-
-
-		//switch (CurrentAttackType)
-		//{
-		//	case ActionManager.AttackType.Lethal:
-		//	{
-		//		victimStats.Health -= attackerStats.Damage;
-
-		//		//var victimActions = victimStats.GetComponent<ActionManager>();
-
-		//		//if (victimActions)
-		//		//{
-		//		//	//If the victim is infecting another, they are vulnerable because of it 
-		//		//	//Could be just and increase of damage if needed
-		//		//	instaKill = victimActions.CurrentAttack == ActionManager.AttackType.Infect;
-		//		//}
-
-		//		break;
-		//	}
-		//		//NOTE: No longer how infection works
-		//		//case ActionManager.AttackType.InfectAttempt:
-		//		//{
-		//		//	CallerInfectionTarget(victimStats.gameObject);
-		//		//	return ActionManager.AttackResult.InfectionInProgress;
-		//		//}
-		//		//case ActionManager.AttackType.Infect:
-		//		//{
-		//		//	victimStats.Infected = true;
-		//		//	justInfected = true;
-		//		//	break;
-		//		//}
-		//}
+		var infectionChance = UnityEngine.Random.Range(0.0f, 100.0f);
+		var cloningChance = UnityEngine.Random.Range(0.0f, 100.0f);
+		var infectedVictim = (infectionChance <= attackerStats.InfectionChance);
+		
 
 		victimStats.Health -= attackerStats.Damage;
 
 		if (victimStats.Health <= 0.0f)
 		{
-			//TODO Chance of infection/cloning
+			if (infectedVictim)
+			{
+				//If infecting on the last hit instead, give the health back
+				victimStats.Health += attackerStats.Damage;
+			}
 
-			return ActionManager.AttackResult.VictimDeath;
+			//Infected attackers have the chance to clone the victim on death
+			if (attackerStats.Infected)
+			{
+				if (cloningChance <= attackerStats.CloningChance)
+				{
+					//TODO make a new friendly
+					GameObject.FindObjectOfType<FriendlyNPCManager>().SpawnSingleFriendly(victimStats.gameObject.transform.position);
+				}
+			}
+			
+			return infectedVictim ? ActionManager.AttackResult.VictimInfected : ActionManager.AttackResult.VictimDeath;
 		}
-		//else if (justInfected)
-		//{
-		//	return ActionManager.AttackResult.VictimInfected;
-		//}
 		
-		
-		return ActionManager.AttackResult.VictimOkay;
+		return infectedVictim ? ActionManager.AttackResult.VictimInfected : ActionManager.AttackResult.VictimOkay;
 	}
 
 	void OnDrawGizmos()

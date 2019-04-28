@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1390341794798836553}
   - component: {fileID: -8990057955013956940}
   - component: {fileID: 8736139691342441652}
+  - component: {fileID: 8441199697852447088}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -158,6 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f8da1cfce2d5c49a7795e4a3b8a327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerAttackTypeText: {fileID: 0}
 --- !u!114 &-8990057955013956940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +193,20 @@ MonoBehaviour:
   MovementSpeed: 1
   AttackSpeed: 0.25
   AttackRange: 0.5
-  InfectionSpeed: 5
+  InfectionChance: 15
+  CloningChance: 5
   Infected: 1
   Neutral: 0
   BeingInfectedBy: {fileID: 0}
+--- !u!114 &8441199697852447088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390341794798836563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 481e95913cbb3184eaf38754eae1c843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
