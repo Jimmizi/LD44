@@ -1,0 +1,39 @@
+{
+	"obstacles": [
+		{
+			"x": 0.0,
+			"y": 0.0,
+			"width": 2.0,
+			"height": 4.0,
+			"enabled": true
+		}
+	],
+	"spawnPoints": [
+		{
+			"x": -4.0,
+			"y": 0.0
+		}
+	],
+	"actor": {
+		"health": 100,
+		"damage": 20,
+		"movementSpeed": 0.5,
+		"attackSpeed": 0.25,
+		"attackRange": 0.425
+	},
+	"spawns": [
+		{
+			"type": 1,
+			"baseSpawnChance": 100,
+			"spawnIncreasePerDifficultyLevel": 0,
+			"difficultyLevelToSpawn": 1,
+			"baseTimesToTryAndSpawn": 2,
+			"timesToTrySpawnIncreasePerDifficultyLevel": 0.4,
+			"onlySpawnOnce": false
+		}
+	],
+	"difficulty": 1,
+	"neutralEnemiesModifier": 1.0,
+	"hostileEnemiesModifier": 0.5,
+	"roundTimer": 60
+}
