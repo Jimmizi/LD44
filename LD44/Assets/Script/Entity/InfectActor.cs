@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Fx;
 using UnityEngine;
 
 /// <summary>
@@ -9,20 +10,50 @@ using UnityEngine;
 public class InfectActor : MonoBehaviour
 {
 	private bool _done = true;
-
+	private bool _triggered = false;
+	
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    private void FxDone()
+    {
+	    
+    }
+    
+    private void TriggerVisuals()
+    {
+	    if (_triggered)
+	    {
+		    return;
+	    }
+
+	    
+	    InfectFx fx = gameObject.GetComponent<InfectFx>();
+	    if (fx != null)
+	    {
+		    fx.Trigger(FxDone);
+	    }
+	    else
+	    {
+		    FxDone();
+	    }
+
+	    _triggered = true;
+
+    }
+
     // Update is called once per frame
     void Update()
     {
 		//TODO Add to player stats
-		//TODO change sprite under like a particle effects hide
 		//TODO Play wololololo sound?
 
+		//TODO change sprite under like a particle effects hide
+		TriggerVisuals();
+		
 		//just a test 
 		this.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32_Friendly");
 

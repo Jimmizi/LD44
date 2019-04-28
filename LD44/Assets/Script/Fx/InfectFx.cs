@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Fx
 {
 
-    public class DeceaseFx : MonoBehaviour
+    public class InfectFx : MonoBehaviour
     {
 
         [SerializeField] private ParticleSystem _particleSystemPrefab;
@@ -13,9 +13,8 @@ namespace Fx
         private ParticleSystem _particleSystem;
         private bool _triggered;
         private Utilities.FxComplete _callback;
-		private float _currentAlpha = 1.0f;
-
-		private void Awake()
+        
+        private void Awake()
         {
             if (_particleSystemPrefab != null)
             {
@@ -44,19 +43,12 @@ namespace Fx
             
             if (_triggered && _particleSystem != null)
             {
-                _currentAlpha -= _particleSystem.main.duration * Time.deltaTime;
-
-				if (this.gameObject.GetComponent<SpriteRenderer>())
-				{
-					var tempColor = this.gameObject.GetComponent<SpriteRenderer>().color;
-					tempColor.a = _currentAlpha;
-					this.gameObject.GetComponent<SpriteRenderer>().color = tempColor;
-				}
-
-				if (!_particleSystem.IsAlive() && _callback != null)
-				{
+                                
+                if (!_particleSystem.IsAlive() && _callback != null)
+                {
                     _callback();
                     _callback = null;
+                    _particleSystem.Stop();
                 }
                 
                 
@@ -65,6 +57,7 @@ namespace Fx
                     _particleSystem.Stop();
                 }*/
 
+                
             }
 
         }
