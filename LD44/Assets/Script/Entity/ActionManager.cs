@@ -167,6 +167,9 @@ public class ActionManager : MonoBehaviour
 	    // Weed out all the same type as me
 	    foreach (var actor in allActors)
 	    {
+
+			if (!actor.Active) continue;
+
 		    //If the actor we're looking at doesn't have the same stat of infection as me, they are a target
 		    if (actor.Infected != _statsRef.Infected)
 		    {

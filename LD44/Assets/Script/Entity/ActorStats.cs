@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ActorStats : MonoBehaviour
 {
+
+	/// <summary>
+	/// Denotes whether this actor participates in simulation.
+	/// </summary>
+	public bool Active = true;
+
 	#region Tuning - Per actor
 
 	/// <summary>
