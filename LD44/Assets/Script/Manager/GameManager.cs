@@ -24,11 +24,6 @@ public class GameManager : MonoBehaviour
 
 	public static LevelManager levelManager;
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         if (Input.GetButtonDown("Pause"))
@@ -64,6 +59,9 @@ public class GameManager : MonoBehaviour
         List<GameObject> infectedCells = FindObjectsOfType<ActorStats>().
                                          Where(x => x.Infected && x.gameObject.GetComponent<PlayerController>() == null).
                                          Select(x => x.gameObject).ToList();
+
+        if (infectedCells.Count == 0) // we are buying permanent upgrade; no actual cell game objects to kill
+            return;
 
         for (int i = 0; i < cellsToKill; i++)
         {

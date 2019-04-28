@@ -47,7 +47,7 @@ public class TemporaryUpgradeManager : MonoBehaviour
             if (upgradeButton)
             {
 	            upgradeButton.interactable = UpgradeCost(upgrade.temporaryStage) <= cells;
-	            upgradeButton.GetComponentInChildren<Text>().text = "" + UpgradeCost(upgrade.temporaryStage);
+	            upgradeButton.GetComponentInChildren<Text>().text = "Cost " + UpgradeCost(upgrade.temporaryStage);
             }
         }
 

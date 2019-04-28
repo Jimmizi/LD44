@@ -10,17 +10,17 @@ public class OnlyShowTextOnHover : MonoBehaviour
 	
     void Start()
     {
-		TextToHide.gameObject.SetActive(false);
+		//TextToHide.gameObject.SetActive(false);
 	}
 
     public void MouseOverEnter(BaseEventData data)
     {
-	    TextToHide.gameObject.SetActive(true);
+	    //TextToHide.gameObject.SetActive(true);
     }
 
     public void MouseOverExit(BaseEventData data)
     {
-		TextToHide.gameObject.SetActive(false);
+		//TextToHide.gameObject.SetActive(false);
 	}
 
 	void Update()

@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    private GameObject mainCanvas;
-    private GameObject gameOverCanvas;
-    private GameObject pauseMenuCanvas;
+    public GameObject mainCanvas;
+    public GameObject gameOverCanvas;
+    public GameObject pauseMenuCanvas;
 
     public bool paused;
 
@@ -18,10 +18,6 @@ public class LevelManager : MonoBehaviour
 
     void SetupHUD()
     {
-	    mainCanvas = GameObject.FindWithTag("MainUICanvas");
-	    gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
-	    pauseMenuCanvas = GameObject.FindWithTag("PauseMenuCanvas");
-
 	    mainCanvas?.SetActive(true);
 	    gameOverCanvas?.SetActive(false);
 	    pauseMenuCanvas?.SetActive(false);
