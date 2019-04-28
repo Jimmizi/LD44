@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 	private Vector2 _playerInput;
 	private ActorMovement _moverRef = null;
 	private ActionManager _actionRef = null;
+	private FlowManager _flowRef = null;
 
 	public Text PlayerAttackTypeText;
 
@@ -28,10 +29,20 @@ public class PlayerController : MonoBehaviour
 
 		PlayerAttackTypeText = GameObject.FindGameObjectWithTag("PlayerAttackType")?.GetComponent<Text>();
 		Debug.Assert(_moverRef != null, "Didn't manage to find a ActionManager.");
+
+		_flowRef = GameObject.FindGameObjectWithTag("FlowManager")?.GetComponent<FlowManager>();
+		Debug.Assert(_flowRef != null, "Didn't manage to find a FlowManager.");
 	}
 	
     void Update()
     {
+	    if (_flowRef && _flowRef.IsRoundOver())
+	    {
+		    _moverRef.Direction = Vector2.zero;
+
+			return;
+	    }
+
         _playerInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 		_moverRef.Direction = _playerInput;
 

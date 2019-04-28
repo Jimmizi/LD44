@@ -49,6 +49,7 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	public void SetStartSpawningFriendlies(Vector2 spawnPoint)
 	{
+		//TODO Need to populate friendly count from somewhere
 		_friendliesLeftToSpawn = 5;
 		_pointToSpawnAround = spawnPoint;
 	}
@@ -100,6 +101,8 @@ public class FriendlyNPCManager : MonoBehaviour
 			{
 				//TODO Nicer spawn in with particles/sound, perhaps a fade in
 				var tempFriendly = (GameObject) Instantiate(FriendlyNPCPrefab, tempRandomSpawnPoint, new Quaternion());
+
+				tempFriendly.GetComponent<ActorStats>()?.ApplyFriendlyStats();
 
 				var tempController = tempFriendly.GetComponent<AIController>();
 

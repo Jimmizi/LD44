@@ -31,6 +31,7 @@ public class InfectActor : MonoBehaviour
 		{
 			tempStats.Infected = true;
 			tempStats.Neutral = false;
+			tempStats.ApplyFriendlyStats();
 		}
 
 		var tempController = this.GetComponent<AIController>();

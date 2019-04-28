@@ -90,4 +90,14 @@ public class ActorStats : MonoBehaviour
 		}
 	}
 
+	public void ApplyPlayerStats()
+	{
+		//Might want to call a reset stats function, any NPC can become the player
+	}
+
+	public void ApplyFriendlyStats()
+	{
+		//Might want to call a reset stats function, any NPC can become a friendly
+	}
+
 }

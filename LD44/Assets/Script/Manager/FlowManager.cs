@@ -15,6 +15,8 @@ using Random = UnityEngine.Random;
 public class FlowManager : MonoBehaviour
 {
 	private const string LEVEL_COMPLETE_SCENE = "BetweenStagesScene";
+	private const string LEVEL_FAILED_SCENE = "MenuScene";
+
 	private const float OBJECTIVE_TEXT_ROUND_START_DURATION_TIME = 10.0f;
 	private const float OBJECTIVE_TEXT_ROUND_START_FADE_OUT_TIME = 2.0f;
 
@@ -26,7 +28,9 @@ public class FlowManager : MonoBehaviour
 		PlayerInit,	// We have our placement, start the stage!
 		Update,		// The update during gameplay, checking if we meet succession criteria
 		StageOver,	// Displays the result of the stage, any states, nice fade out before we're killing everything
+		GameOver,	// We failed and lost the game!
 		Shutdown	// Done with the stage, delete everything and go to the next scene
+		
 	}
 
 	public bool DebugStraightToGameplay;
@@ -97,7 +101,14 @@ public class FlowManager : MonoBehaviour
 	private float _objectiveTextToGameplayDuration;
 	private float _timeSinceRoundStart;
 	private LevelState _currentState;
-	
+	private float _evaluateRoundOverTimer;
+
+	private float _gameOverTimer;
+
+	public bool IsRoundOver()
+	{
+		return _currentState >= LevelState.StageOver;
+	}
 
     
     void Start()
@@ -142,6 +153,11 @@ public class FlowManager : MonoBehaviour
 			case LevelState.StageOver:
 			{
 				StateStageOver();
+				break;
+			}
+			case LevelState.GameOver:
+			{
+				StateGameOver();
 				break;
 			}
 			case LevelState.Shutdown:
@@ -255,6 +271,7 @@ public class FlowManager : MonoBehaviour
 	void StatePlayerInit()
 	{
 		_currentPlayer = (GameObject) Instantiate(CurrentPlayerGameObject, _playerSpawnPosition, new Quaternion());
+		_currentDummyPlayer.GetComponent<ActorStats>()?.ApplyPlayerStats();
 
 		// Assign the camera to follow the actual player now
 		AssignCameraToFollow(_currentPlayer, true);
@@ -262,7 +279,6 @@ public class FlowManager : MonoBehaviour
 		//TODO Extra player init here (HUD, extra bodies)
 
 		GameObjectiveText.text = "Survive.";
-		//RoundTimerText.gameObject.SetActive(true);
 
 		for (int i = 0; i < RoundTimerText.gameObject.transform.parent.childCount; i++)
 		{
@@ -309,6 +325,30 @@ public class FlowManager : MonoBehaviour
 
 		RoundTimerText.text = (RoundTimer - (int) _timeSinceRoundStart).ToString();
 
+		_evaluateRoundOverTimer -= Time.deltaTime;
+		if (_evaluateRoundOverTimer <= 0.0f)
+		{
+			_evaluateRoundOverTimer = 1.5f;
+
+			var allActors = GameObject.FindObjectsOfType<ActorStats>();
+
+			// All Friendlies Dead
+			if (allActors.Where(x => x.Infected).ToArray().Length == 0)
+			{
+				_currentState = LevelState.GameOver;
+				_gameOverTimer = 0.0f;
+				return;
+			}
+
+			//All Enemies Dead
+			if (allActors.Where(x => !x.Infected).ToArray().Length == 0)
+			{
+				_currentState = LevelState.StageOver;
+				return;
+			}
+		}
+
+
 #if UNITY_EDITOR
 		if (Input.GetKeyDown(KeyCode.F1))
 		{
@@ -334,6 +374,21 @@ public class FlowManager : MonoBehaviour
 	{
 		//TODO: Fade out
 		_currentState = LevelState.Shutdown;
+	}
+
+	void StateGameOver()
+	{
+		if (_gameOverTimer == 0.0f)
+		{
+			GameObject.FindObjectOfType<LevelManager>()?.GameOver();
+		}
+
+		_gameOverTimer += Time.deltaTime;
+
+		if (_gameOverTimer >= 4.0f)
+		{
+			SceneManager.LoadScene(LEVEL_FAILED_SCENE);
+		}
 	}
 
 	void StateShutdown()
