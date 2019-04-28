@@ -56,6 +56,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static void InfectedCellDies()
+    {
+        _infectedCellsCount--;
+    }
+
     public static void KillCell(GameObject cell)
     {
         Destroy(cell);
