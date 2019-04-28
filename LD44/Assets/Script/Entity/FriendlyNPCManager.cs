@@ -15,7 +15,7 @@ public class FriendlyNPCManager : MonoBehaviour
 	public GameObject FriendlyNPCPrefab;
 	public List<GameObject> FriendliesList = new List<GameObject>();
 
-	public Text FriendlyAttackTypeText;
+	//public Text FriendlyAttackTypeText;
 	public Text FriendliesLeftText;
 
 	private ActionManager.AttackType _aiPreferredAttack;
@@ -44,7 +44,7 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	public void SetButtonActive()
 	{
-		FriendlyAttackTypeText.gameObject.transform.parent.gameObject.SetActive(true);
+		//FriendlyAttackTypeText.gameObject.transform.parent.gameObject.SetActive(true);
 	}
 
 	public void SetStartSpawningFriendlies(Vector2 spawnPoint)
@@ -56,7 +56,7 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	void Start()
     {
-		FriendlyAttackTypeText.gameObject.transform.parent.gameObject.SetActive(false);
+		//FriendlyAttackTypeText.gameObject.transform.parent.gameObject.SetActive(false);
 		FriendliesLeftText.text = GameManager.InfectedCellsCount.ToString();
 	}
 
@@ -68,10 +68,10 @@ public class FriendlyNPCManager : MonoBehaviour
 		{
 			SwitchPreferredAttackType();
 
-			if (FriendlyAttackTypeText)
-			{
-				FriendlyAttackTypeText.text = "(E) " + (_aiPreferredAttack == ActionManager.AttackType.Lethal ? "Friendlies Prefer Killing" : "Friendlies Prefer Infecting");
-			}
+			//if (FriendlyAttackTypeText)
+			//{
+			//	FriendlyAttackTypeText.text = "(E) " + (_aiPreferredAttack == ActionManager.AttackType.Lethal ? "Friendlies Prefer Killing" : "Friendlies Prefer Infecting");
+			//}
 		}
 
 		if (FriendliesLeftText)

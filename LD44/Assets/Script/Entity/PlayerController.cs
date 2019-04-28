@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
 		_actionRef = GetComponent<ActionManager>();
 		Debug.Assert(_moverRef != null, "Didn't manage to find a ActionManager.");
 
-		PlayerAttackTypeText = GameObject.FindGameObjectWithTag("PlayerAttackType")?.GetComponent<Text>();
-		Debug.Assert(_moverRef != null, "Didn't manage to find a ActionManager.");
+		//PlayerAttackTypeText = GameObject.FindGameObjectWithTag("PlayerAttackType")?.GetComponent<Text>();
+		//Debug.Assert(_moverRef != null, "Didn't manage to find a ActionManager.");
 
 		_flowRef = GameObject.FindGameObjectWithTag("FlowManager")?.GetComponent<FlowManager>();
 		Debug.Assert(_flowRef != null, "Didn't manage to find a FlowManager.");
@@ -46,16 +46,17 @@ public class PlayerController : MonoBehaviour
         _playerInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 		_moverRef.Direction = _playerInput;
 
+		//NOTE: No longer how infection works
 		// Toggle between attack modes
-		if (Input.GetKeyDown(KeyCode.Q))
-		{
-			_actionRef.ToggleAttackMode();
+		//if (Input.GetKeyDown(KeyCode.Q))
+		//{
+		//	_actionRef.ToggleAttackMode();
 
-			if (PlayerAttackTypeText)
-			{
-				PlayerAttackTypeText.text = "(Q) " + (_actionRef.CurrentAttack == ActionManager.AttackType.Lethal ? "Player Attacks Are Lethal" : "Player Attacks Are Infectious");
-			}
-		}
+		//	if (PlayerAttackTypeText)
+		//	{
+		//		PlayerAttackTypeText.text = "(Q) " + (_actionRef.CurrentAttack == ActionManager.AttackType.Lethal ? "Player Attacks Are Lethal" : "Player Attacks Are Infectious");
+		//	}
+		//}
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{

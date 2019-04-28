@@ -8,7 +8,7 @@ public class AttackResolver : MonoBehaviour
 	public ActionManager.cbAttackResolution CallerResultCallback = null;
 	public ActionManager.cbTargetAttemptingToInfect CallerInfectionTarget = null;
 	public bool ReadyForQuery;
-	public ActionManager.AttackType CurrentAttackType;
+	public ActionManager.AttackType CurrentAttackType = ActionManager.AttackType.Lethal;
 	public ActorStats CallerStats;
 
 	public GameObject SpecificTarget = null;
@@ -134,7 +134,8 @@ public class AttackResolver : MonoBehaviour
 				break;
 			case ActionManager.AttackResult.InfectionInProgress:
 				//Tell the other character they're being infected by us
-				othersStats.BeingInfectedBy = CallingGameObject;
+				//NOTE: No longer how infection works
+				//othersStats.BeingInfectedBy = CallingGameObject;
 				break;
 			default:
 				throw new ArgumentOutOfRangeException();
@@ -145,46 +146,52 @@ public class AttackResolver : MonoBehaviour
 
 	private ActionManager.AttackResult ResolveAttack(ActorStats attackerStats, ActorStats victimStats)
 	{
-		var justInfected = false;
-		var instaKill = false;
+		//var justInfected = false;
 
-		switch (CurrentAttackType)
-		{
-			case ActionManager.AttackType.Lethal:
-			{
-				victimStats.Health -= attackerStats.Damage;
-				
-				var victimActions = victimStats.GetComponent<ActionManager>();
 
-				if (victimActions)
-				{
-					//If the victim is infecting another, they are vulnerable because of it 
-					//Could be just and increase of damage if needed
-					instaKill = victimActions.CurrentAttack == ActionManager.AttackType.Infect;
-				}
-				
-				break;
-			}
-			case ActionManager.AttackType.InfectAttempt:
-			{
-				CallerInfectionTarget(victimStats.gameObject);
-				return ActionManager.AttackResult.InfectionInProgress;
-			}
-			case ActionManager.AttackType.Infect:
-			{
-				victimStats.Infected = true;
-				justInfected = true;
-				break;
-			}
-		}
-		if (victimStats.Health <= 0.0f || instaKill)
+		//switch (CurrentAttackType)
+		//{
+		//	case ActionManager.AttackType.Lethal:
+		//	{
+		//		victimStats.Health -= attackerStats.Damage;
+
+		//		//var victimActions = victimStats.GetComponent<ActionManager>();
+
+		//		//if (victimActions)
+		//		//{
+		//		//	//If the victim is infecting another, they are vulnerable because of it 
+		//		//	//Could be just and increase of damage if needed
+		//		//	instaKill = victimActions.CurrentAttack == ActionManager.AttackType.Infect;
+		//		//}
+
+		//		break;
+		//	}
+		//		//NOTE: No longer how infection works
+		//		//case ActionManager.AttackType.InfectAttempt:
+		//		//{
+		//		//	CallerInfectionTarget(victimStats.gameObject);
+		//		//	return ActionManager.AttackResult.InfectionInProgress;
+		//		//}
+		//		//case ActionManager.AttackType.Infect:
+		//		//{
+		//		//	victimStats.Infected = true;
+		//		//	justInfected = true;
+		//		//	break;
+		//		//}
+		//}
+
+		victimStats.Health -= attackerStats.Damage;
+
+		if (victimStats.Health <= 0.0f)
 		{
+			//TODO Chance of infection/cloning
+
 			return ActionManager.AttackResult.VictimDeath;
 		}
-		else if (justInfected)
-		{
-			return ActionManager.AttackResult.VictimInfected;
-		}
+		//else if (justInfected)
+		//{
+		//	return ActionManager.AttackResult.VictimInfected;
+		//}
 		
 		
 		return ActionManager.AttackResult.VictimOkay;

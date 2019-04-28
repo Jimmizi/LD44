@@ -38,7 +38,7 @@ public class ActionManager : MonoBehaviour
 	/// <summary>
 	/// A toggle between wanting to kill or infect
 	/// </summary>
-	public AttackType CurrentAttack = AttackType.InfectAttempt;
+	public AttackType CurrentAttack = AttackType.Lethal;
 
 	public Vector2 TargetLocationForAction;
 
@@ -79,10 +79,11 @@ public class ActionManager : MonoBehaviour
 
 	public void ToggleAttackMode()
 	{
+		//NOTE: We no longer have dual attack modes
 		//can't do another action if waiting for something to get back, or waiting for the infect attack.
 		if (!_awaitingResult && CurrentAttack != AttackType.Infect)
 		{
-			CurrentAttack = CurrentAttack == AttackType.InfectAttempt ? AttackType.Lethal : AttackType.InfectAttempt;
+			//CurrentAttack = CurrentAttack == AttackType.InfectAttempt ? AttackType.Lethal : AttackType.InfectAttempt;
 		}
 	}
 	
@@ -155,12 +156,7 @@ public class ActionManager : MonoBehaviour
 	    _attemptingToInfectTarget = null;
 		_awaitingResult = false;
 		TargetLocationForAction = Vector2.zero;
-
-
-		if (CurrentAttack == AttackType.Infect)
-	    {
-		    CurrentAttack = AttackType.InfectAttempt;
-	    }
+		
     }
 
     private Vector2 GetNearestPosition()
@@ -217,17 +213,18 @@ public class ActionManager : MonoBehaviour
 			attackSpawnPos = GetNearestPosition(); 
 		}
 
-		if (CurrentAttack == AttackType.Infect)
-		{
-			//If we were about to infect a target and they no longer exist, bail out.
-			//	Others won't be able to attack or target something being infected, but do this just in case
-			if (_attemptingToInfectTarget == null)
-			{
-				_currentAction = ActionType.Idle;
-				_awaitingResult = false;
-				return;
-			}
-		}
+		//NOTE: No longer how infection works
+		//if (CurrentAttack == AttackType.Infect)
+		//{
+		//	//If we were about to infect a target and they no longer exist, bail out.
+		//	//	Others won't be able to attack or target something being infected, but do this just in case
+		//	if (_attemptingToInfectTarget == null)
+		//	{
+		//		_currentAction = ActionType.Idle;
+		//		_awaitingResult = false;
+		//		return;
+		//	}
+		//}
 
 		if (attackSpawnPos == Vector2.zero)
 		{
@@ -242,12 +239,12 @@ public class ActionManager : MonoBehaviour
 		if (tempResolver)
 		{
 			tempResolver.CallerResultCallback = GetActionResult;
-			tempResolver.CallerInfectionTarget = other => _attemptingToInfectTarget = other;
+			//tempResolver.CallerInfectionTarget = other => _attemptingToInfectTarget = other;
 			tempResolver.SpecificTarget = _attemptingToInfectTarget;
 			tempResolver.CallingGameObject = this.gameObject;
 			tempResolver.CallerStats = _statsRef;
 
-			tempResolver.CurrentAttackType = CurrentAttack;
+			//tempResolver.CurrentAttackType = CurrentAttack;
 			tempResolver.ReadyForQuery = true;
 			_awaitingResult = true;
 		}
@@ -261,6 +258,6 @@ public class ActionManager : MonoBehaviour
 
     void DoDash()
     {
-
+	    
     }
 }
