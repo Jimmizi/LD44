@@ -43,7 +43,8 @@ public class TemporaryUpgradeManager : MonoBehaviour
             upgradeButton.GetComponentInChildren<Text>().text = "Upgrade\n<" + UpgradeCost(upgrade.temporaryStage) + '>';
         }
 
-        cellsCounter.text = cells.ToString(); // sets cell counter
+		//Flow manager does this (y)
+        //cellsCounter.text = cells.ToString(); // sets cell counter
     }
 
     public void UpgradeTemporary(GameObject upgradeObject)

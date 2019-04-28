@@ -30,7 +30,7 @@ public class PermanentUpgradeManager : MonoBehaviour
 
     void Start()
     {
-        DontDestroyOnLoad(this);
+
     }
 
     private const int upgradeCostMutiplier = 2;

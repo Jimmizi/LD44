@@ -68,11 +68,11 @@ public class FlowManager : MonoBehaviour
 
 	#region Tuning
 
-	// On a range of 1 - 10
-	public int Difficulty = 5;
+	// On a range of 1 - 10 - This Gets added onto GameManager.Difficulty
+	public int Difficulty = 1;
 
-	public int NumberOfNeutralEnemies;
-	public int NumberOfHostileEnemies;
+	public float NeutralEnemiesModifier = 1.0f;
+	public float HostileEnemiesModifier = 0.5f;
 
 	public int RoundTimer = 60;
 
@@ -124,6 +124,13 @@ public class FlowManager : MonoBehaviour
 		Debug.Assert(_npcManagerRef != null, "Did not have a FriendlyNPCManager");
 
 		Debug.Assert(DummyControllerForPlacementCamera != null, "Invalid dummy controller.");
+
+		Debug.Log("Difficulty This Round is " + GameManager.Difficulty.ToString());
+		GameManager.Difficulty += Difficulty;
+
+		// Just apply this back so we can see it in the editor easily
+		Difficulty = GameManager.Difficulty;
+
     }
 	
 	void Update()
@@ -179,7 +186,7 @@ public class FlowManager : MonoBehaviour
 		if (tempStats)
 		{
 			tempStats.Neutral = isNeutral;
-			tempStats.SetupDifficulty(Difficulty);
+			tempStats.SetupDifficulty(GameManager.Difficulty);
 		}
 		
 		_currentEnemies.Add(tempEnemy);
@@ -189,11 +196,19 @@ public class FlowManager : MonoBehaviour
 	{
 		if (EnemyList.Count > 0)
 		{
-			for (var i = 0; i < NumberOfNeutralEnemies; i++)
+			var NumHostiles = (int) (GameManager.Difficulty * HostileEnemiesModifier);
+			var NumFriendlies = (int) (GameManager.Difficulty * NeutralEnemiesModifier);
+
+			if (NumHostiles == 0 && NumFriendlies == 0)
+			{
+				NumHostiles = 1;
+			}
+
+			for (var i = 0; i < NumFriendlies; i++)
 			{
 				SpawnEnemyIn(true);
 			}
-			for (var i = 0; i < NumberOfHostileEnemies; i++)
+			for (var i = 0; i < NumHostiles; i++)
 			{
 				SpawnEnemyIn();
 			}

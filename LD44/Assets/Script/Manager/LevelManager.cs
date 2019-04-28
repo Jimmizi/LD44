@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -10,17 +11,28 @@ public class LevelManager : MonoBehaviour
 
     public bool paused;
 
-    void Start()
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+	    SetupHUD();
+    }
+
+    void SetupHUD()
+    {
+	    mainCanvas = GameObject.FindWithTag("MainUICanvas");
+	    gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
+	    pauseMenuCanvas = GameObject.FindWithTag("PauseMenuCanvas");
+
+	    mainCanvas?.SetActive(true);
+	    gameOverCanvas?.SetActive(false);
+	    pauseMenuCanvas?.SetActive(false);
+	}
+
+	void Start()
     {
         GameManager.levelManager = this;
-
-        mainCanvas = GameObject.FindWithTag("MainUICanvas");
-        gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
-        pauseMenuCanvas = GameObject.FindWithTag("PauseMenuCanvas");
-
-        mainCanvas.SetActive(true);
-        gameOverCanvas.SetActive(false);
-        pauseMenuCanvas.SetActive(false);
+		
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SetupHUD();
     }
 
     public void GameOver()

@@ -7,17 +7,25 @@ public class GameManager : MonoBehaviour
 	//TODO Need to populate friendly count from somewhere
 	private static int _infectedCellsCount = 5;
 
+	private static int _difficulty = 1;
+
     public static int InfectedCellsCount
     {
         get { return _infectedCellsCount; }
         set { DestroyCells(value); }
     }
 
-    public static LevelManager levelManager;
+    public static int Difficulty
+    {
+	    get { return _difficulty; }
+	    set { _difficulty = value; }
+    }
+
+	public static LevelManager levelManager;
 
     void Start()
     {
-        DontDestroyOnLoad(this);
+
     }
 
     void Update()
