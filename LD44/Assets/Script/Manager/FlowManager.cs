@@ -252,6 +252,14 @@ public class FlowManager : MonoBehaviour
 	
 	void StatePlacement()
 	{
+		if (GameObject.FindObjectOfType<LevelManager>())
+		{
+			if (GameObject.FindObjectOfType<LevelManager>().paused)
+			{
+				return;
+			}
+		}
+
 		//Keep the spawn target tracked to the mouse cursor
 		if (_currentSpawnTarget)
 		{
