@@ -5113,6 +5113,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
+      propertyPath: EnemyList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
       propertyPath: SpawnInTargetPrefab
       value: 
       objectReference: {fileID: 7485585363705099457, guid: 9965327771d66174c84a56334411ca58,
@@ -5142,7 +5147,7 @@ PrefabInstance:
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
       propertyPath: Difficulty
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
         type: 3}
@@ -5176,5 +5181,124 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4999915037488276507, guid: 83d4bb32180f16644b858c1207472a7f,
         type: 3}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: NeutralEnemiesModifier
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: HostileEnemiesModifier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: HostileSweeperGameObject
+      value: 
+      objectReference: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
+        type: 3}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[0].Prefab
+      value: 
+      objectReference: {fileID: 4999915037488276507, guid: 83d4bb32180f16644b858c1207472a7f,
+        type: 3}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[2].Prefab
+      value: 
+      objectReference: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
+        type: 3}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[1].Prefab
+      value: 
+      objectReference: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,
+        type: 3}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[1].Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[2].Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[0].BaseSpawnChance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[0].DifficultyLevelToSpawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[0].BaseTimesToTryAndSpawn
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[0].TimesToTrySpawnIncreasePerDifficultyLevel
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[1].BaseSpawnChance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[1].SpawnIncreasePerDifficultyLevel
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[1].DifficultyLevelToSpawn
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[1].BaseTimesToTryAndSpawn
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[1].TimesToTrySpawnIncreasePerDifficultyLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[2].BaseSpawnChance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[2].SpawnIncreasePerDifficultyLevel
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[2].DifficultyLevelToSpawn
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[2].BaseTimesToTryAndSpawn
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[2].OnlySpawnOnce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074814640462022849, guid: cc2d04ad753996e4e89f1351d01a66a5,
+        type: 3}
+      propertyPath: EnemyList.Array.data[2].TimesToTrySpawnIncreasePerDifficultyLevel
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc2d04ad753996e4e89f1351d01a66a5, type: 3}

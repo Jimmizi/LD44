@@ -28,19 +28,19 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	public void SwitchPreferredAttackType()
 	{
-		if (_aiPreferredAttack == ActionManager.AttackType.InfectAttempt)
-		{
-			_aiPreferredAttack = ActionManager.AttackType.Lethal;
-		}
-		else
-		{
-			_aiPreferredAttack = ActionManager.AttackType.InfectAttempt;
-		}
+		//if (_aiPreferredAttack == ActionManager.AttackType.InfectAttempt)
+		//{
+		//	_aiPreferredAttack = ActionManager.AttackType.Lethal;
+		//}
+		//else
+		//{
+		//	_aiPreferredAttack = ActionManager.AttackType.InfectAttempt;
+		//}
 
-		foreach (var friend in FriendliesList)
-		{
-			friend.GetComponent<AIController>()?.SetDesiredAttackType(_aiPreferredAttack);
-		}
+		//foreach (var friend in FriendliesList)
+		//{
+		//	friend.GetComponent<AIController>()?.SetDesiredAttackType(_aiPreferredAttack);
+		//}
 		
 		
 	}
@@ -54,7 +54,7 @@ public class FriendlyNPCManager : MonoBehaviour
 	{
 		if (GameManager.InfectedCellsCount == 0)
 		{
-			_friendliesLeftToSpawn = 3;
+			_friendliesLeftToSpawn = 1;
 		}
 		else
 		{
@@ -81,7 +81,7 @@ public class FriendlyNPCManager : MonoBehaviour
 		// Toggle between attack modes
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-			SwitchPreferredAttackType();
+			//SwitchPreferredAttackType();
 
 			//if (FriendlyAttackTypeText)
 			//{

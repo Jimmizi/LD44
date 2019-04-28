@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using UnityEditor.UIElements;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -172,6 +173,11 @@ public class AIController : MonoBehaviour
 				continue;
 			}
 
+			if (actor.GetComponent<KillActor>())
+			{
+				continue;
+			}
+
 			enemiesToTarget.Add(actor.gameObject);
 		}
 
@@ -266,13 +272,6 @@ public class AIController : MonoBehaviour
 			_targetFindAttempts = 0;
 		}
 		
-
-		if (_actionRef.DoingAnAction)
-		{
-			_moverRef.Direction = Vector2.zero;
-			return;
-		}
-
 		//Retarget if our target has begun being infected, and not by me
 		if (!_waitingOnPathResult && _statsRef.BeingInfectedBy != null && !_statsRef.Infected)
 		{
@@ -282,6 +281,14 @@ public class AIController : MonoBehaviour
 				return;
 			}
 		}
+
+		if (_taskTarget.GetComponent<KillActor>())
+		{
+			ClearTarget();
+			return;
+		}
+
+		//TODO Maybe retarget if we see something else is right next to us
 
 		//Retarget if the target is now infected
 		if (!_waitingOnPathResult && _statsRef.Infected && _taskTarget.GetComponent<ActorStats>().Infected)
@@ -293,7 +300,6 @@ public class AIController : MonoBehaviour
 		_timeSinceLastAttackAction += Time.deltaTime;
 		if (_timeSinceLastAttackAction >= 7.5f)
 		{
-			Debug.Log("Attack Timeout");
 			if (((Vector2)_taskTarget.transform.position - (Vector2)this.transform.position).magnitude > _statsRef.AttackRange * 2.0f)
 			{
 				ClearTarget();
@@ -301,14 +307,22 @@ public class AIController : MonoBehaviour
 			}
 		}
 
+		Vector2 customMovetoPoint = Vector2.zero;
+
 		//If we're close enough, attack the target
 		if (((Vector2) _taskTarget.transform.position - (Vector2)this.transform.position).magnitude < _statsRef.AttackRange)
 		{
-			_actionRef.DoAction(ActionManager.ActionType.Attack);
-			_actionRef.TargetLocationForAction = _taskTarget.transform.position;
-			_timeSinceLastAttackAction = 0.0f;
+			if (_actionRef.CanAttack)
+			{
+				_actionRef.DoAction(ActionManager.ActionType.Attack);
+				_actionRef.TargetLocationForAction = _taskTarget.transform.position;
+				_timeSinceLastAttackAction = 0.0f;
+			}
+			//TODO maybe reintroduce this - atm enemies can just sit inside their target
+			//customMovetoPoint = _taskTarget.transform.position;
 		}
-		else if (_currentPath == null || _currentPath.Count == 0)
+		
+		if (_currentPath == null || _currentPath.Count == 0)
 		{
 			if (!_waitingOnPathResult)
 			{
@@ -334,14 +348,15 @@ public class AIController : MonoBehaviour
 		else
 		{
 			//Otherwise travel in the direction of the next node
-			var direction = _currentPath[_currentNode].position - transform.position;
+			var direction = (customMovetoPoint != Vector2.zero ? customMovetoPoint : (Vector2)_currentPath[_currentNode].position) - (Vector2)transform.position;
+			var orthDir = new Vector3(direction.x, direction.y, 0);
 
 			var normal = transform.forward;
-			Vector3.OrthoNormalize(ref normal, ref direction);
+			Vector3.OrthoNormalize(ref normal, ref orthDir);
 
-			_moverRef.Direction = direction;
+			_moverRef.Direction = orthDir;
 
-			if ((transform.position - _currentPath[_currentNode].position).magnitude <= REACHED_NODE_DISTANCE)
+			if (customMovetoPoint == Vector2.zero && (transform.position - _currentPath[_currentNode].position).magnitude <= REACHED_NODE_DISTANCE)
 			{
 				_currentNode++;
 

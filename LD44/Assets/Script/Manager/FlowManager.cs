@@ -36,13 +36,7 @@ public class FlowManager : MonoBehaviour
 	public bool DebugStraightToGameplay;
 
 	#region Engine facing config
-
-	/// <summary>
-	/// List of enemies that can be spawned in for this stage.
-	/// </summary>
-	public GameObject HostileEnemyGameObject;
-	public GameObject NeutralEnemyGameObject;
-
+	
 	/// <summary>
 	/// The prefab for visualisation of where the spawn drop in point will be
 	/// </summary>
@@ -69,13 +63,68 @@ public class FlowManager : MonoBehaviour
 
 	#region Tuning - per round
 
-	// On a range of 1 - 10 - This Gets added onto GameManager.Difficulty
-	public int Difficulty = 1;
+	public enum EnemyType
+	{
+		Neutral,
+		Hostile,
+		Sweeper
+	}
+	
+	[Serializable]
+	public struct SpawnStats
+	{
+		[SerializeField]
+		public GameObject Prefab;
 
-	public float NeutralEnemiesModifier = 1.0f;
-	public float HostileEnemiesModifier = 0.5f;
+		[SerializeField]
+		public EnemyType Type;
+
+		/// <summary>
+		/// The base chance to spawn this in
+		/// </summary>
+		[SerializeField]
+		public int BaseSpawnChance;
+
+		/// <summary>
+		/// Extra difficulty levels above the DifficultyLevelToSpawn level add onto the chance to spawn
+		/// </summary>
+		[SerializeField]
+		public int SpawnIncreasePerDifficultyLevel;
+
+		/// <summary>
+		/// The difficulty level of the stage needed before we start trying to spawn things in
+		/// </summary>
+		[SerializeField]
+		public int DifficultyLevelToSpawn;
+
+		/// <summary>
+		/// How many times to try and spawn
+		/// </summary>
+		[SerializeField]
+		public int BaseTimesToTryAndSpawn;
+
+		/// <summary>
+		/// How many times to try and spawn
+		/// </summary>
+		[SerializeField]
+		public float TimesToTrySpawnIncreasePerDifficultyLevel;
+
+		/// <summary>
+		/// If a chance spawns one, don't try to spawn any more
+		/// </summary>
+		[SerializeField]
+		public bool OnlySpawnOnce;
+	}
+
+	[SerializeField]
+	public List<SpawnStats> EnemyList = new List<SpawnStats>();
+
 
 	public int RoundTimer = 60;
+	public float DifficultyMod = 0.5f;
+
+	// On a range of 1 - 10 - This Gets added onto GameManager.Difficulty
+	public int DifficultyIncreaseAfterRound = 1;
 
 	#endregion
 
@@ -125,13 +174,9 @@ public class FlowManager : MonoBehaviour
 		Debug.Assert(_npcManagerRef != null, "Did not have a FriendlyNPCManager");
 
 		Debug.Assert(DummyControllerForPlacementCamera != null, "Invalid dummy controller.");
+		
 
 		Debug.Log("Difficulty This Round is " + GameManager.Difficulty.ToString());
-		GameManager.Difficulty += Difficulty;
-
-		// Just apply this back so we can see it in the editor easily
-		Difficulty = GameManager.Difficulty;
-
     }
 	
 	void Update()
@@ -177,49 +222,63 @@ public class FlowManager : MonoBehaviour
     }
 
 
-	void SpawnEnemyIn(bool isNeutral = false)
+	void TryToSpawnEnemy(SpawnStats data)
 	{
-		var vPosition = _spawnerRef.GetSpawnPoint();
-		GameObject tempEnemy = null;
-
-		if (isNeutral)
+		if (data.DifficultyLevelToSpawn > GameManager.Difficulty)
 		{
-			tempEnemy = (GameObject)Instantiate(NeutralEnemyGameObject, vPosition, new Quaternion());
+			Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " cannot spawn this round, difficulty is too low: " + data.DifficultyLevelToSpawn.ToString() + " > " +  GameManager.Difficulty.ToString());
+			return;
 		}
-		else
-		{
-			tempEnemy = (GameObject)Instantiate(HostileEnemyGameObject, vPosition, new Quaternion());
-		}
-		
 
-		var tempStats = tempEnemy.GetComponent<ActorStats>();
+		var levelsAboveBaseDifficulty = (GameManager.Difficulty - data.DifficultyLevelToSpawn);
 
-		if (tempStats)
+		var extraSpawnChance = data.SpawnIncreasePerDifficultyLevel * levelsAboveBaseDifficulty;
+		var extraSpawnTries = Mathf.Floor(data.TimesToTrySpawnIncreasePerDifficultyLevel * levelsAboveBaseDifficulty);
+
+		var spawnChance = data.BaseSpawnChance + extraSpawnChance;
+		var timesToTrySpawn = data.BaseTimesToTryAndSpawn + extraSpawnTries;
+
+		Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " spawn chance: " + spawnChance.ToString() + "%, times to try: " + timesToTrySpawn.ToString());
+
+		for (var i = 0; i < timesToTrySpawn; i++)
 		{
-			tempStats.SetupDifficulty(GameManager.Difficulty);
+			if (Random.Range(0.0f, 100.0f) >= spawnChance)
+			{
+				Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " try " + i.ToString() + " failed.");
+				continue;
+			}
+			
+			Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " try " + i.ToString() + " succeeded!");
+			
+			var tempEnemy = (GameObject)Instantiate(data.Prefab, _spawnerRef.GetSpawnPoint(), new Quaternion());
+			
+			var tempStats = tempEnemy.GetComponent<ActorStats>();
+			if (tempStats)
+			{
+				tempStats.SetupDifficulty(GameManager.Difficulty, DifficultyMod);
+			}
+
+			_currentEnemies.Add(tempEnemy);
+
+			if (data.OnlySpawnOnce)
+			{
+				Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " not spawning any more of these.");
+				break;
+			}
 		}
-		
-		_currentEnemies.Add(tempEnemy);
+	}
+
+	void HandleEnemySpawning()
+	{
+		foreach (var enemy in EnemyList)
+		{
+			TryToSpawnEnemy(enemy);
+		}
 	}
 
 	void StateInit()
 	{
-		var NumHostiles = (int) (GameManager.Difficulty * HostileEnemiesModifier);
-		var NumFriendlies = (int) (GameManager.Difficulty * NeutralEnemiesModifier);
-
-		if (NumHostiles == 0 && NumFriendlies == 0)
-		{
-			NumHostiles = 1;
-		}
-
-		for (var i = 0; i < NumFriendlies; i++)
-		{
-			SpawnEnemyIn(true);
-		}
-		for (var i = 0; i < NumHostiles; i++)
-		{
-			SpawnEnemyIn();
-		}
+		HandleEnemySpawning();
 
 		if (DebugStraightToGameplay)
 		{
@@ -404,6 +463,9 @@ public class FlowManager : MonoBehaviour
 	{
 		//TODO: Fade out
 		_currentState = LevelState.Shutdown;
+
+		//TODO need to reset this on new stage start
+		GameManager.Difficulty += DifficultyIncreaseAfterRound;
 	}
 
 	void StateGameOver()
@@ -411,12 +473,20 @@ public class FlowManager : MonoBehaviour
 		if (_gameOverTimer == 0.0f)
 		{
 			GameObject.FindObjectOfType<LevelManager>()?.GameOver();
+			
 		}
 
 		_gameOverTimer += Time.deltaTime;
-
 		if (_gameOverTimer >= 4.0f)
 		{
+			var tempLevelManagerPersObj = GameObject.FindObjectOfType<LevelManager>()?.GetComponent<PersistentObject>();
+			if (tempLevelManagerPersObj)
+			{
+				Debug.Log("Destroying persistent level manager.");
+				//Delete the persistent at game over so that it won't transfer back to the main menu
+				Destroy(tempLevelManagerPersObj);
+			}
+			
 			SceneManager.LoadScene(LEVEL_FAILED_SCENE);
 		}
 	}

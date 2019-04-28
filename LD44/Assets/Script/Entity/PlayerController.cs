@@ -60,7 +60,10 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			_actionRef.DoAction(ActionManager.ActionType.Attack);
+			if (_actionRef.CanAttack)
+			{
+				_actionRef.DoAction(ActionManager.ActionType.Attack);
+			}
 		}
 
 		if (Input.GetKeyDown(KeyCode.Space))

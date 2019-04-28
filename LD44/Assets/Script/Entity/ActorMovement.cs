@@ -56,7 +56,7 @@ public class ActorMovement : MonoBehaviour
 
 		    }
 	    }
-
+		
 		_rigidbodyRef.velocity = Direction * tempSpeed;
 
 		if (Direction.x != 0.0f)

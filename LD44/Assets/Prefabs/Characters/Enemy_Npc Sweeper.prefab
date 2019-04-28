@@ -23,7 +23,7 @@ PrefabInstance:
     - target: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: m_Name
-      value: Enemy_Npc
+      value: Enemy_Npc Sweeper
       objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
@@ -48,7 +48,7 @@ PrefabInstance:
     - target: {fileID: 8736139691342441652, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: Damage
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8736139691342441652, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
@@ -58,7 +58,7 @@ PrefabInstance:
     - target: {fileID: 8736139691342441652, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: UsesAoeAttack
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1390341794798836556, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}

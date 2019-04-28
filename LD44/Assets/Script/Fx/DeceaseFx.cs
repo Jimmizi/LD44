@@ -33,7 +33,7 @@ namespace Fx
             {
                 if (_triggered)
                 {
-                    Debug.Log("AlreadyTriggered");
+                   // Debug.Log("AlreadyTriggered");
                 }
                 _particleSystem.Play();
             }
@@ -48,9 +48,9 @@ namespace Fx
             if (_triggered && _particleSystem != null)
             {
                 
-                Debug.LogFormat("UPDATE!!!!!! {0}", _particleSystem.IsAlive());
+//
                 
-                if (!_particleSystem.isPlaying) Debug.Log("NOTALIVR!");
+                //if (!_particleSystem.isPlaying) Debug.Log("NOTALIVR!");
                 if (!_particleSystem.IsAlive() && _callback != null)
                 {
                     _callback();

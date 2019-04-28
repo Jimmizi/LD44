@@ -45,7 +45,7 @@ public class ActorStats : MonoBehaviour
 	/// The chance per hit of infecting a target
 	/// Range: 0.0f - 100.0f
 	/// </summary>
-	public float InfectionChance = 15.0f;
+	public float InfectionChance = 90.0f;
 
 	/// <summary>
 	/// The chance on killing a target that they clone
@@ -68,18 +68,23 @@ public class ActorStats : MonoBehaviour
 	/// </summary>
 	public GameObject BeingInfectedBy;
 
+	/// <summary>
+	/// Does this character do a bigger area of affect attack
+	/// </summary>
+	public bool UsesAoeAttack;
 
-	private const int EXTRA_HEALTH_INTRODUCED_AT_DIFFICULTY_LEVEL = 3;
-	private const int EXTRA_HEALTH_PER_DIFFICULTY_STEP = 10;
 
-	private const int EXTRA_DAMAGE_INTRODUCED_AT_DIFFICULTY_LEVEL = 2;
-	private const int EXTRA_DAMAGE_PER_DIFFICULTY_STEP = 5;
+	public int ExtraHealthIntroducedAtDifficultyLevel = 3;
+	public int ExtraHealthPerDifficultyStep = 10;
 
-	private const int EXTRA_ATTACK_SPEED_INTRODUCED_AT_DIFFICULTY_LEVEL = 4;
-	private const float EXTRA_ATTACK_SPEED_PER_DIFFICULTY_STEP = 0.025f;
+	public int ExtraDamageIntroducedAtDifficultyLevel = 2;
+	public int ExtraDamagePerDifficultyStep = 5;
 
-	private const int EXTRA_MOVEMENT_SPEED_INTRODUCED_AT_DIFFICULTY_LEVEL = 2;
-	private const float EXTRA_MOVEMENT_SPEED_PER_DIFFICULTY_STEP = 0.1f;
+	public int ExtraAttackSpeedIntroducedAtDifficultyLevel = 4;
+	public float ExtraAttackSpeedPerDifficultyStep = 0.025f;
+
+	//public int ExtraMovementSpeedIntroducedAtDifficultyLevel = 2;
+	//public float ExtraMovementSpeedPerDifficultyStep = 0.05f;
 
 	#endregion
 
@@ -87,29 +92,44 @@ public class ActorStats : MonoBehaviour
 	/// Difficulty setup for enemies to the player
 	/// </summary>
 	/// <param name="difficultyLevel"></param>
-	public void SetupDifficulty(int difficultyLevel)
+	public void SetupDifficulty(int difficultyLevel, float modifier = 1.0f)
 	{
+		int extraHealth = 0, extraDamage = 0;
+		float extraSpeed = 0.0f, extraMovement = 0.0f;
+
 		//Neutrals only get half of the extra stats
-		if (difficultyLevel >= EXTRA_HEALTH_INTRODUCED_AT_DIFFICULTY_LEVEL)
+		if (difficultyLevel >= ExtraHealthIntroducedAtDifficultyLevel)
 		{
-			Health += (EXTRA_HEALTH_PER_DIFFICULTY_STEP / (Neutral ? 2 : 1)) * (EXTRA_HEALTH_INTRODUCED_AT_DIFFICULTY_LEVEL - (difficultyLevel - 1));
+			extraHealth = (ExtraHealthPerDifficultyStep / (Neutral ? 2 : 1)) * (difficultyLevel - (ExtraHealthIntroducedAtDifficultyLevel - 1));
+			extraHealth = (int)(extraHealth * modifier);
 		}
 
-		if (difficultyLevel >= EXTRA_DAMAGE_INTRODUCED_AT_DIFFICULTY_LEVEL)
+		if (difficultyLevel >= ExtraDamageIntroducedAtDifficultyLevel)
 		{
-			Damage += (EXTRA_DAMAGE_PER_DIFFICULTY_STEP / (Neutral ? 2 : 1)) * (EXTRA_DAMAGE_INTRODUCED_AT_DIFFICULTY_LEVEL - (difficultyLevel - 1));
+			extraDamage = (ExtraDamagePerDifficultyStep / (Neutral ? 2 : 1)) * (difficultyLevel - (ExtraDamageIntroducedAtDifficultyLevel - 1));
+			extraDamage = (int)(extraDamage * modifier);
 		}
 
-		if (difficultyLevel >= EXTRA_ATTACK_SPEED_INTRODUCED_AT_DIFFICULTY_LEVEL)
+		if (difficultyLevel >= ExtraAttackSpeedIntroducedAtDifficultyLevel)
 		{
-			AttackSpeed -= (EXTRA_ATTACK_SPEED_PER_DIFFICULTY_STEP / (Neutral ? 2 : 1)) * (EXTRA_ATTACK_SPEED_INTRODUCED_AT_DIFFICULTY_LEVEL - (difficultyLevel - 1));
-			AttackSpeed = Mathf.Max(0.05f, AttackSpeed);
+			extraSpeed = (ExtraAttackSpeedPerDifficultyStep / (Neutral ? 2 : 1)) * (difficultyLevel - (ExtraAttackSpeedIntroducedAtDifficultyLevel - 1));
+			extraSpeed *= modifier;
 		}
 
-		if (difficultyLevel >= EXTRA_MOVEMENT_SPEED_INTRODUCED_AT_DIFFICULTY_LEVEL)
-		{
-			MovementSpeed += (EXTRA_MOVEMENT_SPEED_PER_DIFFICULTY_STEP / (Neutral ? 2 : 1)) * (EXTRA_MOVEMENT_SPEED_INTRODUCED_AT_DIFFICULTY_LEVEL - (difficultyLevel - 1));
-		}
+		//if (difficultyLevel >= ExtraMovementSpeedIntroducedAtDifficultyLevel)
+		//{
+			//extraMovement = (EXTRA_MOVEMENT_SPEED_PER_DIFFICULTY_STEP / (Neutral ? 2 : 1)) * (difficultyLevel - (EXTRA_MOVEMENT_SPEED_INTRODUCED_AT_DIFFICULTY_LEVEL - 1));
+			//extraMovement *= modifier;
+		//}
+
+		Health += extraHealth;
+
+		Damage += extraDamage;
+
+		AttackSpeed -= extraSpeed;
+		AttackSpeed = Mathf.Max(0.05f, AttackSpeed);
+
+		//MovementSpeed += extraMovement;
 	}
 
 	public void ApplyPlayerStats()

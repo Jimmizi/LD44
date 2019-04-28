@@ -42,7 +42,6 @@ public class AttackResolver : MonoBehaviour
 		{
 			if (SpecificTarget.GetComponent<Collider2D>())
 			{
-				Debug.Log("Attacking specific target.");
 				ProcessAttack(SpecificTarget.GetComponent<Collider2D>());
 			}
 
@@ -74,11 +73,6 @@ public class AttackResolver : MonoBehaviour
 				break;
 			}
 			
-			//TODO Picking a target depending on distance (limited by attack range)
-			//TODO Multiple targets possibly if an attack allows for that
-
-			Debug.Log("Collided with: " + other.name);
-
 			ProcessAttack(other);
 		}
 
@@ -167,7 +161,6 @@ public class AttackResolver : MonoBehaviour
 			{
 				if (cloningChance <= attackerStats.CloningChance)
 				{
-					//TODO make a new friendly
 					GameObject.FindObjectOfType<FriendlyNPCManager>().SpawnSingleFriendly(victimStats.gameObject.transform.position);
 				}
 			}

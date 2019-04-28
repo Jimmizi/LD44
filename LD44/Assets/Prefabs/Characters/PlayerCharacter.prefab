@@ -190,9 +190,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Health: 20
-  Damage: 4
-  MovementSpeed: 0.6
+  Health: 200
+  Damage: 40
+  MovementSpeed: 1.2
   AttackSpeed: 0.25
   AttackRange: 0.5
   InfectionChance: 15
@@ -200,6 +200,7 @@ MonoBehaviour:
   Infected: 1
   Neutral: 0
   BeingInfectedBy: {fileID: 0}
+  UsesAoeAttack: 0
 --- !u!114 &8441199697852447088
 MonoBehaviour:
   m_ObjectHideFlags: 0

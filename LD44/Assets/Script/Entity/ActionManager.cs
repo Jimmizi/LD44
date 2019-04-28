@@ -54,11 +54,11 @@ public class ActionManager : MonoBehaviour
 	private ActorMovement _moverRef = null;
 	private ActorStats _statsRef = null;
 	
-	public bool DoingAnAction
+	public bool CanAttack
 	{
 		get
 		{
-			return _currentAction != ActionType.Idle;
+			return _currentAction == ActionType.Idle && _actionDelay <= 0.0f;
 		}
 	}
 
@@ -106,7 +106,7 @@ public class ActionManager : MonoBehaviour
 	    if (_actionDelay > 0.0f)
 	    {
 		    _actionDelay -= Time.deltaTime;
-		    return;
+		   
 	    }
 
 		switch (_currentAction)
@@ -116,42 +116,11 @@ public class ActionManager : MonoBehaviour
 				DoAttack();
 				break;
 			}
-
-			case ActionType.Dash:
-			{
-				DoDash();
-				break;
-			}
 		}
 	}
 
     public void GetActionResult(AttackResult eResult)
     {
-	    switch (eResult)
-	    {
-		    case AttackResult.InvalidTarget:
-			    break;
-		    case AttackResult.VictimDeath:
-			    break;
-		    case AttackResult.VictimInfected:
-			    break;
-		    case AttackResult.VictimOkay:
-			    break;
-		    case AttackResult.InfectionInProgress:
-		    {
-				//TODO Add charge/eating animations to make it visual that an infection is happening
-				
-			    //_actionDelay = _statsRef.InfectionSpeed;
-			    CurrentAttack = AttackType.Infect;
-			    _awaitingResult = false;
-
-			    return;
-		    }
-		    default:
-			    throw new ArgumentOutOfRangeException(nameof(eResult), eResult, null);
-	    }
-	    
-		Debug.Log("Action result received");
 	    _currentAction = ActionType.Idle;
 	    _attemptingToInfectTarget = null;
 		_awaitingResult = false;
@@ -196,11 +165,10 @@ public class ActionManager : MonoBehaviour
 	    return Vector2.zero;
 	}
 
+	//TODO Make the attack update to the updated position of the target
+
 	void DoAttack()
     {
-		//TODO stats for range and size of attack
-
-		//TODO improve where the bounds of the attack are
 		Vector2 attackSpawnPos;
 
 		if (TargetLocationForAction != Vector2.zero)
@@ -236,8 +204,18 @@ public class ActionManager : MonoBehaviour
 			return;
 		}
 
+		var attackSize = 1.0f;
+
+		if (_statsRef.UsesAoeAttack)
+		{
+			attackSpawnPos = this.transform.position;
+			attackSize = 3.0f;
+		}
+
 		var tempQuery = (GameObject) Instantiate(AttackQueryPrefab, attackSpawnPos, new Quaternion());
 		var tempResolver = tempQuery.GetComponent<AttackResolver>();
+
+		tempQuery.transform.localScale *= attackSize;
 
 		if (tempResolver)
 		{

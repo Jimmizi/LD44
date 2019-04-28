@@ -25,12 +25,6 @@ public class SpawnpointFinder : MonoBehaviour
 		if (pointsToUse.Length > 0)
 		{
 			vReturnValue = pointsToUse[Random.Range(0, pointsToUse.Length)].transform.position;
-			//foreach (var point in pointsToUse)
-			//{
-			//	// TODO: Away from NPC/Player check
-			//	vReturnValue = point.transform.position;
-			//	break;
-			//}
 		}
 
 		return vReturnValue;
