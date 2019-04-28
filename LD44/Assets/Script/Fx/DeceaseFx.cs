@@ -13,8 +13,9 @@ namespace Fx
         private ParticleSystem _particleSystem;
         private bool _triggered;
         private Utilities.FxComplete _callback;
-        
-        private void Awake()
+		private float _currentAlpha = 1.0f;
+
+		private void Awake()
         {
             if (_particleSystemPrefab != null)
             {
@@ -47,11 +48,17 @@ namespace Fx
             
             if (_triggered && _particleSystem != null)
             {
-                
-//
-                
-                //if (!_particleSystem.isPlaying) Debug.Log("NOTALIVR!");
-                if (!_particleSystem.IsAlive() && _callback != null)
+				_currentAlpha -= _particleSystem.main.duration * Time.deltaTime;
+
+				if (this.gameObject.GetComponent<SpriteRenderer>())
+				{
+					var tempColor = this.gameObject.GetComponent<SpriteRenderer>().color;
+					tempColor.a = _currentAlpha;
+					this.gameObject.GetComponent<SpriteRenderer>().color = tempColor;
+				}
+
+				//if (!_particleSystem.isPlaying) Debug.Log("NOTALIVR!");
+				if (!_particleSystem.IsAlive() && _callback != null)
                 {
                     _callback();
                     _callback = null;

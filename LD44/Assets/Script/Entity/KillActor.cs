@@ -31,7 +31,10 @@ public class KillActor : MonoBehaviour
 		    return;
 	    }
 
-        if (GetComponent<ActorStats>().Infected)
+	    GetComponent<Animator>()?.SetTrigger("Death");
+
+
+		if (GetComponent<ActorStats>().Infected)
             GameManager.InfectedCellDies();
 
         foreach (Component component in gameObject.GetComponents<Component>())
@@ -58,7 +61,8 @@ public class KillActor : MonoBehaviour
 	    if (cl != null) Destroy(cl);
 	    
 	    DeceaseFx fx = gameObject.GetComponent<DeceaseFx>();
-	    if (fx != null)
+		
+		if (fx != null)
 	    {
 		    fx.Trigger(Kill);
 	    }

@@ -53,7 +53,8 @@ public class ActionManager : MonoBehaviour
 
 	private ActorMovement _moverRef = null;
 	private ActorStats _statsRef = null;
-	
+	private Animator _animatorRef = null;
+
 	public bool CanAttack
 	{
 		get
@@ -67,6 +68,13 @@ public class ActionManager : MonoBehaviour
 		if (newAction == ActionType.Idle || _currentAction != ActionType.Idle)
 		{
 			return false;
+		}
+		var currentClipInfo = _animatorRef.GetCurrentAnimatorClipInfo(0);
+
+
+		if (currentClipInfo[0].clip.name != "AttackAnim")
+		{
+			_animatorRef.SetTrigger("Attack");
 		}
 
 		_currentAction = newAction;
@@ -94,6 +102,9 @@ public class ActionManager : MonoBehaviour
 
 		_statsRef = GetComponent<ActorStats>();
 		Debug.Assert(_statsRef != null, "Didn't manage to find a ActorStats.");
+
+		_animatorRef = GetComponent<Animator>();
+		Debug.Assert(_animatorRef != null, "Didn't manage to find a Animator.");
 	}
 	
     void Update()
