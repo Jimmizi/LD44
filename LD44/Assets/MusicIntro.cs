@@ -14,11 +14,11 @@ public class MusicIntro : MonoBehaviour
     {
 	    _asRef = GetComponent<AudioSource>();
 	    _asRef.clip = MusicToPlayAfterIntro;
+	    _asRef.loop = true;
 
-	    _asRef.PlayOneShot(MusicIntroToPlay);
+		_asRef.PlayOneShot(MusicIntroToPlay);
 	    _asRef.PlayDelayed(MusicIntroToPlay.length);
-
-	}
+    }
 
     // Update is called once per frame
     void Update()
