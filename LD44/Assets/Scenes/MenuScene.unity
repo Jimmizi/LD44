@@ -5356,7 +5356,7 @@ MonoBehaviour:
   GameObjectiveText: {fileID: 0}
   RoundTimerText: {fileID: 0}
   EnemyList:
-  - Prefab: {fileID: 4999915037488276507, guid: 83d4bb32180f16644b858c1207472a7f,
+  - Prefab: {fileID: 6208273945129549312, guid: 83d4bb32180f16644b858c1207472a7f,
       type: 3}
     Type: 0
     BaseSpawnChance: 100
@@ -5376,7 +5376,7 @@ MonoBehaviour:
     TimesToTrySpawnIncreasePerDifficultyLevel: 1
     OnlySpawnOnce: 0
     SpawnAtLeastOnce: 0
-  - Prefab: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
+  - Prefab: {fileID: 6208273945129549312, guid: 2ba72be001fef1043a8fa99b44a76f34,
       type: 3}
     Type: 2
     BaseSpawnChance: 100
