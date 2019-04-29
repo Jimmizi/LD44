@@ -3326,12 +3326,12 @@ MonoBehaviour:
       type: 3}
     Type: 1
     BaseSpawnChance: 50
-    SpawnIncreasePerDifficultyLevel: 20
+    SpawnIncreasePerDifficultyLevel: 50
     DifficultyLevelToSpawn: 2
-    BaseTimesToTryAndSpawn: 2
+    BaseTimesToTryAndSpawn: 1
     TimesToTrySpawnIncreasePerDifficultyLevel: 1
     OnlySpawnOnce: 0
-    SpawnAtLeastOnce: 1
+    SpawnAtLeastOnce: 0
   - Prefab: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
       type: 3}
     Type: 2

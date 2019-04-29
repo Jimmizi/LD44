@@ -375,8 +375,17 @@ public class AIController : MonoBehaviour
 
 		Vector2 customMovetoPoint = Vector2.zero;
 
+		if (_statsRef.UsesAoeAttack)
+		{
+			if (_actionRef.CanAttack)
+			{
+				_actionRef.DoAction(ActionManager.ActionType.Attack);
+				_actionRef.TargetLocationForAction = this.transform.position;
+				_timeSinceLastAttackAction = 0.0f;
+			}
+		}
 		//If we're close enough, attack the target
-		if (((Vector2) _taskTarget.transform.position - (Vector2)this.transform.position).magnitude < _statsRef.AttackRange)
+		else if (((Vector2) _taskTarget.transform.position - (Vector2)this.transform.position).magnitude < _statsRef.AttackRange)
 		{
 			if (_actionRef.CanAttack)
 			{
