@@ -51,14 +51,15 @@ public class TemporaryUpgradeManager : MonoBehaviour
 
             if (upgrade.temporaryUpgradeObject)
             {
-	            upgradeButton = GetComponentInChildren<Button>();
+	            upgradeButton = upgrade.temporaryUpgradeObject.GetComponentInChildren<Button>();
 	        }
 			
 			if (upgradeButton)
             {
 	            upgradeButton.interactable = UpgradeCost(upgrade.temporaryStage) <= cells;
-	            upgradeButton.GetComponentInChildren<Text>().text = "Cost " + UpgradeCost(upgrade.temporaryStage);
             }
+
+            upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("CostText").text = "x" + UpgradeCost(upgrade.temporaryStage);
         }
 
 		//Flow manager does this (y)
