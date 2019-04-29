@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3992617719883022808}
   - component: {fileID: 8105136588191558817}
   - component: {fileID: 5310446023184873066}
-  - component: {fileID: -6906255331949897277}
   m_Layer: 0
   m_Name: DeceaseParticleSystem
   m_TagString: Untagged
@@ -43,7 +42,7 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 0.5
   simulationSpeed: 1
-  stopAction: 1
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4753,16 +4752,3 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &-6906255331949897277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3808419486784314659}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e593cbfa6b0bfc54d8d1bf86a021eea3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DestroyAfterSeconds: 5
