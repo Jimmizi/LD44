@@ -32,7 +32,29 @@ public class TemporaryUpgradeManager : MonoBehaviour
 
     public void SetUpGUI(int cells)
     {
-        foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
+	    if (PermanentUpgradeManager.damageUpgrade.temporaryUpgradeObject == null)
+	    {
+		    PermanentUpgradeManager.damageUpgrade.temporaryUpgradeObject = GameObject.Find("DamageUpgrade");
+	    }
+
+	    if (PermanentUpgradeManager.HPUpgrade.temporaryUpgradeObject == null)
+	    {
+		    PermanentUpgradeManager.HPUpgrade.temporaryUpgradeObject = GameObject.Find("HPUpgrade");
+	    }
+
+	    if (PermanentUpgradeManager.cloningUpgrade.temporaryUpgradeObject == null)
+	    {
+		    PermanentUpgradeManager.cloningUpgrade.temporaryUpgradeObject = GameObject.Find("CloningUpgrade");
+	    }
+
+	    if (PermanentUpgradeManager.cloningUpgrade.temporaryUpgradeObject == null ||
+	        PermanentUpgradeManager.HPUpgrade.temporaryUpgradeObject ||
+	        PermanentUpgradeManager.damageUpgrade.temporaryUpgradeObject)
+	    {
+		    return;
+	    }
+
+	    foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
         {
 	        if (upgrade == null)
 	        {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	//TODO Need to populate friendly count from somewhere
+	//just 
 	private static int _infectedCellsCount;
 
 	private static int _difficulty = 1;
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         TemporaryUpgradeManager.singleton?.SetUpGUI(newCellsCount);
 
-        if (newCellsCount > _infectedCellsCount)
+        if (newCellsCount > _infectedCellsCount || newCellsCount == 0)
         {
             _infectedCellsCount = newCellsCount;
             return;
@@ -57,28 +57,26 @@ public class GameManager : MonoBehaviour
 
         // get list of all infected cells except of one controlled by a player
         List<GameObject> infectedCells = FindObjectsOfType<ActorStats>().
-                                         Where(x => x.Infected && x.gameObject.GetComponent<PlayerController>() == null).
+                                         Where(x => x.Infected && x.gameObject.GetComponent<PlayerController>() == null && x.GetComponent<KillActor>() == null).
                                          Select(x => x.gameObject).ToList();
-
-        if (infectedCells.Count == 0) // we are buying permanent upgrade; no actual cell game objects to kill
-        {
-            _infectedCellsCount -= cellsToKill;
-            return;
-        }
 
         for (int i = 0; i < cellsToKill; i++)
         {
             int index = Random.Range(0, infectedCells.Count);
 
-            infectedCells [index].AddComponent<KillActor>();
-            infectedCells.RemoveAt(index);
+            if (index >= 0 && index < infectedCells.Count)
+            {
+	            infectedCells[index].AddComponent<KillActor>();
+	            infectedCells.RemoveAt(index);
+            }
         }
     }
 
     public static void InfectedCellDies()
     {
         _infectedCellsCount--;
-        TemporaryUpgradeManager.singleton.SetUpGUI(_infectedCellsCount);
+
+        TemporaryUpgradeManager.singleton?.SetUpGUI(_infectedCellsCount);
     }
 
     public static Upgrade UpgradeChooser(string name)

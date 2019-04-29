@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ActorStats : MonoBehaviour
 {
+	public static int MapRotationCount = 1;
 
 	/// <summary>
 	/// Denotes whether this actor participates in simulation.
@@ -122,6 +123,10 @@ public class ActorStats : MonoBehaviour
 			//extraMovement = (EXTRA_MOVEMENT_SPEED_PER_DIFFICULTY_STEP / (Neutral ? 2 : 1)) * (difficultyLevel - (EXTRA_MOVEMENT_SPEED_INTRODUCED_AT_DIFFICULTY_LEVEL - 1));
 			//extraMovement *= modifier;
 		//}
+
+		extraHealth *= MapRotationCount;
+		extraDamage *= MapRotationCount;
+		extraSpeed *= MapRotationCount;
 
 		Health += extraHealth;
 

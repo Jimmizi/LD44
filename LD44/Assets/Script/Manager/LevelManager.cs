@@ -10,13 +10,16 @@ public class LevelManager : MonoBehaviour
     public GameObject gameOverCanvas;
     public GameObject pauseMenuCanvas;
 
+	public AudioClip MusicToPlay;
+
     public bool paused;
+    private float _timerBetweenNullChecks;
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
 	    if (mainCanvas == null)
 	    {
-		    mainCanvas = GameObject.Find("MainCanvas");
+		    mainCanvas = GameObject.Find("MainCanvas_NEW");
 	    }
 
 	    if (gameOverCanvas == null)
@@ -31,6 +34,33 @@ public class LevelManager : MonoBehaviour
 
 		SetupHUD();
     }
+
+    void Update()
+    {
+	    _timerBetweenNullChecks += Time.deltaTime;
+
+	    if (_timerBetweenNullChecks < 1.0f)
+	    {
+		    return;
+	    }
+
+	    _timerBetweenNullChecks = 0.0f;
+
+		if (mainCanvas == null)
+	    {
+		    mainCanvas = GameObject.Find("MainCanvas_NEW");
+	    }
+
+	    if (gameOverCanvas == null)
+	    {
+		    gameOverCanvas = GameObject.FindWithTag("GameOverCanvas");
+	    }
+
+	    if (pauseMenuCanvas == null)
+	    {
+		    pauseMenuCanvas = GameObject.FindWithTag("PauseMenuCanvas");
+	    }
+	}
 
     void SetupHUD()
     {
@@ -52,15 +82,24 @@ public class LevelManager : MonoBehaviour
         mainCanvas.SetActive(false);
         gameOverCanvas.SetActive(true);
 
-        //Time.timeScale = 0;
-    }
+        gameOverCanvas.transform.GetChild(0).gameObject.SetActive(true);
+
+		//Time.timeScale = 0;
+	}
 
     public void Pause()
     {
+	    if (mainCanvas == null)
+	    {
+		    return;
+	    }
         mainCanvas.SetActive(false);
         pauseMenuCanvas.SetActive(true);
 
-        Time.timeScale = 0;
+        pauseMenuCanvas.transform.GetChild(0).gameObject.SetActive(true);
+
+
+		Time.timeScale = 0;
 
         paused = true;
     }
