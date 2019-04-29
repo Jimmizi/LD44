@@ -40,10 +40,10 @@ public class TemporaryUpgradeManager : MonoBehaviour
 	        }
 
             // sets "stage x" text
-            var tempText = upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("StageText");
+            Text tempText = upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("LevelText");
             if (tempText)
 			{
-				tempText.text = "stage\n" + upgrade.temporaryStage;
+				tempText.text = upgrade.temporaryStage.ToString();
 			}
 
             // sets interactibility and text of upgrade button

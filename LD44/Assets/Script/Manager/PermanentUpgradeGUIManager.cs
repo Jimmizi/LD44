@@ -32,7 +32,7 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
         foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
         {
             // sets "stage x" text
-            upgrade.upgradeObject.GetCompomentWithName<Text>("StageText").text = "stage\n" + upgrade.stage;
+            upgrade.upgradeObject.GetCompomentWithName<Text>("LevelText").text = upgrade.stage.ToString();
 
             // sets interactibility of upgrade button
             Button upgradeButton = upgrade.upgradeObject.GetComponentInChildren<Button>();
