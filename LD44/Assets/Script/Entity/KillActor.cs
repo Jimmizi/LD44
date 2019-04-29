@@ -12,12 +12,6 @@ public class KillActor : MonoBehaviour
 {
 	private bool _done = true;
     private bool _triggered = false;
-	
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void FxDone()
     {
@@ -31,11 +25,10 @@ public class KillActor : MonoBehaviour
 		    return;
 	    }
 
-	    GetComponent<Animator>()?.SetTrigger("Death");
-
-
-		if (GetComponent<ActorStats>().Infected)
+        if (GetComponent<ActorStats>().Infected)
             GameManager.InfectedCellDies();
+
+        GetComponent<Animator>()?.SetTrigger("Death");
 
         foreach (Component component in gameObject.GetComponents<Component>())
 	    {
@@ -79,9 +72,10 @@ public class KillActor : MonoBehaviour
     void Update()
     {
 	    if (_done)
-	    {
-			// TODO: Before this point, we will want to spawn other entities, particles, sounds
-			TriggerVisuals();
+	    {	        
+
+            // TODO: Before this point, we will want to spawn other entities, particles, sounds
+            TriggerVisuals();
 
 			if (GetComponent<PlayerController>())
 			{
@@ -106,9 +100,7 @@ public class KillActor : MonoBehaviour
 				{
 				    GameManager.levelManager.GameOver();
 				}
-			}
-
-			
+			}			
 	    }
     }
 }

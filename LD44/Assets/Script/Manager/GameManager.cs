@@ -57,14 +57,8 @@ public class GameManager : MonoBehaviour
 
         // get list of all infected cells except of one controlled by a player
         List<GameObject> infectedCells = FindObjectsOfType<ActorStats>().
-                                         Where(x => x.Infected && x.gameObject.GetComponent<PlayerController>() == null).
+                                         Where(x => x.Infected && x.gameObject.GetComponent<PlayerController>() == null && x.GetComponent<KillActor>() == null).
                                          Select(x => x.gameObject).ToList();
-
-        if (infectedCells.Count == 0) // we are buying permanent upgrade; no actual cell game objects to kill
-        {
-            _infectedCellsCount -= cellsToKill;
-            return;
-        }
 
         for (int i = 0; i < cellsToKill; i++)
         {
@@ -78,7 +72,8 @@ public class GameManager : MonoBehaviour
     public static void InfectedCellDies()
     {
         _infectedCellsCount--;
-        TemporaryUpgradeManager.singleton.SetUpGUI(_infectedCellsCount);
+
+        TemporaryUpgradeManager.singleton?.SetUpGUI(_infectedCellsCount);
     }
 
     public static Upgrade UpgradeChooser(string name)

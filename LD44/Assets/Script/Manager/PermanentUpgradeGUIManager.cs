@@ -48,13 +48,13 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
     {
         Upgrade upgrade = PermanentUpgradeManager.upgrades.First(x => x.upgradeObject == upgradeObject);
 
-        if (GameManager.InfectedCellsCount < PermanentUpgradeManager.UpgradeCost(upgrade.temporaryStage))
+        if (GameManager.InfectedCellsCount < PermanentUpgradeManager.UpgradeCost(upgrade.stage))
             return;
 
         GameManager.InfectedCellsCount -= PermanentUpgradeManager.UpgradeCost(upgrade.stage);
 
         upgrade.stage++;
 
-        SetUpGUI(GameManager.InfectedCellsCount);
+        SetUpGUI(GameManager.InfectedCellsCount - PermanentUpgradeManager.UpgradeCost(upgrade.stage - 1));
     }
 }
