@@ -6302,28 +6302,31 @@ MonoBehaviour:
     SpawnIncreasePerDifficultyLevel: 0
     DifficultyLevelToSpawn: 1
     BaseTimesToTryAndSpawn: 2
-    TimesToTrySpawnIncreasePerDifficultyLevel: 0.4
+    TimesToTrySpawnIncreasePerDifficultyLevel: 0.6
     OnlySpawnOnce: 0
+    SpawnAtLeastOnce: 0
   - Prefab: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,
       type: 3}
     Type: 1
     BaseSpawnChance: 50
     SpawnIncreasePerDifficultyLevel: 10
-    DifficultyLevelToSpawn: 2
-    BaseTimesToTryAndSpawn: 2
+    DifficultyLevelToSpawn: 1
+    BaseTimesToTryAndSpawn: 3
     TimesToTrySpawnIncreasePerDifficultyLevel: 1
     OnlySpawnOnce: 0
+    SpawnAtLeastOnce: 1
   - Prefab: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
       type: 3}
     Type: 2
-    BaseSpawnChance: 25
+    BaseSpawnChance: 100
     SpawnIncreasePerDifficultyLevel: 15
     DifficultyLevelToSpawn: 3
-    BaseTimesToTryAndSpawn: 2
+    BaseTimesToTryAndSpawn: 1
     TimesToTrySpawnIncreasePerDifficultyLevel: 0
     OnlySpawnOnce: 1
-  RoundTimer: 60
-  DifficultyMod: 0.5
+    SpawnAtLeastOnce: 1
+  RoundTimer: 30
+  DifficultyMod: 0.6
   DifficultyIncreaseAfterRound: 1
   NextScene: ThirdLevel
   NextSceneAtDifficultyLevel: 3
