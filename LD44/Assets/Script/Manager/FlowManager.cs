@@ -322,7 +322,22 @@ public class FlowManager : MonoBehaviour
 		}
 
 		var spawnChance = data.BaseSpawnChance + extraSpawnChance;
-		var timesToTrySpawn = data.BaseTimesToTryAndSpawn + extraSpawnTries + (ActorStats.MapRotationCount - 1);
+		var timesToTrySpawn = (data.BaseTimesToTryAndSpawn + extraSpawnTries * ActorStats.MapRotationCount);
+
+		if (data.Type == EnemyType.Hostile)
+		{
+			timesToTrySpawn += GameManager.InfectedCellsCount / 3;
+		}
+
+		if (data.Type == EnemyType.Sweeper)
+		{
+			timesToTrySpawn += GameManager.InfectedCellsCount / 10;
+		}
+
+		if (data.Type == EnemyType.Neutral)
+		{
+			spawnChance /= ActorStats.MapRotationCount;
+		}
 
 		Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " spawn chance: " + spawnChance.ToString() + "%, times to try: " + timesToTrySpawn.ToString());
 
@@ -354,7 +369,7 @@ public class FlowManager : MonoBehaviour
 				{
 					dataController.initActorFromType(tempStats, data.Type);
 				}
-				tempStats.SetupDifficulty(GameManager.Difficulty, DifficultyMod);
+				tempStats.SetupDifficulty(GameManager.Difficulty * ActorStats.MapRotationCount, DifficultyMod * ActorStats.MapRotationCount);
 			}
 
 			_currentEnemies.Add(tempEnemy);

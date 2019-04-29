@@ -72,7 +72,7 @@ namespace Pathfinding
 
 			        if (containedWithinABounds)
 			        {
-				        var tempNode = GridGenerator.GetInstance().NodeFromWorldPosition(testPoint);
+				        var tempNode = GridGenerator.GetInstance()?.NodeFromWorldPosition(testPoint);
 
 				        return (tempNode != null && !tempNode.obstructed);
 			        }

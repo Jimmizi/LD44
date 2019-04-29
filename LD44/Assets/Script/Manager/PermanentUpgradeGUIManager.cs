@@ -12,6 +12,10 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
     public Text cellsCounter;
 
     private float endOfRoundCellModifier = 1.25f;
+    private static int _upgradesMade = 0;
+
+    private static int _timesIncreasedCostMultiplier = 0;
+    private static int _updatesNeededToUpdateCostMod = 3;
 
     void Awake()
     {
@@ -55,7 +59,20 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
         GameManager.InfectedCellsCount -= PermanentUpgradeManager.UpgradeCost(upgrade.stage);
 
         upgrade.stage++;
+        _upgradesMade++;
 
-        SetUpGUI(GameManager.InfectedCellsCount - PermanentUpgradeManager.UpgradeCost(upgrade.stage - 1));
+        if (_upgradesMade >= _updatesNeededToUpdateCostMod)
+        {
+	        _upgradesMade = 0;
+	        PermanentUpgradeManager.UpgradeCostMutiplier++;
+	        _timesIncreasedCostMultiplier++;
+
+	        if (_timesIncreasedCostMultiplier >= 6)
+	        {
+		        _updatesNeededToUpdateCostMod--;
+	        }
+        }
+
+		SetUpGUI(GameManager.InfectedCellsCount - PermanentUpgradeManager.UpgradeCost(upgrade.stage - 1));
     }
 }

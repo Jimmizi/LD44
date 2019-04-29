@@ -156,7 +156,10 @@ public class ActorStats : MonoBehaviour
 		{
 			dataController.initActorFromType(this, 3);	
 		}
-		
+
+		//Just a hack so just infected go same speed as friendlies. too late to do properly
+		MovementSpeed = 1;
+
 	    UpgradeEffectManager.ApplyPermanentUpgrades(this);
     }
 }

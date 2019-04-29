@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -6,6 +7,7 @@ using Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
+using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 
 /// <summary>
@@ -64,6 +66,10 @@ public class FriendlyNPCManager : MonoBehaviour
 			{
 				GameManager.InfectedCellsCount = 0;
 			}
+			else
+			{
+				_friendliesLeftToSpawn = Math.Min(200, _friendliesLeftToSpawn);
+			}
 		}
 		_pointToSpawnAround = spawnPoint;
 	}
@@ -90,6 +96,14 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	void Update()
 	{
+		var allActors = GameObject.FindObjectsOfType<ActorStats>().Where(x => x.Infected).ToArray();
+
+		//Only spawn this many friendlies
+		if (allActors.Length > 300)
+		{
+			return;
+		}
+
 		if (FriendliesLeftText)
 		{
 			FriendliesLeftText.text = GameManager.InfectedCellsCount.ToString();
@@ -129,7 +143,7 @@ public class FriendlyNPCManager : MonoBehaviour
 					tempController.CurrentTask = AIController.AITask.AttackTarget;
 				}
 				
-				FriendliesList.Add(tempFriendly);
+				//FriendliesList.Add(tempFriendly);
 				spawnedSuccessfully = true;
 
 				_friendliesLeftToSpawn--;

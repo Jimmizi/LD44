@@ -31,8 +31,11 @@ public class KillActor : MonoBehaviour
 			    newPlayerActor.gameObject.AddComponent<PlayerController>();
 			    newPlayerActor.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32");
 			    newPlayerActor.GetComponent<ActorStats>()?.ApplyPlayerStats();
-			    
-			    if (newPlayerActor.GetComponent<Animator>())
+
+			    newPlayerActor.GetComponent<BoxCollider2D>().isTrigger = false;
+
+
+				if (newPlayerActor.GetComponent<Animator>())
 			    {
 				    newPlayerActor.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animators/slime_blue_64x64_0");
 			    }

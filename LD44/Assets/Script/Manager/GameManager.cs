@@ -29,14 +29,14 @@ public class GameManager : MonoBehaviour
         if (Input.GetButtonDown("Pause"))
             levelManager.PauseUnpause();
 
-        if (Input.GetButtonDown("UpgradeHP"))
-            TemporaryUpgradeManager.singleton.UpgradeTemporary(TemporaryUpgradeManager.singleton.HPUpgradeObject);
+        //if (Input.GetButtonDown("UpgradeHP"))
+        //    TemporaryUpgradeManager.singleton.UpgradeTemporary(TemporaryUpgradeManager.singleton.HPUpgradeObject);
 
-        if (Input.GetButtonDown("UpgradeDamage"))
-            TemporaryUpgradeManager.singleton.UpgradeTemporary(TemporaryUpgradeManager.singleton.damageUpgradeObject);
+        //if (Input.GetButtonDown("UpgradeDamage"))
+        //    TemporaryUpgradeManager.singleton.UpgradeTemporary(TemporaryUpgradeManager.singleton.damageUpgradeObject);
 
-        if (Input.GetButtonDown("UpgradeCloning"))
-            TemporaryUpgradeManager.singleton.UpgradeTemporary(TemporaryUpgradeManager.singleton.cloningUpgradeObject);
+        //if (Input.GetButtonDown("UpgradeCloning"))
+        //    TemporaryUpgradeManager.singleton.UpgradeTemporary(TemporaryUpgradeManager.singleton.cloningUpgradeObject);
     }
 
     /// <summary>
