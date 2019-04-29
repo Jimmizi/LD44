@@ -34,6 +34,12 @@ public class FlowManager : MonoBehaviour
 		
 	}
 
+	private struct ObjectiveTextStruct
+	{
+		public string scenePresentIn;
+		public string text;
+	}
+
 	public bool DebugStraightToGameplay;
 	public bool ThisIsTheTitleMenu;
 
@@ -131,8 +137,6 @@ public class FlowManager : MonoBehaviour
 	public string NextScene = "";
 	public int NextSceneAtDifficultyLevel = 5;
 	
-	[SerializeField]
-	public List<string> ObjectiveTexts = new List<string>();
 
 	#endregion
 
@@ -168,6 +172,7 @@ public class FlowManager : MonoBehaviour
 
 	//TODO Before Submit - Reenable this
 	private static bool _tutorialPassed = true;
+	private static bool _randomiseObjectiveText = false;
 
 	private TransitionFade _fader;
 
@@ -176,10 +181,50 @@ public class FlowManager : MonoBehaviour
 		return _currentState >= LevelState.StageOver;
 	}
 
-    
+	private static bool _listSetUp;
+	static List<ObjectiveTextStruct> _objectiveTextList = new List<ObjectiveTextStruct>();
+
+	string[,] _objectiveTextALL = new string[,]
+	{
+		{ "Take what is yours.", "Sacrifice the minions.", "Dominate.", "Survive. Prosper.", "Multiply."},
+		{ "Seek. Destroy.", "Find and take.", "No cell can hide.", "You are unstoppable.", "You are immortal."},
+		{ "Rule. Conquer.", "Take. Take.", "More. More.", "Everything is yours.", "There is only you."},
+		{ "No remorse.", "No pity.", "No thought.", "No feelings.", "Only you."},
+	};
+
+	void SetupObjectiveTextList()
+	{
+		if (_listSetUp)
+		{
+			return;
+		}
+
+		const int sceneCount = 4;
+		const int objCount = 5;
+		var sceneName = new string[] {"FirstLevel", "SecondLevel", "ThirdLevel", "FourthLevel"};
+		
+		for (int scene = 0; scene < sceneCount; scene++)
+		{
+
+			//4 scenes times 5 difficulties per scene
+			for (int i = 0; i < objCount; i++)
+			{
+				var tempOT = new ObjectiveTextStruct();
+				tempOT.scenePresentIn = sceneName[scene];
+				tempOT.text = _objectiveTextALL[scene, i];
+
+				_objectiveTextList.Add(tempOT);
+			}
+		}
+
+		_listSetUp = true;
+	}
+
     void Start()
     {
-	    _spawnerRef = GameObject.FindGameObjectWithTag("Manager_Spawnpoints")?.GetComponent<SpawnpointFinder>();
+	    SetupObjectiveTextList();
+
+		_spawnerRef = GameObject.FindGameObjectWithTag("Manager_Spawnpoints")?.GetComponent<SpawnpointFinder>();
 		_mainCameraRef = GameObject.FindGameObjectWithTag("MainCamera")?.GetComponent<Camera>();
 		_npcManagerRef = GetComponent<FriendlyNPCManager>();
 		_fader = GameObject.FindObjectOfType<TransitionFade>();
@@ -197,7 +242,6 @@ public class FlowManager : MonoBehaviour
 
 		Debug.Assert(DummyControllerForPlacementCamera != null, "Invalid dummy controller.");
 		
-
 		Debug.Log("Difficulty This Round is " + GameManager.Difficulty.ToString());
     }
 	
@@ -416,15 +460,26 @@ public class FlowManager : MonoBehaviour
 		// Assign the camera to follow the actual player now
 		AssignCameraToFollow(_currentPlayer, true);
 
-		if (ObjectiveTexts.Count > 0)
+		if (_objectiveTextList.Count > 0)
 		{
-			if ((GameManager.Difficulty - 1) < ObjectiveTexts.Count)
+			if (!_randomiseObjectiveText)
 			{
-				GameObjectiveText.text = ObjectiveTexts[(GameManager.Difficulty - 1)];
+				var textsForLevel = _objectiveTextList.Where(x => x.scenePresentIn == SceneManager.GetActiveScene().name).ToArray();
+				
+				if ((GameManager.Difficulty - 1) < textsForLevel.Length)
+				{
+					GameObjectiveText.text = textsForLevel[(GameManager.Difficulty - 1)].text;
+				}
+				else
+				{
+					GameObjectiveText.text = textsForLevel[Random.Range(0, textsForLevel.Length)].text;
+				}
 			}
 			else
 			{
-				GameObjectiveText.text = ObjectiveTexts[Random.Range(0, ObjectiveTexts.Count)];
+				var randomScene = Random.Range(0, 5);
+				var randomText = Random.Range(0, 6);
+				GameObjectiveText.text = _objectiveTextALL[randomScene, randomText];
 			}
 		}
 		
@@ -530,6 +585,7 @@ public class FlowManager : MonoBehaviour
 		//TODO: Fade out
 		_currentState = LevelState.Shutdown;
 		_doingFadeOut = true;
+		_doingFadeIn = false;
 
 		//TODO need to reset this on new stage start
 		GameManager.Difficulty += DifficultyIncreaseAfterRound;
@@ -575,6 +631,12 @@ public class FlowManager : MonoBehaviour
 			//Next level, reset difficulty
 			UpgradeNextScene.NextSceneToUse = NextScene;
 			GameManager.Difficulty = 1;
+
+			if (UpgradeNextScene.NextSceneToUse == "FirstLevel")
+			{
+				_randomiseObjectiveText = true;
+				ActorStats.MapRotationCount++;
+			}
 		}
 		else
 		{
