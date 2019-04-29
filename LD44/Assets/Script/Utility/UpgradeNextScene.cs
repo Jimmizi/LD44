@@ -50,16 +50,16 @@ public class UpgradeNextScene : MonoBehaviour
 
     public void LoadNextScene()
     {
-	    if (NextSceneToUse == "")
-	    {
-		    SceneManager.LoadScene("FirstLevel");
-	    }
-	    else
-	    {
-		    SceneManager.LoadScene(NextSceneToUse);
-	    }
+	    //if (NextSceneToUse == "")
+	    //{
+		   // SceneManager.LoadScene("FirstLevel");
+	    //}
+	    //else
+	    //{
+		   // SceneManager.LoadScene(NextSceneToUse);
+	    //}
 
-	    return;
+	    //return;
 		if (!_startedExitFade && !_doingFadeIn)
 	    {
 		    GameObject.Find("MainCanvas")?.SetActive(false);

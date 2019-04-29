@@ -3235,7 +3235,7 @@ MonoBehaviour:
   RoundTimer: 60
   DifficultyMod: 0.5
   DifficultyIncreaseAfterRound: 1
-  NextScene: SecondLevel
+  NextScene: FirstLevel
   NextSceneAtDifficultyLevel: 5
   ObjectiveTexts:
   - Take what is yours.

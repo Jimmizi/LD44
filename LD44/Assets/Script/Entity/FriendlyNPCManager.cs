@@ -14,7 +14,7 @@ using Vector2 = UnityEngine.Vector2;
 
 public class FriendlyNPCManager : MonoBehaviour
 {
-
+	public bool OnMenu_SpawnImmediately = false;
 	public GameObject FriendlyNPCPrefab;
 	public List<GameObject> FriendliesList = new List<GameObject>();
 
@@ -59,6 +59,11 @@ public class FriendlyNPCManager : MonoBehaviour
 		else
 		{
 			_friendliesLeftToSpawn = GameManager.InfectedCellsCount;
+
+			if (!OnMenu_SpawnImmediately)
+			{
+				GameManager.InfectedCellsCount = 0;
+			}
 		}
 		_pointToSpawnAround = spawnPoint;
 	}
@@ -71,24 +76,20 @@ public class FriendlyNPCManager : MonoBehaviour
 
 	void Start()
     {
-		//FriendlyAttackTypeText.gameObject.transform.parent.gameObject.SetActive(false);
-		FriendliesLeftText.text = GameManager.InfectedCellsCount.ToString();
+	    if (FriendliesLeftText)
+	    {
+		    FriendliesLeftText.text = GameManager.InfectedCellsCount.ToString();
+	    }
+
+		if (OnMenu_SpawnImmediately)
+		{
+			SetStartSpawningFriendlies(Vector2.zero);
+		}
 	}
 
 
 	void Update()
 	{
-		// Toggle between attack modes
-		if (Input.GetKeyDown(KeyCode.E))
-		{
-			//SwitchPreferredAttackType();
-
-			//if (FriendlyAttackTypeText)
-			//{
-			//	FriendlyAttackTypeText.text = "(E) " + (_aiPreferredAttack == ActionManager.AttackType.Lethal ? "Friendlies Prefer Killing" : "Friendlies Prefer Infecting");
-			//}
-		}
-
 		if (FriendliesLeftText)
 		{
 			FriendliesLeftText.text = GameManager.InfectedCellsCount.ToString();
@@ -132,7 +133,11 @@ public class FriendlyNPCManager : MonoBehaviour
 				spawnedSuccessfully = true;
 
 				_friendliesLeftToSpawn--;
-				GameManager.InfectedCellsCount++;
+
+				if (!OnMenu_SpawnImmediately)
+				{
+					GameManager.InfectedCellsCount++;
+				}
 
 				break;
 			}
