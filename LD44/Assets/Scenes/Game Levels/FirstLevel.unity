@@ -3233,10 +3233,10 @@ MonoBehaviour:
   - Prefab: {fileID: 4999915037488276507, guid: 83d4bb32180f16644b858c1207472a7f,
       type: 3}
     Type: 0
-    BaseSpawnChance: 100
+    BaseSpawnChance: 2
     SpawnIncreasePerDifficultyLevel: 0
     DifficultyLevelToSpawn: 1
-    BaseTimesToTryAndSpawn: 2
+    BaseTimesToTryAndSpawn: 100
     TimesToTrySpawnIncreasePerDifficultyLevel: 0.4
     OnlySpawnOnce: 0
   - Prefab: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,

@@ -314,7 +314,9 @@ public class AIController : MonoBehaviour
     }
 
     private void ProcessTaskAttackTarget()
-    {
+	{
+	    _moverRef.Direction = Vector2.zero;
+
 		if (_taskTarget == null)
 		{
 			_taskTarget = FindSuitableTargetToAttack();
@@ -381,7 +383,6 @@ public class AIController : MonoBehaviour
 				_actionRef.DoAction(ActionManager.ActionType.Attack);
 				_actionRef.TargetLocationForAction = _taskTarget.transform.position;
 				_timeSinceLastAttackAction = 0.0f;
-				_moverRef.Direction = Vector2.zero;
 			}
 			//TODO maybe reintroduce this - atm enemies can just sit inside their target
 			//customMovetoPoint = _taskTarget.transform.position;
@@ -403,7 +404,6 @@ public class AIController : MonoBehaviour
 		else if (_currentNode >= _currentPath.Count)
 		{
 			_currentPath.Clear();
-			_moverRef.Direction = Vector2.zero;
 			_currentNode = 0;
 		}
 		//Recalculate if the target has moved 
@@ -416,15 +416,12 @@ public class AIController : MonoBehaviour
 					_originalTargetPlace = _taskTarget.transform.position;
 					_waitingOnPathResult = true;
 				}
-
-				_moverRef.Direction = Vector2.zero;
-				
 			}
 		}
 		else
 		{
 			//Otherwise travel in the direction of the next node
-			var direction = (customMovetoPoint != Vector2.zero ? customMovetoPoint : (Vector2)_currentPath[_currentNode].position) - (Vector2)transform.position;
+			var direction = (Vector2)_currentPath[_currentNode].position - (Vector2)transform.position;
 			var orthDir = new Vector3(direction.x, direction.y, 0);
 
 			var normal = transform.forward;
@@ -432,7 +429,7 @@ public class AIController : MonoBehaviour
 
 			_moverRef.Direction = orthDir;
 
-			if (customMovetoPoint == Vector2.zero && (transform.position - _currentPath[_currentNode].position).magnitude <= REACHED_NODE_DISTANCE)
+			if ((transform.position - _currentPath[_currentNode].position).magnitude <= REACHED_NODE_DISTANCE)
 			{
 				_currentNode++;
 

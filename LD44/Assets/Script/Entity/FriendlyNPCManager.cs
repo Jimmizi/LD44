@@ -54,7 +54,7 @@ public class FriendlyNPCManager : MonoBehaviour
 	{
 		if (GameManager.InfectedCellsCount == 0)
 		{
-			_friendliesLeftToSpawn = 1;//50;
+			_friendliesLeftToSpawn = 1;
 		}
 		else
 		{
