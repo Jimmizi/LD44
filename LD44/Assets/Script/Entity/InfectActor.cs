@@ -65,6 +65,7 @@ public class InfectActor : MonoBehaviour
 		if (tempStats)
 		{
 			tempStats.Infected = true;
+			tempStats.UsesAoeAttack = false;
 			tempStats.Neutral = false;
 			tempStats.ApplyFriendlyStats();
 		}

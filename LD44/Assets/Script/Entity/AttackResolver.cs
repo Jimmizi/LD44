@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 public class AttackResolver : MonoBehaviour
@@ -33,6 +34,11 @@ public class AttackResolver : MonoBehaviour
 		if (mainCanvas)
 		{
 			var tempStatus = (GameObject) Instantiate(StatusChangeUIPrefab, pos, new Quaternion(), mainCanvas.transform);
+			var tempText = tempStatus.GetComponent<Text>();
+			if (tempText)
+			{
+				tempText.text = text;
+			}
 		}
 		
 	}
@@ -55,6 +61,7 @@ public class AttackResolver : MonoBehaviour
 		if (CallerStats.UsesAoeAttack)
 		{
 			Instantiate(AoeEffectsPrefab, CallingGameObject.transform.position, new Quaternion());
+			this.transform.localScale *= 3;
 		}
 		
 		if (SpecificTarget != null)
