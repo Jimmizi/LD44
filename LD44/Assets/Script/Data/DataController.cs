@@ -13,10 +13,19 @@ namespace Data
     public class DataController : MonoBehaviour
     {
 
-
         public GameObject obstaclePrefab;
         public GameObject spawnPointPrefab;
-        public GameObject spawnPrefab;
+
+        [System.Serializable]
+        public struct SpawnPrefabs
+        {
+            public GameObject neutralPrefab;
+            public GameObject hostilePrefab;
+            public GameObject sweeperPrefab;
+        }
+
+        public SpawnPrefabs spawnPrefabs;
+        
 
         private string _levelDataFilename = "data.json";
         private bool _obstaclesAdded = false;
@@ -38,22 +47,6 @@ namespace Data
             }
             
         }
-
-        /*List<GameObject> FindAllPrefabInstances(UnityEngine.Object myPrefab)
-        {
-            List<GameObject> result = new List<GameObject>();
-            GameObject[] allObjects = (GameObject[])FindObjectsOfType(typeof(GameObject));
-            foreach(GameObject GO in allObjects)
-            {
-                if (EditorUtility.GetPrefabType(GO) == PrefabType.PrefabInstance)
-                {
-                    UnityEngine.Object GO_prefab = EditorUtility.GetPrefabParent(GO);
-                    if (myPrefab == GO_prefab)
-                        result.Add(GO);
-                }
-            }
-            return result;
-        }*/
 
         private void initActor(ActorStats stats, Actor actor)
         {
@@ -113,42 +106,43 @@ namespace Data
                         Quaternion.identity);
                 }
             }
-
-            /*if (levelData.actor != null)
-            {
-                ActorStats[] actors = GameObject.FindObjectsOfType<ActorStats>() as ActorStats[];
-                
-
-                if (actors.Length > 0)
-                {
-                    for (int i = 0; i < actors.Length; i++)
-                    {
-                        actors[i].Health = levelData.actor.health;
-                        actors[i].Damage = levelData.actor.damage;
-                        actors[i].MovementSpeed = levelData.actor.movementSpeed;
-                        actors[i].AttackSpeed = levelData.actor.attackSpeed;
-                        actors[i].AttackRange = levelData.actor.attackRange;
-                    }
-                }
-
-            }*/
-
-            if (levelData.spawns != null && flowManager != null && spawnPrefab != null)
+            
+            if (levelData.spawns != null && flowManager != null)
             {
                 foreach (Spawn spawn in levelData.spawns)
                 {
 
-                    FlowManager.SpawnStats stats = new FlowManager.SpawnStats();
-                    stats.Prefab = spawnPrefab;
-                    stats.Type = (FlowManager.EnemyType) spawn.type;
-                    stats.BaseSpawnChance = spawn.baseSpawnChance;
-                    stats.SpawnIncreasePerDifficultyLevel = spawn.spawnIncreasePerDifficultyLevel;
-                    stats.DifficultyLevelToSpawn = spawn.difficultyLevelToSpawn;
-                    stats.BaseTimesToTryAndSpawn = spawn.baseTimesToTryAndSpawn;
-                    stats.TimesToTrySpawnIncreasePerDifficultyLevel = spawn.timesToTrySpawnIncreasePerDifficultyLevel;
-                    stats.OnlySpawnOnce = spawn.onlySpawnOnce;
-                    
-                    flowManager.EnemyList.Add(stats);
+                    GameObject prefab = null;
+                    switch (spawn.type)
+                    {
+                        case EnemyType.Neutral:
+                            prefab = spawnPrefabs.neutralPrefab;
+                            break;
+                        case EnemyType.Hostile:
+                            prefab = spawnPrefabs.hostilePrefab;
+                            break;
+                        case EnemyType.Sweeper:
+                            prefab = spawnPrefabs.sweeperPrefab;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (prefab != null)
+                    {
+                        FlowManager.SpawnStats stats = new FlowManager.SpawnStats();
+                        stats.Prefab = prefab;
+                        stats.Type = (FlowManager.EnemyType) spawn.type;
+                        stats.BaseSpawnChance = spawn.baseSpawnChance;
+                        stats.SpawnIncreasePerDifficultyLevel = spawn.spawnIncreasePerDifficultyLevel;
+                        stats.DifficultyLevelToSpawn = spawn.difficultyLevelToSpawn;
+                        stats.BaseTimesToTryAndSpawn = spawn.baseTimesToTryAndSpawn;
+                        stats.TimesToTrySpawnIncreasePerDifficultyLevel =
+                            spawn.timesToTrySpawnIncreasePerDifficultyLevel;
+                        stats.OnlySpawnOnce = spawn.onlySpawnOnce;
+
+                        flowManager.EnemyList.Add(stats);
+                    }
                 }
 
                 
