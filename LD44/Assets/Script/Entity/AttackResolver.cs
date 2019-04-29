@@ -196,8 +196,9 @@ public class AttackResolver : MonoBehaviour
 			
 			return infectedVictim ? ActionManager.AttackResult.VictimInfected : ActionManager.AttackResult.VictimDeath;
 		}
-		
-		return infectedVictim ? ActionManager.AttackResult.VictimInfected : ActionManager.AttackResult.VictimOkay;
+
+		return ActionManager.AttackResult.VictimOkay;
+		//return infectedVictim ? ActionManager.AttackResult.VictimInfected : ActionManager.AttackResult.VictimOkay;
 	}
 
 	void OnDrawGizmos()
