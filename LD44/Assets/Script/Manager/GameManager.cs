@@ -61,7 +61,10 @@ public class GameManager : MonoBehaviour
                                          Select(x => x.gameObject).ToList();
 
         if (infectedCells.Count == 0) // we are buying permanent upgrade; no actual cell game objects to kill
+        {
+            _infectedCellsCount -= cellsToKill;
             return;
+        }
 
         for (int i = 0; i < cellsToKill; i++)
         {
