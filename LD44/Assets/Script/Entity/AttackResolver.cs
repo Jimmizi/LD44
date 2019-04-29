@@ -61,7 +61,7 @@ public class AttackResolver : MonoBehaviour
 		if (CallerStats.UsesAoeAttack)
 		{
 			Instantiate(AoeEffectsPrefab, CallingGameObject.transform.position, new Quaternion());
-			this.transform.localScale *= 3;
+			this.transform.localScale *= 3.5f;
 		}
 		
 		if (SpecificTarget != null)
