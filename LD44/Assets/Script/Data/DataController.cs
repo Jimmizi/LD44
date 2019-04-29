@@ -82,6 +82,8 @@ namespace Data
             if (generator != null)
             {
                 generator.DetectObstacles();
+                generator.RemovePointsNotInBounds();
+
             }
         }
         

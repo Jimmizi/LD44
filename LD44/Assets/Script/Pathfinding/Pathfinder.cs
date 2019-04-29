@@ -22,9 +22,10 @@ namespace Pathfinding
         private GridGenerator _gridGenerator;
         private List<Node> _foundPath;
         private PathfinderManager.PathfindingComplete _callback;
-		
+		private AIController _pathRequester;
 
-        public Pathfinder(Vector3 startPosition, Vector3 targetPosition, PathfinderManager.PathfindingComplete callback = null)
+
+		public Pathfinder(Vector3 startPosition, Vector3 targetPosition, AIController pathRequester, PathfinderManager.PathfindingComplete callback = null)
         {
             _gridGenerator = GridGenerator.GetInstance();
             _gridGenerator.startPosition = startPosition;
@@ -33,7 +34,8 @@ namespace Pathfinding
             start = _gridGenerator.NodeFromWorldPosition(startPosition);
             target = _gridGenerator.NodeFromWorldPosition(targetPosition);
 
-            _callback = callback;
+            _pathRequester = pathRequester;
+			_callback = callback;
         }
 
         public void FindPath()
@@ -49,7 +51,7 @@ namespace Pathfinding
         
         public void NotifyComplete()
         {
-            if(_callback != null)
+            if(_pathRequester != null && _callback != null)
             {
                 _callback(_foundPath);
             }

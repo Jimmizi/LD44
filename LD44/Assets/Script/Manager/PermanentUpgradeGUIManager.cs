@@ -11,7 +11,7 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
 
     public Text cellsCounter;
 
-    private int endOfRoundCellReward = 10;
+    private float endOfRoundCellModifier = 1.25f;
 
     void Awake()
     {
@@ -22,7 +22,7 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.InfectedCellsCount += endOfRoundCellReward;
+        GameManager.InfectedCellsCount = Mathf.FloorToInt((float)GameManager.InfectedCellsCount * endOfRoundCellModifier);
 
         SetUpGUI(GameManager.InfectedCellsCount);
     }

@@ -2052,7 +2052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 889429836}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: EnclosingWalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5806,11 +5806,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5658641848450166474, guid: 1ac1eb27d1407a047807766e88b65a8a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1101622715344002249, guid: 1ac1eb27d1407a047807766e88b65a8a,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -6055,16 +6050,6 @@ PrefabInstance:
       propertyPath: RoundTimerText
       value: 
       objectReference: {fileID: 1870021179}
-    - target: {fileID: 7346508008141515699, guid: 2736e9f09100a4a44932bd1d3094a625,
-        type: 3}
-      propertyPath: ObjectiveTexts.Array.data[1]
-      value: Sacrifice your minions.
-      objectReference: {fileID: 0}
-    - target: {fileID: 7346508008141515699, guid: 2736e9f09100a4a44932bd1d3094a625,
-        type: 3}
-      propertyPath: EnemyList.Array.data[0].BaseTimesToTryAndSpawn
-      value: 150
-      objectReference: {fileID: 0}
     - target: {fileID: 7346508007549475207, guid: 2736e9f09100a4a44932bd1d3094a625,
         type: 3}
       propertyPath: FriendliesLeftText

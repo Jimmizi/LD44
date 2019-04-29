@@ -1,0 +1,239 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7346508008037755394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7346508008037755396}
+  - component: {fileID: 7346508008037755395}
+  m_Layer: 0
+  m_Name: PathfinderManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7346508008037755396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346508008037755394}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7346508008664238659}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7346508008037755395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346508008037755394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea22fcf93c3e4b7b80cab8a07392f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxThreads: 1
+--- !u!1 &7346508008141515698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7346508008141515700}
+  - component: {fileID: 7346508008141515699}
+  - component: {fileID: 7346508007549475207}
+  m_Layer: 0
+  m_Name: Level Director
+  m_TagString: FlowManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7346508008141515700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346508008141515698}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7346508008664238659}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7346508008141515699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346508008141515698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 518ddbe7ae51fcd4e8fd75847fc1a35c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugStraightToGameplay: 0
+  ThisIsTheTitleMenu: 0
+  SpawnInTargetPrefab: {fileID: 7485585363705099457, guid: 9965327771d66174c84a56334411ca58,
+    type: 3}
+  CurrentPlayerGameObject: {fileID: 1390341794798836563, guid: 6daae1d9d9b0c634a828368c2ad46646,
+    type: 3}
+  DummyControllerForPlacementCamera: {fileID: 755506794860714621, guid: 657e6c858fb22c344b9235c89947dcc2,
+    type: 3}
+  GameObjectiveText: {fileID: 0}
+  RoundTimerText: {fileID: 0}
+  EnemyList:
+  - Prefab: {fileID: 4999915037488276507, guid: 83d4bb32180f16644b858c1207472a7f,
+      type: 3}
+    Type: 0
+    BaseSpawnChance: 100
+    SpawnIncreasePerDifficultyLevel: 0
+    DifficultyLevelToSpawn: 1
+    BaseTimesToTryAndSpawn: 3
+    TimesToTrySpawnIncreasePerDifficultyLevel: 0.4
+    OnlySpawnOnce: 0
+  - Prefab: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,
+      type: 3}
+    Type: 1
+    BaseSpawnChance: 50
+    SpawnIncreasePerDifficultyLevel: 10
+    DifficultyLevelToSpawn: 2
+    BaseTimesToTryAndSpawn: 2
+    TimesToTrySpawnIncreasePerDifficultyLevel: 1
+    OnlySpawnOnce: 0
+  - Prefab: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
+      type: 3}
+    Type: 2
+    BaseSpawnChance: 25
+    SpawnIncreasePerDifficultyLevel: 15
+    DifficultyLevelToSpawn: 3
+    BaseTimesToTryAndSpawn: 2
+    TimesToTrySpawnIncreasePerDifficultyLevel: 0
+    OnlySpawnOnce: 1
+  RoundTimer: 60
+  DifficultyMod: 0.5
+  DifficultyIncreaseAfterRound: 1
+  NextScene: SecondLevel
+  NextSceneAtDifficultyLevel: 5
+  ObjectiveTexts:
+  - Take what is yours.
+  - Rule.
+  - Domination.
+  - Survive. Prosper.
+  - Keep calm. Slime on.
+--- !u!114 &7346508007549475207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346508008141515698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbccb77311b283c4b8744efe528b8261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FriendlyNPCPrefab: {fileID: 4999915037488276507, guid: 1d9b1ad56c3c59a4881b01676c74a0cb,
+    type: 3}
+  FriendliesList: []
+  FriendliesLeftText: {fileID: 0}
+--- !u!1 &7346508008664238658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7346508008664238659}
+  m_Layer: 0
+  m_Name: Management
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7346508008664238659
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346508008664238658}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7346508008141515700}
+  - {fileID: 7346508009077653842}
+  - {fileID: 7346508008037755396}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7346508009077653840
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7346508009077653842}
+  - component: {fileID: 7346508009077653841}
+  m_Layer: 0
+  m_Name: Grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7346508009077653842
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346508009077653840}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7346508008664238659}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7346508009077653841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346508009077653840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713c876d9f39a4ec2bb0918547615e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclesMask:
+    serializedVersion: 2
+    m_Bits: 3584
+  gridSize: {x: 15, y: 15}
+  nodeRadius: 0.1
+  nodeSpacing: 0.1
+  startPosition: {x: 0, y: 0, z: 0}
+  endPosition: {x: 0, y: 0, z: 0}

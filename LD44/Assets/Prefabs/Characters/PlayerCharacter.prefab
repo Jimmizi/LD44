@@ -195,7 +195,7 @@ MonoBehaviour:
   Health: 200
   Damage: 40
   MovementSpeed: 1.2
-  AttackSpeed: 0.25
+  AttackSpeed: 1
   AttackRange: 0.5
   InfectionChance: 15
   CloningChance: 5

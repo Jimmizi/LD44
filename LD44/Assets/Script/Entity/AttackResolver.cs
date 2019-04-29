@@ -91,6 +91,11 @@ public class AttackResolver : MonoBehaviour
 			return;
 		}
 
+		if (other.GetComponent<InfectActor>() || other.GetComponent<KillActor>())
+		{
+			return;
+		}
+
 		//Don't attack the same type
 		if (CallerStats.Infected == othersStats.Infected)
 		{
@@ -106,9 +111,7 @@ public class AttackResolver : MonoBehaviour
 				return;
 			}
 		}
-
-
-
+		
 		_queryResult = ResolveAttack(CallerStats, othersStats);
 
 		switch (_queryResult)

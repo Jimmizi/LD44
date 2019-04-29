@@ -152,20 +152,7 @@ namespace Pathfinding
 
 			return new Vector2(0.0f, 0.0f);
 		}
-
-        // TODO: Temporary
-        private void TestCallback(List<Node> path)
-        {
-            if (path != null)
-            {
-                Debug.Log("Path found.");
-            }
-            else
-            {
-                Debug.Log("Path not found.");
-            }
-        }
-        
+		
         void Update()
         {
 			
@@ -173,7 +160,9 @@ namespace Pathfinding
 
             while (i < _jobs.Count)
             {
-                if (_jobs[i].done)
+	            _jobs[i].FindPath();
+
+				if (_jobs[i].done)
                 {
                     _jobs[i].NotifyComplete();
                     _jobs.RemoveAt(i);
@@ -184,29 +173,36 @@ namespace Pathfinding
                 }
             }
 
-            if (_queue.Count > 0 && _jobs.Count < maxThreads)
+            if (_queue.Count > 0)// && _jobs.Count < maxThreads)
             {
                 Pathfinder finder = _queue[0];
                 _queue.RemoveAt(0);
                 _jobs.Add(finder);
 
-                Thread thread = new Thread(finder.FindPath);
-                thread.Start();
+                //Thread thread = new Thread(finder.FindPath);
+                //thread.Start();
 
-                /* As per the doc
-                 * https://msdn.microsoft.com/en-us/library/system.threading.thread(v=vs.110).aspx
-                 * It is not necessary to retain a reference to a Thread object once you have started the thread. 
-                 * The thread continues to execute until the thread procedure is complete.
-                 */
+                ///* As per the doc
+                // * https://msdn.microsoft.com/en-us/library/system.threading.thread(v=vs.110).aspx
+                // * It is not necessary to retain a reference to a Thread object once you have started the thread. 
+                // * The thread continues to execute until the thread procedure is complete.
+                // */
 
             }
 
         }
 
-        public void RequestPathfind(Vector3 start, Vector3 target, PathfindingComplete callback)
+        public bool RequestPathfind(Vector3 start, Vector3 target, AIController pathRequester, PathfindingComplete callback)
         {
-            Pathfinder finder = new Pathfinder(start, target, callback);
+	        if (!IsPointWithinPlayableArea(target))
+	        {
+		        return false;
+	        }
+
+            Pathfinder finder = new Pathfinder(start, target, pathRequester, callback);
             _queue.Add(finder);
+
+            return true;
         }
 
 

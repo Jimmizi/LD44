@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using Pathfinding;
+using System;
 using System.Collections.Generic;
-using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 /// <summary>
 /// Control the actor via code, and a direction calculated for the AI to move in
@@ -87,7 +88,7 @@ public class AIController : MonoBehaviour
 	}
 
 
-    void Update()
+    void FixedUpdate()
     {
 	    //If we're not infected and we're on the process of being so, stop all movement
 	    if (_statsRef.BeingInfectedBy != null && !_statsRef.Infected)
@@ -126,6 +127,63 @@ public class AIController : MonoBehaviour
 	    ClearTarget();
     }
 
+    public float GetDistFromNodeToEndOfPath(int node)
+    {
+	    var runningDist = 0f;
+
+	    for (int i = node; node < _currentPath.Count-1; i++)
+	    {
+		    runningDist += ((Vector2) _currentPath[i].position - (Vector2) _currentPath[i + 1].position).magnitude;
+	    }
+
+	    return runningDist;
+    }
+
+    public int GetNextNodeNearestToTarget()
+    {
+	    var myDistances = new List<float>();
+	    var targetDistances = new List<float>();
+	    var nodeDistancesToEnd = new List<float>();
+
+		var myClosestIndex = 0;
+	    var myClosestDist = 99999f;
+	    var myDistToEnd = 0.0f;
+
+	    var targetClosestIndex = 0;
+	    var targetClosestDist = 99999f;
+
+		for (int i = 0; i < _currentPath.Count; i++)
+	    {
+		    myDistances.Add(((Vector2)_currentPath[i].position - (Vector2) this.transform.position).magnitude);
+		    //nodeDistancesToEnd.Add(GetDistFromNodeToEndOfPath(i));
+		    //targetDistances.Add(((Vector2)_currentPath[i].position - (Vector2)_currentPath[_currentPath.Count-1].position).magnitude);
+	    }
+		
+		for (int i = 0; i < myDistances.Count; i++)
+		{
+			if (myDistances[i] < myClosestDist)
+			{
+				myClosestDist = myDistances[i];
+				myClosestIndex = i;
+			}
+		}
+
+		//Could find a nice way to find the next node via distance, but just
+		//	get the closest node and start going to the next one
+		if (myClosestIndex + 1 < _currentPath.Count)
+		{
+			myClosestIndex++;
+		}
+
+		if (myClosestIndex < 0 || !_pathfinder.IsPointWithinPlayableArea(_currentPath[myClosestIndex].position))
+		{
+			myClosestIndex = 0;
+		}
+
+		return Math.Max(0, myClosestIndex);
+		//myDistToEnd = GetDistFromNodeToEndOfPath(myClosestIndex);
+    }
+
     public void RespondToPlayerSpawned()
     {
 	    if (_statsRef.Neutral)
@@ -133,8 +191,9 @@ public class AIController : MonoBehaviour
 		    CurrentTask = Random.Range(0, 101) < 50 ? AITask.Panic : AITask.Flee;
 		    _currentPath.Clear();
 		    _endOfPathWaitTime = 0.0f;
-			_currentNode = 0;
-		}
+
+		    _currentNode = 0;
+	    }
 	    else
 	    {
 			CurrentTask = AITask.AttackTarget;
@@ -143,11 +202,16 @@ public class AIController : MonoBehaviour
 
     public void cbPathResult(List<Node> path)
     {
+	    if (!this)
+		    return;
+
 	    if (path != null && path.Count > 0)
 	    {
+		    _currentPath.Clear();
 		    _currentPath = path;
+		    _currentNode = GetNextNodeNearestToTarget();
 	    }
-
+	    
 		_waitingOnPathResult = false;
 
     }
@@ -242,7 +306,8 @@ public class AIController : MonoBehaviour
 	    _currentPath.Clear();
 	    _endOfPathWaitTime = 0.0f;
 	    _originalTargetPlace = Vector2.zero;
-	    _currentNode = 0;
+	    _moverRef.Direction = Vector2.zero;
+		_currentNode = 0;
 	    _timeSinceLastAttackAction = 0;
 	    _targetFindAttempts = 0;
 		_taskTarget = null;
@@ -316,6 +381,7 @@ public class AIController : MonoBehaviour
 				_actionRef.DoAction(ActionManager.ActionType.Attack);
 				_actionRef.TargetLocationForAction = _taskTarget.transform.position;
 				_timeSinceLastAttackAction = 0.0f;
+				_moverRef.Direction = Vector2.zero;
 			}
 			//TODO maybe reintroduce this - atm enemies can just sit inside their target
 			//customMovetoPoint = _taskTarget.transform.position;
@@ -323,26 +389,37 @@ public class AIController : MonoBehaviour
 		
 		if (_currentPath == null || _currentPath.Count == 0)
 		{
+			_moverRef.Direction = Vector2.zero;
 			if (!_waitingOnPathResult)
 			{
-				_pathfinder.RequestPathfind(this.transform.position, _taskTarget.transform.position, cbPathResult);
-				_originalTargetPlace = _taskTarget.transform.position;
-				_waitingOnPathResult = true;
+				if(_pathfinder.RequestPathfind(this.transform.position, _taskTarget.transform.position, this, cbPathResult))
+				{ 
+					_originalTargetPlace = _taskTarget.transform.position;
+					_waitingOnPathResult = true;
+				}
 			}
 		}
 		//We've done our current one
 		else if (_currentNode >= _currentPath.Count)
 		{
 			_currentPath.Clear();
+			_moverRef.Direction = Vector2.zero;
 			_currentNode = 0;
 		}
 		//Recalculate if the target has moved 
 		else if (((Vector2)_taskTarget.transform.position - _originalTargetPlace).magnitude >= REEVALUATE_DIST_FOR_TARGET_HAVING_MOVED)
 		{
-			_currentPath.Clear();
-			_currentNode = 0;
+			if (!_waitingOnPathResult)
+			{
+				if(_pathfinder.RequestPathfind(this.transform.position, _taskTarget.transform.position, this, cbPathResult))
+				{ 
+					_originalTargetPlace = _taskTarget.transform.position;
+					_waitingOnPathResult = true;
+				}
 
-			_moverRef.Direction /= 4; //don't fully stop
+				_moverRef.Direction = Vector2.zero;
+				
+			}
 		}
 		else
 		{
@@ -373,7 +450,8 @@ public class AIController : MonoBehaviour
 	    if (_endOfPathWaitTime > 0.0f)
 	    {
 		    _endOfPathWaitTime -= Time.deltaTime;
-		    return;
+		    _moverRef.Direction = Vector2.zero;
+			return;
 	    }
 
 		//Find a new path
@@ -381,17 +459,18 @@ public class AIController : MonoBehaviour
 	    {
 		    if (!_waitingOnPathResult)
 		    {
-			    _pathfinder.RequestPathfind(this.transform.position, _pathfinder.GetRandomPointInBounds(CurrentTask != AITask.Wander), cbPathResult);
-			    _waitingOnPathResult = true;
-		    }
+			    _waitingOnPathResult = _pathfinder.RequestPathfind(this.transform.position, _pathfinder.GetRandomPointInBounds(CurrentTask != AITask.Wander), this, cbPathResult);
+			    _moverRef.Direction = Vector2.zero;
+			}
 	    }
 		//We've done our current one
 	    else if(_currentNode >= _currentPath.Count)
 	    {
 		    _currentPath.Clear();
 		    _currentNode = 0;
+		    _moverRef.Direction = Vector2.zero;
 
-		    if (CurrentTask == AITask.Wander)
+			if (CurrentTask == AITask.Wander)
 		    {
 			    _endOfPathWaitTime = Random.Range(0.5f, 3.0f);
 		    }

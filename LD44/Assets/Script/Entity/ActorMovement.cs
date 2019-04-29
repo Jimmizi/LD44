@@ -45,10 +45,10 @@ public class ActorMovement : MonoBehaviour
 	
     void FixedUpdate()
     {
-	    if (_actionManager?.CurrentAttack == ActionManager.AttackType.Infect)
-	    {
-		    return;
-	    }
+	    //if (_actionManager?.CurrentAttack == ActionManager.AttackType.Infect)
+	    //{
+		   // return;
+	    //}
 
 	    var tempSpeed = _statsRef.MovementSpeed;
 

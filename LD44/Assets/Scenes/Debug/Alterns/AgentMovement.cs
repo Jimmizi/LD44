@@ -56,6 +56,6 @@ public class AgentMovement : MonoBehaviour
             return;
         }
         
-        _pathfinderManager.RequestPathfind(transform.position, _target, PathCallback);
+        _pathfinderManager.RequestPathfind(transform.position, _target, null, PathCallback);
     }
 }

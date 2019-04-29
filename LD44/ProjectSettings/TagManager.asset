@@ -15,6 +15,7 @@ TagManager:
   - TeamFriendly
   - PlayerAttackType
   - FlowManager
+  - TempUpgradeCanvas
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - DummyPlayer
   - LevelBoundaries
   - Level
-  - 
+  - GridBlockers
   - 
   - 
   - 

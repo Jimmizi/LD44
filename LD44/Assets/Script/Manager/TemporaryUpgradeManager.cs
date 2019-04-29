@@ -34,6 +34,11 @@ public class TemporaryUpgradeManager : MonoBehaviour
     {
         foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
         {
+	        if (upgrade == null)
+	        {
+		        continue;
+	        }
+
             // sets "stage x" text
             var tempText = upgrade.temporaryUpgradeObject.GetCompomentWithName<Text>("StageText");
             if (tempText)
@@ -42,9 +47,14 @@ public class TemporaryUpgradeManager : MonoBehaviour
 			}
 
             // sets interactibility and text of upgrade button
-            Button upgradeButton = upgrade?.temporaryUpgradeObject?.GetComponentInChildren<Button>();
+            Button upgradeButton = null;
 
-            if (upgradeButton)
+            if (upgrade.temporaryUpgradeObject)
+            {
+	            upgradeButton = GetComponentInChildren<Button>();
+	        }
+			
+			if (upgradeButton)
             {
 	            upgradeButton.interactable = UpgradeCost(upgrade.temporaryStage) <= cells;
 	            upgradeButton.GetComponentInChildren<Text>().text = "Cost " + UpgradeCost(upgrade.temporaryStage);

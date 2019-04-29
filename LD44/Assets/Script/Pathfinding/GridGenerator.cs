@@ -63,7 +63,9 @@ namespace Pathfinding
                     _nodes[x, y] = new Node(obstructed, worldPoint3, x, y);
                 }
             }
-            
+
+            RemovePointsNotInBounds();
+
         }
 
         public void DetectObstacles()
@@ -82,12 +84,31 @@ namespace Pathfinding
                                           Vector3.up * (y * _nodeDiameter + nodeRadius);
 
                     Vector2 worldPoint2 = new Vector2(worldPoint3.x, worldPoint3.y);
-                    
-                    _nodes[x, y].obstructed = (Physics2D.OverlapCircle(worldPoint2, nodeRadius, obstaclesMask) != null);
+					
+					_nodes[x, y].obstructed = (Physics2D.OverlapCircle(worldPoint2, nodeRadius, obstaclesMask) != null);
                 }
             }
 
         }
+
+        public void RemovePointsNotInBounds()
+        {
+			var _pathfinder = GameObject.FindObjectOfType<PathfinderManager>();
+
+			if (!_pathfinder)
+			{
+				Debug.Log("PATHFINDER NOT FOUND");
+				return;
+			}
+
+			for (int x = 0; x < _sizeX; x++)
+	        {
+		        for (int y = 0; y < _sizeY; y++)
+		        {
+			        _nodes[x, y].obstructed = !_pathfinder.IsPointWithinPlayableArea(_nodes[x, y].position);
+		        }
+	        }
+		}
 
         public List<Node> GetNeighbours(Node node)
         {

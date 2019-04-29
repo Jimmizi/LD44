@@ -165,6 +165,7 @@ public class FlowManager : MonoBehaviour
 	private bool _doingFadeIn = true;
 	private bool _doingFadeOut = false;
 	private bool _startedFailFade = false;
+	private static bool _tutorialPassed = false;
 
 	private TransitionFade _fader;
 
@@ -182,6 +183,11 @@ public class FlowManager : MonoBehaviour
 		_fader = GameObject.FindObjectOfType<TransitionFade>();
 
 		RoundTimerText?.gameObject.SetActive(false);
+
+		if (!_tutorialPassed)
+		{
+			GameObject.FindGameObjectWithTag("TempUpgradeCanvas")?.SetActive(false);
+		}
 
 		Debug.Assert(_spawnerRef != null, "Did not have a spawner in the level.");
 		Debug.Assert(_mainCameraRef != null, "Did not have a camera in the level.");
@@ -513,6 +519,8 @@ public class FlowManager : MonoBehaviour
 
 	void StateStageOver()
 	{
+		_tutorialPassed = true;
+
 		//TODO: Fade out
 		_currentState = LevelState.Shutdown;
 		_doingFadeOut = true;
