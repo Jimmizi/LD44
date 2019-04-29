@@ -203,6 +203,9 @@ public class StartOptions : MonoBehaviour {
             elapsedTime += Time.deltaTime;
             float currentAlpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / totalDuration);
             canvasGroupToFadeAlpha.alpha = currentAlpha;
+
+			if(!forMenuFadeIn)
+				this.GetComponent<AudioSource>().volume -= Time.deltaTime;
 			
             yield return null;
         }

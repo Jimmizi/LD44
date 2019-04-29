@@ -6,7 +6,7 @@ using UnityEngine;
 public class MenuSettings : ScriptableObject
 {
 
-    public float menuFadeTime = .5f;
+    public float menuFadeTime = 1.0f;
     public Color sceneChangeFadeColor = Color.black;
     [Header("Leave this at zero to start game in same scene as menu, otherwise set to scene index")]
     public int nextSceneIndex = 0;

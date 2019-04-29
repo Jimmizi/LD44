@@ -209,6 +209,8 @@ public class ActionManager : MonoBehaviour
 		//	}
 		//}
 
+		this.GetComponent<CharacterAudio>()?.PlayAttackSound();
+
 		if (attackSpawnPos == Vector2.zero)
 		{
 			_currentAction = ActionType.Idle;

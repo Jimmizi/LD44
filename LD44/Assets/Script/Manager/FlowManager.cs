@@ -309,13 +309,18 @@ public class FlowManager : MonoBehaviour
 			return;
 		}
 
-		var levelsAboveBaseDifficulty = (GameManager.Difficulty - data.DifficultyLevelToSpawn);
+		var levelsAboveBaseDifficulty = (GameManager.Difficulty - data.DifficultyLevelToSpawn) + ActorStats.MapRotationCount;
 
-		var extraSpawnChance = data.SpawnIncreasePerDifficultyLevel * levelsAboveBaseDifficulty;
+		var extraSpawnChance = data.SpawnIncreasePerDifficultyLevel * levelsAboveBaseDifficulty * ActorStats.MapRotationCount;
 		var extraSpawnTries = Mathf.Floor(data.TimesToTrySpawnIncreasePerDifficultyLevel * levelsAboveBaseDifficulty);
 
+		if (ActorStats.MapRotationCount > 1)
+		{
+			extraSpawnChance *= 2;
+		}
+
 		var spawnChance = data.BaseSpawnChance + extraSpawnChance;
-		var timesToTrySpawn = data.BaseTimesToTryAndSpawn + extraSpawnTries;
+		var timesToTrySpawn = data.BaseTimesToTryAndSpawn + extraSpawnTries + (ActorStats.MapRotationCount - 1);
 
 		Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " spawn chance: " + spawnChance.ToString() + "%, times to try: " + timesToTrySpawn.ToString());
 

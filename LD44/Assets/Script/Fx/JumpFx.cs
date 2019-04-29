@@ -26,7 +26,7 @@ namespace Fx
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
 
-            GameObject system = Instantiate(_particleSystemPrefab);
+            var system = Instantiate(_particleSystemPrefab);
             _particleSystem = system.GetComponent<ParticleSystem>();
             _particleSystem.transform.position = animator.rootPosition;
             _particleSystem.Simulate(0.3f);
