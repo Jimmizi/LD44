@@ -72,10 +72,10 @@ public class ActionManager : MonoBehaviour
 		var currentClipInfo = _animatorRef.GetCurrentAnimatorClipInfo(0);
 
 
-		if (currentClipInfo[0].clip.name != "AttackAnim")
-		{
+		//if (currentClipInfo[0].clip.name != "AttackAnim")
+		//{
 			_animatorRef.SetTrigger("Attack");
-		}
+		//}
 
 		_currentAction = newAction;
 		_awaitingResult = false;

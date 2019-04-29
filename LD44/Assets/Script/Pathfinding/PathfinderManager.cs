@@ -40,40 +40,43 @@ namespace Pathfinding
 
         public bool IsPointWithinPlayableArea(Vector2 testPoint, bool testNotOnCharacter = false)
         {
-	        var boundsGameObject = GameObject.FindGameObjectWithTag("MapBounds");
+	        var boundsGameObject = GameObject.FindGameObjectsWithTag("MapBounds");
 
-	        if (boundsGameObject)
+	        if (boundsGameObject.Length > 0)
 	        {
-		        var applicableBounds = boundsGameObject.GetComponents<BoxCollider2D>();
-		        List<Vector2> tempResults = new List<Vector2>();
-		        bool containedWithinABounds = false;
-
-		        foreach (var bound in applicableBounds)
+		        foreach (var boundsFound in boundsGameObject)
 		        {
-			        if (bound.bounds.Contains(testPoint))
+			        var applicableBounds = boundsFound.GetComponents<BoxCollider2D>();
+			        List<Vector2> tempResults = new List<Vector2>();
+			        bool containedWithinABounds = false;
+
+			        foreach (var bound in applicableBounds)
 			        {
-				        containedWithinABounds = true;
-				        break;
+				        if (bound.bounds.Contains(testPoint))
+				        {
+					        containedWithinABounds = true;
+					        break;
+				        }
+			        }
+
+			        if (testNotOnCharacter)
+			        {
+				        var allCharacters = GameObject.FindObjectsOfType<ActorStats>();
+
+				        if (allCharacters.Any(actor =>
+					        ((Vector2) actor.gameObject.transform.position - testPoint).magnitude <= 0.2f))
+				        {
+					        return false;
+				        }
+			        }
+
+			        if (containedWithinABounds)
+			        {
+				        var tempNode = GridGenerator.GetInstance().NodeFromWorldPosition(testPoint);
+
+				        return (tempNode != null && !tempNode.obstructed);
 			        }
 		        }
-
-		        if (testNotOnCharacter)
-		        {
-			        var allCharacters = GameObject.FindObjectsOfType<ActorStats>();
-
-			        if (allCharacters.Any(actor => ((Vector2) actor.gameObject.transform.position - testPoint).magnitude <= 0.2f))
-			        {
-				        return false;
-			        }
-		        }
-
-		        if (containedWithinABounds)
-		        {
-			        var tempNode = GridGenerator.GetInstance().NodeFromWorldPosition(testPoint);
-
-			        return (tempNode != null && !tempNode.obstructed);
-		        }
-
 	        }
 
 	        return false;
