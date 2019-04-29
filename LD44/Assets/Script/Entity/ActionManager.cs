@@ -105,6 +105,8 @@ public class ActionManager : MonoBehaviour
 
 		_animatorRef = GetComponent<Animator>();
 		Debug.Assert(_animatorRef != null, "Didn't manage to find a Animator.");
+		
+		_animatorRef.SetFloat("AttackSpeedMultiplier", _statsRef.AttackSpeed * 2.0f);
 	}
 	
     void Update()
