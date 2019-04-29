@@ -22,7 +22,7 @@
 		"attackRange": 0.425
 	},
 	"actorHostile": {
-		"health": 100,
+		"health": 400,
 		"damage": 40,
 		"movementSpeed": 0.5,
 		"attackSpeed": 0.25,
@@ -50,6 +50,15 @@
 		"attackRange": 0.425
 	},
 	"spawns": [
+		{
+			"type": 0,
+			"baseSpawnChance": 80,
+			"spawnIncreasePerDifficultyLevel": 0,
+			"difficultyLevelToSpawn": 1,
+			"baseTimesToTryAndSpawn": 2,
+			"timesToTrySpawnIncreasePerDifficultyLevel": 0.4,
+			"onlySpawnOnce": false
+		},
 		{
 			"type": 1,
 			"baseSpawnChance": 100,
