@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	//TODO Need to populate friendly count from somewhere
+	//just 
 	private static int _infectedCellsCount;
 
 	private static int _difficulty = 1;
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         TemporaryUpgradeManager.singleton?.SetUpGUI(newCellsCount);
 
-        if (newCellsCount > _infectedCellsCount)
+        if (newCellsCount > _infectedCellsCount || newCellsCount == 0)
         {
             _infectedCellsCount = newCellsCount;
             return;
@@ -64,8 +64,11 @@ public class GameManager : MonoBehaviour
         {
             int index = Random.Range(0, infectedCells.Count);
 
-            infectedCells [index].AddComponent<KillActor>();
-            infectedCells.RemoveAt(index);
+            if (index >= 0 && index < infectedCells.Count)
+            {
+	            infectedCells[index].AddComponent<KillActor>();
+	            infectedCells.RemoveAt(index);
+            }
         }
     }
 

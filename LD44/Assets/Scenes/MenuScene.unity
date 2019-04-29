@@ -5134,7 +5134,6 @@ MonoBehaviour:
   DifficultyIncreaseAfterRound: 1
   NextScene: SecondLevel
   NextSceneAtDifficultyLevel: 1
-  ObjectiveTexts: []
 --- !u!4 &1265255892
 Transform:
   m_ObjectHideFlags: 0
@@ -8467,7 +8466,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 1e5aca7dba4e8a047897c7ad9addb1b0, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -11473,6 +11472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbccb77311b283c4b8744efe528b8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnMenu_SpawnImmediately: 0
   FriendlyNPCPrefab: {fileID: 4999915037488276507, guid: 1d9b1ad56c3c59a4881b01676c74a0cb,
     type: 3}
   FriendliesList: []

@@ -169,9 +169,8 @@ public class FlowManager : MonoBehaviour
 	private bool _doingFadeIn = true;
 	private bool _doingFadeOut = false;
 	private bool _startedFailFade = false;
-
-	//TODO Before Submit - Reenable this
-	private static bool _tutorialPassed = true;
+	
+	private static bool _tutorialPassed = false;
 	private static bool _randomiseObjectiveText = false;
 
 	private TransitionFade _fader;
@@ -477,8 +476,8 @@ public class FlowManager : MonoBehaviour
 			}
 			else
 			{
-				var randomScene = Random.Range(0, 5);
-				var randomText = Random.Range(0, 6);
+				var randomScene = Random.Range(0, 4);
+				var randomText = Random.Range(0, 5);
 				GameObjectiveText.text = _objectiveTextALL[randomScene, randomText];
 			}
 		}

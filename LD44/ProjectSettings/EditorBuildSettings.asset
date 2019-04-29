@@ -11,15 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Levels/FirstLevel.unity
     guid: 0a0c06de08667a34684cba30b760bcd1
-  - enabled: 0
-    path: Assets/__DELETED_GUID_Trash/6c3a122044a67514fb9ab1151127a73d
-    guid: 6c3a122044a67514fb9ab1151127a73d
-  - enabled: 0
-    path: Assets/__DELETED_GUID_Trash/e41032eed906335409727858300c9307
-    guid: e41032eed906335409727858300c9307
-  - enabled: 0
-    path: Assets/__DELETED_GUID_Trash/8e7099177ac3f564f8bdf0f62c6f7e91
-    guid: 8e7099177ac3f564f8bdf0f62c6f7e91
+  - enabled: 1
+    path: Assets/Scenes/Game Levels/SecondLevel.unity
+    guid: 9b63a06f083039545a236617142233b8
+  - enabled: 1
+    path: Assets/Scenes/Game Levels/ThirdLevel.unity
+    guid: 4652c9b743a51284aa2fc5d6929d8cd8
+  - enabled: 1
+    path: Assets/Scenes/Game Levels/FourthLevel.unity
+    guid: 05d2f551b6cecdc42a726235aa57fa35
   - enabled: 1
     path: Assets/Scenes/BetweenStagesScene.unity
     guid: 213abdc86ce6f3549bfd6997556bd8cb
