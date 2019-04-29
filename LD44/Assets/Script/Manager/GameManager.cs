@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         TemporaryUpgradeManager.singleton?.SetUpGUI(newCellsCount);
 
-        if (newCellsCount > _infectedCellsCount || newCellsCount == 0)
+        if (newCellsCount > _infectedCellsCount)
         {
             _infectedCellsCount = newCellsCount;
             return;
