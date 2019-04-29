@@ -194,12 +194,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Active: 1
-  Health: 200
+  Health: 120
   Damage: 40
   MovementSpeed: 1.2
   AttackSpeed: 1
   AttackRange: 0.5
-  InfectionChance: 15
+  InfectionChance: 100
   CloningChance: 5
   Infected: 1
   Neutral: 0

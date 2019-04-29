@@ -122,6 +122,8 @@ public class FlowManager : MonoBehaviour
 		/// </summary>
 		[SerializeField]
 		public bool OnlySpawnOnce;
+
+		public bool SpawnAtLeastOnce;
 	}
 
 	[SerializeField]
@@ -324,14 +326,21 @@ public class FlowManager : MonoBehaviour
 
 		Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " spawn chance: " + spawnChance.ToString() + "%, times to try: " + timesToTrySpawn.ToString());
 
+		var autoSpawn = data.SpawnAtLeastOnce;
+
 		for (var i = 0; i < timesToTrySpawn; i++)
 		{
-			if (Random.Range(0.0f, 100.0f) >= spawnChance)
+			var spawnChanceRandom = Random.Range(0.0f, 100.0f);
+
+			if (spawnChanceRandom >= spawnChance && !autoSpawn)
 			{
-				Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " try " + i.ToString() + " failed.");
+				Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " try " + i.ToString() + " failed. Got: " + spawnChanceRandom.ToString() + " but chance was " + spawnChance.ToString());
 				continue;
 			}
-			
+
+			autoSpawn = false;
+
+
 			Debug.Log("TryToSpawnEnemy - " + data.Type.ToString() + " try " + i.ToString() + " succeeded!");
 			
 			var tempEnemy = (GameObject)Instantiate(data.Prefab, _spawnerRef.GetSpawnPoint(), new Quaternion());
