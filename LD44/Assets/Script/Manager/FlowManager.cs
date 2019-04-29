@@ -313,7 +313,7 @@ public class FlowManager : MonoBehaviour
 
 		var levelsAboveBaseDifficulty = (GameManager.Difficulty - data.DifficultyLevelToSpawn) + ActorStats.MapRotationCount;
 
-		var extraSpawnChance = data.SpawnIncreasePerDifficultyLevel * levelsAboveBaseDifficulty * ActorStats.MapRotationCount;
+		var extraSpawnChance = data.SpawnIncreasePerDifficultyLevel * levelsAboveBaseDifficulty;
 		var extraSpawnTries = Mathf.Floor(data.TimesToTrySpawnIncreasePerDifficultyLevel * levelsAboveBaseDifficulty);
 
 		if (ActorStats.MapRotationCount > 1)
@@ -322,16 +322,11 @@ public class FlowManager : MonoBehaviour
 		}
 
 		var spawnChance = data.BaseSpawnChance + extraSpawnChance;
-		var timesToTrySpawn = (data.BaseTimesToTryAndSpawn + extraSpawnTries * ActorStats.MapRotationCount);
-
-		if (data.Type == EnemyType.Hostile)
-		{
-			timesToTrySpawn += GameManager.InfectedCellsCount / 3;
-		}
-
+		var timesToTrySpawn = (data.BaseTimesToTryAndSpawn + extraSpawnTries);
+		
 		if (data.Type == EnemyType.Sweeper)
 		{
-			timesToTrySpawn += GameManager.InfectedCellsCount / 10;
+			timesToTrySpawn += GameManager.InfectedCellsCount / 3;
 		}
 
 		if (data.Type == EnemyType.Neutral)

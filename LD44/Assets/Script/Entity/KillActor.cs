@@ -32,7 +32,8 @@ public class KillActor : MonoBehaviour
 			    newPlayerActor.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32");
 			    newPlayerActor.GetComponent<ActorStats>()?.ApplyPlayerStats();
 
-			    newPlayerActor.GetComponent<BoxCollider2D>().isTrigger = false;
+				if(newPlayerActor.GetComponent<BoxCollider2D>())
+					newPlayerActor.GetComponent<BoxCollider2D>().isTrigger = false;
 
 
 				if (newPlayerActor.GetComponent<Animator>())

@@ -29,7 +29,11 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
 		//Always get at least one cell
 	    GameManager.InfectedCellsCount++;
 
-		GameManager.InfectedCellsCount = Mathf.FloorToInt((float)GameManager.InfectedCellsCount * endOfRoundCellModifier);
+		// No extra cells per round after the first rotation
+	    if (ActorStats.MapRotationCount == 1)
+	    {
+		    GameManager.InfectedCellsCount = Mathf.FloorToInt((float)GameManager.InfectedCellsCount * endOfRoundCellModifier);
+	    }
 		
         SetUpGUI(GameManager.InfectedCellsCount);
     }
