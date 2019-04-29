@@ -28,11 +28,6 @@ public class PermanentUpgradeManager : MonoBehaviour
         };
     }
 
-    void Start()
-    {
-
-    }
-
     private const int upgradeCostMutiplier = 2;
 
     public static int UpgradeCost(int stage)
