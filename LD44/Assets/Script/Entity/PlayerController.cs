@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,17 +47,15 @@ public class PlayerController : MonoBehaviour
         _playerInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 		_moverRef.Direction = _playerInput;
 
-		//NOTE: No longer how infection works
-		// Toggle between attack modes
-		//if (Input.GetKeyDown(KeyCode.Q))
-		//{
-		//	_actionRef.ToggleAttackMode();
+#if UNITY_EDITOR
 
-		//	if (PlayerAttackTypeText)
-		//	{
-		//		PlayerAttackTypeText.text = "(Q) " + (_actionRef.CurrentAttack == ActionManager.AttackType.Lethal ? "Player Attacks Are Lethal" : "Player Attacks Are Infectious");
-		//	}
-		//}
+		if (Input.GetKeyDown(KeyCode.F2))
+		{
+			if(!this.gameObject.GetComponent<KillActor>())
+				this.gameObject.AddComponent<KillActor>();
+		}
+
+#endif
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{

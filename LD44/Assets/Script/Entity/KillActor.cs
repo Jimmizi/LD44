@@ -15,7 +15,37 @@ public class KillActor : MonoBehaviour
 
     private void FxDone()
     {
-	    Destroy(gameObject);
+	    if (GetComponent<PlayerController>())
+	    {
+		    var allActors = GameObject.FindObjectsOfType<ActorStats>().Where(x => x.Infected && !x.GetComponent<PlayerController>()).ToArray();
+
+		    if (allActors.Length > 0)
+		    {
+			    var newPlayerActor = allActors[Random.Range(0, allActors.Length)];
+
+			    if (newPlayerActor.gameObject.GetComponent<AIController>())
+			    {
+				    Destroy(newPlayerActor.gameObject.GetComponent<AIController>());
+			    }
+
+			    newPlayerActor.gameObject.AddComponent<PlayerController>();
+			    newPlayerActor.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32");
+			    newPlayerActor.GetComponent<ActorStats>()?.ApplyPlayerStats();
+			    
+			    if (newPlayerActor.GetComponent<Animator>())
+			    {
+				    newPlayerActor.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animators/slime_blue_64x64_0");
+			    }
+
+				Camera.main.gameObject.GetComponent<SimpleCameraLerp>().LerpTarget = newPlayerActor.gameObject.transform;
+		    }
+		    else
+		    {
+			    GameManager.levelManager.GameOver();
+		    }
+	    }
+
+		Destroy(gameObject);
     }
 
     private void TriggerVisuals()
@@ -76,31 +106,6 @@ public class KillActor : MonoBehaviour
 
             // TODO: Before this point, we will want to spawn other entities, particles, sounds
             TriggerVisuals();
-
-			if (GetComponent<PlayerController>())
-			{
-				var allActors = GameObject.FindObjectsOfType<ActorStats>().Where(x => x.Infected && !x.GetComponent<PlayerController>()).ToArray();
-
-				if (allActors.Length > 0)
-				{
-					var newPlayerActor = allActors[Random.Range(0, allActors.Length)];
-
-					if (newPlayerActor.gameObject.GetComponent<AIController>())
-					{
-						Destroy(newPlayerActor.gameObject.GetComponent<AIController>());
-					}
-
-					newPlayerActor.gameObject.AddComponent<PlayerController>();
-					newPlayerActor.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Test32x32");
-					newPlayerActor.GetComponent<ActorStats>()?.ApplyPlayerStats();
-
-					Camera.main.gameObject.GetComponent<SimpleCameraLerp>().LerpTarget = newPlayerActor.gameObject.transform;
-				}
-				else
-				{
-				    GameManager.levelManager.GameOver();
-				}
-			}			
 	    }
     }
 }

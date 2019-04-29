@@ -16,6 +16,7 @@ TagManager:
   - PlayerAttackType
   - FlowManager
   - TempUpgradeCanvas
+  - PersistentBoi
   layers:
   - Default
   - TransparentFX

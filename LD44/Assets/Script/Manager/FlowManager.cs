@@ -576,18 +576,6 @@ public class FlowManager : MonoBehaviour
 			Debug.Log("Debug skipping stage.");
 			_currentState = LevelState.StageOver;
 		}
-
-		if (Input.GetKeyDown(KeyCode.F2))
-		{
-			var allActors = GameObject.FindObjectsOfType<ActorStats>().Where(x => x.gameObject.GetComponent<PlayerController>()).ToArray();
-
-			if (allActors.Length > 0)
-			{
-				allActors[0].gameObject.AddComponent<KillActor>();
-			}
-
-		}
-
 #endif
 	}
 
@@ -623,9 +611,9 @@ public class FlowManager : MonoBehaviour
 			var tempLevelManagerPersObj = GameObject.FindObjectOfType<LevelManager>()?.GetComponent<PersistentObject>();
 			if (tempLevelManagerPersObj)
 			{
-				Debug.Log("Destroying persistent level manager.");
+				//NOTE Persistent manager now will delete that object if found within the menu scene
 				//Delete the persistent at game over so that it won't transfer back to the main menu
-				Destroy(tempLevelManagerPersObj);
+				//Destroy(tempLevelManagerPersObj);
 			}
 			
 			SceneManager.LoadScene(LEVEL_FAILED_SCENE);

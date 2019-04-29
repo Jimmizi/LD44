@@ -83,6 +83,7 @@ public class LevelManager : MonoBehaviour
         gameOverCanvas.SetActive(true);
 
         gameOverCanvas.transform.GetChild(0).gameObject.SetActive(true);
+		GameObject.FindGameObjectWithTag("PersistentBoi")?.GetComponent<MusicIntro>()?.KillBGM();
 
 		//Time.timeScale = 0;
 	}

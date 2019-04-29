@@ -149,12 +149,12 @@ PrefabInstance:
     - target: {fileID: 8736139691342441652, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: Health
-      value: 60
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8736139691342441652, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: Damage
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8736139691342441652, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
@@ -164,7 +164,7 @@ PrefabInstance:
     - target: {fileID: 8736139691342441652, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}
       propertyPath: InfectionChance
-      value: 90
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6729527464554533771, guid: 6daae1d9d9b0c634a828368c2ad46646,
         type: 3}

@@ -8427,11 +8427,11 @@ MonoBehaviour:
   - Prefab: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,
       type: 3}
     Type: 1
-    BaseSpawnChance: 75
+    BaseSpawnChance: 80
     SpawnIncreasePerDifficultyLevel: 10
     DifficultyLevelToSpawn: 1
     BaseTimesToTryAndSpawn: 4
-    TimesToTrySpawnIncreasePerDifficultyLevel: 1
+    TimesToTrySpawnIncreasePerDifficultyLevel: 2
     OnlySpawnOnce: 0
     SpawnAtLeastOnce: 1
   - Prefab: {fileID: 4999915037488276507, guid: 2ba72be001fef1043a8fa99b44a76f34,
@@ -15295,7 +15295,7 @@ PrefabInstance:
     - target: {fileID: 227614965580754252, guid: e29c7c404f607364aa9b7caa8880110d,
         type: 3}
       propertyPath: orthographic size
-      value: 3
+      value: 3.25
       objectReference: {fileID: 0}
     - target: {fileID: 227614965580754254, guid: e29c7c404f607364aa9b7caa8880110d,
         type: 3}

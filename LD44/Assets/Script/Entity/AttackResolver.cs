@@ -30,8 +30,10 @@ public class AttackResolver : MonoBehaviour
 	void SpawnStatusChange(string text, Vector3 pos)
 	{
 		var mainCanvas = GameObject.FindGameObjectWithTag("MainUICanvas");
-
-		var tempStatus = (GameObject) Instantiate(StatusChangeUIPrefab, pos, new Quaternion(), mainCanvas.transform);
+		if (mainCanvas)
+		{
+			var tempStatus = (GameObject) Instantiate(StatusChangeUIPrefab, pos, new Quaternion(), mainCanvas.transform);
+		}
 		
 	}
 
