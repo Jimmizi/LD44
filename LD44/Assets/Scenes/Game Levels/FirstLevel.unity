@@ -2166,6 +2166,18 @@ MonoBehaviour:
   MusicIntroToPlay: {fileID: 8300000, guid: 58725628cd90239418f1fbc3d4c51b46, type: 3}
   MusicToPlayAfterIntro: {fileID: 8300000, guid: bac782aebd81ad54884a5e4354ac7781,
     type: 3}
+--- !u!114 &871014869 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 48760062312004020, guid: f098744179c9d1e468f0dfff7ac40d76,
+    type: 3}
+  m_PrefabInstance: {fileID: 48760063001056071}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871014866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 707365e3faba983459975b723bf94544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &871014872
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5764,11 +5776,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenuCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 137537552193833416, guid: fbc1e95dd36f17f4bacfb38959336bb4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 137537552193833420, guid: fbc1e95dd36f17f4bacfb38959336bb4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5874,11 +5881,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 137537551126819899, guid: fbc1e95dd36f17f4bacfb38959336bb4,
+    - target: {fileID: 137537552607276194, guid: fbc1e95dd36f17f4bacfb38959336bb4,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 871014869}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbc1e95dd36f17f4bacfb38959336bb4, type: 3}
 --- !u!1001 &227614965637213060

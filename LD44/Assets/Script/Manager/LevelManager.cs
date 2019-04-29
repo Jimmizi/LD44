@@ -94,6 +94,9 @@ public class LevelManager : MonoBehaviour
 	    {
 		    return;
 	    }
+
+        Cursor.visible = true;
+
         mainCanvas.SetActive(false);
         pauseMenuCanvas.SetActive(true);
 
@@ -107,6 +110,8 @@ public class LevelManager : MonoBehaviour
 
     public void Unpause()
     {
+        Cursor.visible = false;
+
         mainCanvas.SetActive(true);
         pauseMenuCanvas.SetActive(false);
 

@@ -425,7 +425,10 @@ public class FlowManager : MonoBehaviour
 	
 	void StatePlacement()
 	{
-	    Cursor.visible = false;
+	    if (!GameManager.levelManager.paused)
+	    {
+	        Cursor.visible = false;
+        }	    
 
 		if (GameObject.FindObjectOfType<LevelManager>())
 		{
