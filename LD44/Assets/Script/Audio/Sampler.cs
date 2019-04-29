@@ -13,7 +13,7 @@ namespace Audio
     {
         
         [Header("Debug")]
-        [SerializeField] private bool _debugPlay;
+        [SerializeField] public bool _debugPlay;
 
         [Header("Config")]
         [SerializeField] private AudioClip _audioClip;
@@ -27,6 +27,7 @@ namespace Audio
         private SamplerVoice[] _voices;
         private int _voiceIndex;
         private bool _queuePlay = false;
+        private float? _pitch;
 
         private void Awake()
         {
@@ -40,6 +41,17 @@ namespace Audio
             }
         }
 
+        public void Cue()
+        {
+            _queuePlay = true;
+        }
+
+        public void CueWithPitch(float pitch)
+        {
+            _pitch = pitch;
+            _queuePlay = true;
+        }
+        
         private void Update()
         {
             if (_debugPlay)
@@ -74,7 +86,16 @@ namespace Audio
 
             if (_queuePlay)
             {
-                _voices[_voiceIndex].Play(_audioClip, tickTime, _attackTime, -1.0, _releaseTime);
+                if (_pitch != null)
+                {
+                    _voices[_voiceIndex].Play(_audioClip, _pitch.Value, tickTime, _attackTime, -1.0, _releaseTime);
+                    _pitch = null;
+                }
+                else
+                {
+                    _voices[_voiceIndex].Play(_audioClip, tickTime, _attackTime, -1.0, _releaseTime);
+                }
+
                 _voiceIndex = (_voiceIndex + 1) % _voices.Length;
                 _queuePlay = false;
             }

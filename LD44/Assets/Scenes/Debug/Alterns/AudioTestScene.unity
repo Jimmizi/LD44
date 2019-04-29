@@ -277,11 +277,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bcc541d263b45dcaefb49b9608e00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugPlay: 0
-  _audioClip: {fileID: 8300000, guid: b38e1ec51b48e4707b1788fce2e9a9be, type: 3}
+  _debugPlay: 1
+  _audioClip: {fileID: 8300000, guid: f7468b49b9bbd470bb59fc98541f89ca, type: 3}
   _attackTime: 0
   _releaseTime: 0.3199999928474426
-  _maxVoices: 2
+  _maxVoices: 1
   _samplerVoicePrefab: {fileID: 5324769339687704136, guid: c22186abaeae34f01939dc2a0e62a9c7,
     type: 3}
   _metronome: {fileID: 225937012}
@@ -328,11 +328,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bcc541d263b45dcaefb49b9608e00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugPlay: 0
-  _audioClip: {fileID: 8300000, guid: 0a8ecc3745f7b4d238cda0ee143c86ee, type: 3}
+  _debugPlay: 1
+  _audioClip: {fileID: 8300000, guid: fd6bc12208a2a4d82b9d19d71aa7c49c, type: 3}
   _attackTime: 0
   _releaseTime: 0.3199999928474426
-  _maxVoices: 2
+  _maxVoices: 1
   _samplerVoicePrefab: {fileID: 5324769339687704136, guid: c22186abaeae34f01939dc2a0e62a9c7,
     type: 3}
   _metronome: {fileID: 225937012}
@@ -379,11 +379,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bcc541d263b45dcaefb49b9608e00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugPlay: 0
-  _audioClip: {fileID: 8300000, guid: a0dfabc6b390f4c4ca35cfdab44d6eeb, type: 3}
-  _attackTime: 0.12999999523162842
+  _debugPlay: 1
+  _audioClip: {fileID: 8300000, guid: 667dc22391e2a44df94fdc92b66de33e, type: 3}
+  _attackTime: 0.04899999871850014
   _releaseTime: 0.3199999928474426
-  _maxVoices: 2
+  _maxVoices: 1
   _samplerVoicePrefab: {fileID: 5324769339687704136, guid: c22186abaeae34f01939dc2a0e62a9c7,
     type: 3}
   _metronome: {fileID: 225937012}
