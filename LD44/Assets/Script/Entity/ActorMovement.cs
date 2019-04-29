@@ -89,4 +89,16 @@ public class ActorMovement : MonoBehaviour
 			transform.localScale = new Vector3(-DirectionFacing, 1, 1);
 		}
 	}
+
+
+    /*void Update()
+    {
+	    if (_animatorRef == null) return;
+	    
+	    Debug.LogFormat("ANIMATION: {0} ", _animatorRef.GetCurrentAnimatorStateInfo(0).IsName("WalkAnim"));
+	    if (_animatorRef.GetCurrentAnimatorStateInfo(0).IsName("YourAnimationName"))
+	    {
+		    // Avoid any reload.
+	    }
+    }*/
 }
