@@ -119,8 +119,8 @@ internal static class Utitilies
 			    {
 				    if (child.childCount == 0)
 				    {
-					    return null;
-				    }
+					    continue;
+                    }
 				    else
 				    {
 					    T returnObject = GetCompomentWithName<T>(child.gameObject, componentName);

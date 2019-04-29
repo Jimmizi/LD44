@@ -31,13 +31,12 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
     {
         foreach (Upgrade upgrade in PermanentUpgradeManager.upgrades)
         {
-            // sets "stage x" text
-            upgrade.upgradeObject.GetCompomentWithName<Text>("LevelText").text = upgrade.stage.ToString();
+            // sets stage and price texts
+            upgrade.upgradeObject.GetCompomentWithName<Text>("LevelText").text = "^" + upgrade.stage;
+            upgrade.upgradeObject.GetCompomentWithName<Text>("PriceText").text = PermanentUpgradeManager.UpgradeCost(upgrade.stage) + "x";
 
             // sets interactibility of upgrade button
-            Button upgradeButton = upgrade.upgradeObject.GetComponentInChildren<Button>();
-            upgradeButton.interactable = PermanentUpgradeManager.UpgradeCost(upgrade.stage) <= cells;
-            upgradeButton.GetComponentInChildren<Text>().text = "" + PermanentUpgradeManager.UpgradeCost(upgrade.stage);
+            upgrade.upgradeObject.GetComponentInChildren<Button>().interactable = PermanentUpgradeManager.UpgradeCost(upgrade.stage) <= cells;
         }
 
         cellsCounter.text = cells.ToString(); // sets cell counter
