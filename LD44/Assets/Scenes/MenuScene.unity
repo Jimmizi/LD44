@@ -510,6 +510,11 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.b
       value: 0.20784315
       objectReference: {fileID: 0}
+    - target: {fileID: 227614965580754252, guid: e29c7c404f607364aa9b7caa8880110d,
+        type: 3}
+      propertyPath: orthographic size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 227614965580754254, guid: e29c7c404f607364aa9b7caa8880110d,
         type: 3}
       propertyPath: m_Enabled
