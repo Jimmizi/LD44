@@ -24,6 +24,8 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
     {
         GameManager.InfectedCellsCount = Mathf.FloorToInt((float)GameManager.InfectedCellsCount * endOfRoundCellModifier);
 
+        GameManager.InfectedCellsCount = 50;
+
         SetUpGUI(GameManager.InfectedCellsCount);
     }
 
