@@ -8424,7 +8424,7 @@ MonoBehaviour:
     TimesToTrySpawnIncreasePerDifficultyLevel: 0.8
     OnlySpawnOnce: 0
     SpawnAtLeastOnce: 0
-  - Prefab: {fileID: 4999915037488276507, guid: f353baad0ed3c0b4db8d4983e460f1bf,
+  - Prefab: {fileID: 6208273945129549312, guid: f353baad0ed3c0b4db8d4983e460f1bf,
       type: 3}
     Type: 1
     BaseSpawnChance: 80
