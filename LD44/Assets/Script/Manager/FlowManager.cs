@@ -165,7 +165,9 @@ public class FlowManager : MonoBehaviour
 	private bool _doingFadeIn = true;
 	private bool _doingFadeOut = false;
 	private bool _startedFailFade = false;
-	private static bool _tutorialPassed = false;
+
+	//TODO Before Submit - Reenable this
+	private static bool _tutorialPassed = true;
 
 	private TransitionFade _fader;
 

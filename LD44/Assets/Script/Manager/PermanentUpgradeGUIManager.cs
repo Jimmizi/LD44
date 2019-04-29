@@ -37,7 +37,7 @@ public class PermanentUpgradeGUIManager : MonoBehaviour
             // sets interactibility of upgrade button
             Button upgradeButton = upgrade.upgradeObject.GetComponentInChildren<Button>();
             upgradeButton.interactable = PermanentUpgradeManager.UpgradeCost(upgrade.stage) <= cells;
-            upgradeButton.GetComponentInChildren<Text>().text = "Upgrade\n<" + PermanentUpgradeManager.UpgradeCost(upgrade.stage) + '>';
+            upgradeButton.GetComponentInChildren<Text>().text = "" + PermanentUpgradeManager.UpgradeCost(upgrade.stage);
         }
 
         cellsCounter.text = cells.ToString(); // sets cell counter
