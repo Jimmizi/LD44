@@ -12,6 +12,8 @@ public class AttackResolver : MonoBehaviour
 	public ActionManager.AttackType CurrentAttackType = ActionManager.AttackType.Lethal;
 	public ActorStats CallerStats;
 
+	public GameObject AoeEffectsPrefab;
+
 	public GameObject SpecificTarget = null;
 	public GameObject CallingGameObject = null;
 
@@ -36,6 +38,11 @@ public class AttackResolver : MonoBehaviour
 		{
 			ProcessAttackDone();
 			return;
+		}
+
+		if (CallerStats.UsesAoeAttack)
+		{
+			Instantiate(AoeEffectsPrefab, CallingGameObject.transform.position, new Quaternion());
 		}
 		
 		if (SpecificTarget != null)

@@ -74,6 +74,8 @@ MonoBehaviour:
   ReadyForQuery: 0
   CurrentAttackType: 0
   CallerStats: {fileID: 0}
+  AoeEffectsPrefab: {fileID: 3392861813041397183, guid: 0bbc416827c57fd4ebc4a60acd53a73b,
+    type: 3}
   SpecificTarget: {fileID: 0}
   CallingGameObject: {fileID: 0}
 --- !u!212 &-5755041590481107691
