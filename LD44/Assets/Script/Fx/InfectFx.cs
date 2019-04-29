@@ -20,7 +20,7 @@ namespace Fx
             {
                 _particleSystem = Instantiate(_particleSystemPrefab);
                 _particleSystem.transform.parent = transform;
-                _particleSystem.transform.localPosition = Vector3.zero;
+                _particleSystem.transform.localPosition = Vector3.zero - Vector3.up * 0.2f;
             }
 
             _triggered = false;
@@ -31,6 +31,7 @@ namespace Fx
         {
             if (_particleSystem != null)
             {
+                _particleSystem.Simulate(0.2f);
                 _particleSystem.Play();
             }
 
