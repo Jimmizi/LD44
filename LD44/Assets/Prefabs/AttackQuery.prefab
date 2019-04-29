@@ -76,6 +76,8 @@ MonoBehaviour:
   CallerStats: {fileID: 0}
   AoeEffectsPrefab: {fileID: 3392861813041397183, guid: 0bbc416827c57fd4ebc4a60acd53a73b,
     type: 3}
+  StatusChangeUIPrefab: {fileID: 701198061590680047, guid: 787f32e659e50194aaa47005213487bc,
+    type: 3}
   SpecificTarget: {fileID: 0}
   CallingGameObject: {fileID: 0}
 --- !u!212 &-5755041590481107691

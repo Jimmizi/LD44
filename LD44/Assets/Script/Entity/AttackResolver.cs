@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Random = System.Random;
 
@@ -13,6 +14,7 @@ public class AttackResolver : MonoBehaviour
 	public ActorStats CallerStats;
 
 	public GameObject AoeEffectsPrefab;
+	public GameObject StatusChangeUIPrefab;
 
 	public GameObject SpecificTarget = null;
 	public GameObject CallingGameObject = null;
@@ -24,7 +26,15 @@ public class AttackResolver : MonoBehaviour
 		CallerResultCallback(_queryResult);
 		Destroy(gameObject);
 	}
-	
+
+	void SpawnStatusChange(string text, Vector3 pos)
+	{
+		var mainCanvas = GameObject.FindGameObjectWithTag("MainUICanvas");
+
+		var tempStatus = (GameObject) Instantiate(StatusChangeUIPrefab, pos, new Quaternion(), mainCanvas.transform);
+		
+	}
+
 	void Update()
 	{
 		if (!ReadyForQuery)
@@ -127,11 +137,20 @@ public class AttackResolver : MonoBehaviour
 				break;
 			case ActionManager.AttackResult.VictimDeath:
 			{
+				if (StatusChangeUIPrefab)
+				{
+					if (othersStats.Infected)
+					{
+						SpawnStatusChange("-1", other.gameObject.transform.position);
+					}
+				}
+
 				other.gameObject.AddComponent<KillActor>();
 				break;
 			}
 			case ActionManager.AttackResult.VictimInfected:
 			{
+				SpawnStatusChange("+1", other.gameObject.transform.position);
 				other.gameObject.AddComponent<InfectActor>();
 				break;
 			}
@@ -171,6 +190,7 @@ public class AttackResolver : MonoBehaviour
 				if (cloningChance <= attackerStats.CloningChance)
 				{
 					GameObject.FindObjectOfType<FriendlyNPCManager>().SpawnSingleFriendly(victimStats.gameObject.transform.position);
+					SpawnStatusChange("+1", victimStats.gameObject.transform.position);
 				}
 			}
 			
