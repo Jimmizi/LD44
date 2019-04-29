@@ -381,4 +381,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackSound: {fileID: 8300000, guid: 4a86c7ccc85615047b5b5978365673a7, type: 3}
-  MoveSound: {fileID: 0}
+  DeathSound: {fileID: 8300000, guid: 123ddfa7487d85b4c8eae96dd62d2685, type: 3}
+  MoveSounds:
+  - {fileID: 8300000, guid: 49449ca8741868848b74e2e12e14634a, type: 3}
+  - {fileID: 8300000, guid: d64c279e2d800b3408a1c8cb2a464133, type: 3}
+  - {fileID: 8300000, guid: 49cb14ef50e9d0441aecf87c38ae1d4f, type: 3}

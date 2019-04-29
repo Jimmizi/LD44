@@ -98,6 +98,7 @@ public class KillActor : MonoBehaviour
 		    FxDone();
 	    }
 
+		this.GetComponent<CharacterAudio>()?.PlayDeathSound();
 	    _triggered = true;
 
     }

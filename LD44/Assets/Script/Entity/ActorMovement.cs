@@ -19,6 +19,8 @@ public class ActorMovement : MonoBehaviour
 	private ActorStats _statsRef = null;
 	private Animator _animatorRef = null;
 
+	private bool _needWalkingSound = true;
+
     void Start()
     {
 		_rigidbodyRef = GetComponent<Rigidbody2D>();
@@ -70,9 +72,20 @@ public class ActorMovement : MonoBehaviour
 		{
 			DirectionFacing = Direction.x < 0.0f ? -1 : 1;
 			_animatorRef?.SetBool("Moving", true);
+
+			if (_needWalkingSound)
+			{
+				this.GetComponent<CharacterAudio>()?.StartMoveSound();
+				_needWalkingSound = false;
+			}
 		}
 		else
 		{
+			if (!_needWalkingSound)
+			{
+				this.GetComponent<CharacterAudio>()?.StopMoveSound();
+				_needWalkingSound = true;
+			}
 			_animatorRef?.SetBool("Moving", false);
 		}
 
