@@ -358,6 +358,8 @@ public class FlowManager : MonoBehaviour
 	
 	void StatePlacement()
 	{
+	    Cursor.visible = false;
+
 		if (GameObject.FindObjectOfType<LevelManager>())
 		{
 			if (GameObject.FindObjectOfType<LevelManager>().paused)
@@ -400,9 +402,11 @@ public class FlowManager : MonoBehaviour
 				}
 
 				_currentState = LevelState.PlayerInit;
-			}
-		}
-	}
+
+			    Cursor.visible = true;
+            }	    
+        }	    
+    }
 
 	void StatePlayerInit()
 	{
