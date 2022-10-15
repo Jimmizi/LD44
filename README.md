@@ -3,6 +3,10 @@
 # Splitter Cells
 Made for Ludum Dare 44
 
+https://jimmizi.itch.io/splitter-cells
+
+https://ldjam.com/events/ludum-dare/44/splitter-cells
+
 Infect. Survive. Prosper.
 
 As a cell, survive in this harsh environment that pits you against those who would rather you not be around. Good luck.
