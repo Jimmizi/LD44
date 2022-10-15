@@ -1,5 +1,4 @@
 ![](https://static.jam.host/raw/7be/12/z/22915.png)
-![](https://static.jam.host/raw/757/32/z/24beb.gif)
 
 # Splitter Cells
 Made for Ludum Dare 44
